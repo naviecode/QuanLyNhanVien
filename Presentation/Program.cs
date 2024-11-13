@@ -1,5 +1,5 @@
-using BusinessLogic.IService.IUserService;
-using BusinessLogic.Services.UserService;
+using BusinessLogic.IService;
+using BusinessLogic.Services;
 using Data;
 using Data.IRepository;
 using Data.Repository;
@@ -30,17 +30,17 @@ namespace Presentation
             var form1 = ServiceProvider.GetService<LoginScreen>();
             Application.Run(form1);
         }
-        private static void ConfigureServices(ServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSingleton(configuration);
+            private static void ConfigureServices(ServiceCollection services, IConfiguration configuration)
+            {
+                services.AddSingleton(configuration);
 
-            services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")));
+                services.AddDbContext<DatabaseContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IRepositoryManager, RepositoryManager>();
+                services.AddScoped<IServiceManager, ServiceManager>();
 
-            services.AddTransient<LoginScreen>();
-        }
+                services.AddTransient<LoginScreen>();
+            }
     }
 }

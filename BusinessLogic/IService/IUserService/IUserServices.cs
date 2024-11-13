@@ -2,7 +2,7 @@
 
 namespace BusinessLogic.IService.IUserService
 {
-    public interface IUserService
+    public interface IUserServices
     {
         Task<ResponseActionDto<UserReadDto>> Create(UserCreateDto userCreateDto);
         Task<ResponseActionDto<UserReadDto>> Update(UserUpdateDto userUpdateDto);

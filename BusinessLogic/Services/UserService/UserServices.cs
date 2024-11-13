@@ -1,19 +1,17 @@
 ﻿using BusinessLogic.IService;
 using BusinessLogic.IService.IUserService;
 using BusinessLogic.IService.IUserService.Dto;
-using Data.Entities;
 using Data.IRepository;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogic.Services.UserService
 {
-    public class UserService : IUserService
+    public class UserServices : IUserServices
     {
-        private readonly IUsersRepository _usersRepository;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public UserService(IUsersRepository usersRepository) 
+        public UserServices(IRepositoryManager repositoryManager) 
         {
-            _usersRepository = usersRepository;
+            _repositoryManager = repositoryManager;
         }
 
         public async Task<ResponseActionDto<UserReadDto>> Create(UserCreateDto userCreateDto)
@@ -22,7 +20,7 @@ namespace BusinessLogic.Services.UserService
         }
         public async Task<ResponseActionDto<UserReadDto>> Delete(int userId)
         {
-            return new ResponseActionDto<UserReadDto>(null,1, "test", "test");
+            throw new NotImplementedException();
         }
 
         public async Task<ResponseDataDto<UserReadDto>> GetAll()

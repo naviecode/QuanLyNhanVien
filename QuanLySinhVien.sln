@@ -5,9 +5,11 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{FE64999B-6BA5-4482-B605-5F3F33DCB741}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{AED2DB9B-B193-4F5F-A578-4D7E4CC37338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{AED2DB9B-B193-4F5F-A578-4D7E4CC37338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A58203CA-7B15-4382-906A-9C9C6030E023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{A58203CA-7B15-4382-906A-9C9C6030E023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{1EAE6EEA-1110-464F-8640-A6628D572196}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A58203CA-7B15-4382-906A-9C9C6030E023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A58203CA-7B15-4382-906A-9C9C6030E023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A58203CA-7B15-4382-906A-9C9C6030E023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EAE6EEA-1110-464F-8640-A6628D572196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EAE6EEA-1110-464F-8640-A6628D572196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EAE6EEA-1110-464F-8640-A6628D572196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EAE6EEA-1110-464F-8640-A6628D572196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,19 +1,19 @@
-﻿using BusinessLogic.IService.IUserService;
+﻿using BusinessLogic.IService;
 
 namespace Presentation.Forms
 {
     public partial class LoginScreen : BaseForm
     {
-        private readonly IUserService _userService;
-        public LoginScreen(IUserService userSerivce)
+        private readonly IServiceManager _serviceManager;
+        public LoginScreen(IServiceManager serviceManager)
         {
             InitializeComponent();
-            _userService = userSerivce;
+            _serviceManager = serviceManager;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var abc = _userService.Delete(1);
+            var abc = _serviceManager.UserService.GetAll();
             if(txtUserName.Text == "admin" && txtPassWord.Text.Length > 0)
             {
                 MessageBox.Show("Success");
