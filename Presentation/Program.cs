@@ -1,4 +1,5 @@
 using BusinessLogic.IService;
+using BusinessLogic.Mapper;
 using BusinessLogic.Services;
 using Data;
 using Data.IRepository;
@@ -27,20 +28,25 @@ namespace Presentation
 
 
             ApplicationConfiguration.Initialize();
-            var form1 = ServiceProvider.GetService<LoginScreen>();
+            var form1 = ServiceProvider.GetService<HostForm>();
             Application.Run(form1);
         }
-            private static void ConfigureServices(ServiceCollection services, IConfiguration configuration)
-            {
-                services.AddSingleton(configuration);
+        private static void ConfigureServices(ServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton(configuration);
 
-                services.AddDbContext<DatabaseContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")));
+            services.AddAutoMapper(typeof(UserMapperProfile).Assembly);
 
-                services.AddScoped<IRepositoryManager, RepositoryManager>();
-                services.AddScoped<IServiceManager, ServiceManager>();
 
-                services.AddTransient<LoginScreen>();
-            }
+            services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")));
+
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<IServiceManager, ServiceManager>();
+
+            services.AddTransient<HostForm>();
+            services.AddTransient<MainForm>();
+            services.AddTransient<LoginScreen>();
+        }
     }
 }

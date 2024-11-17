@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Helpers
+﻿using Data.Entities;
+
+namespace BusinessLogic.Helpers
 {
     public static class UserSession
     {
@@ -13,6 +15,12 @@
         public static bool HasPermission(string permission)
         {
             return Permissions.Contains(permission);
+        }
+
+        public static void Clear()
+        {
+            Username = null;
+            Permissions = null;
         }
     }
 }

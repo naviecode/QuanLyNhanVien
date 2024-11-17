@@ -4,10 +4,11 @@ namespace BusinessLogic.IService.IUserService
 {
     public interface IUserServices
     {
-        Task<ResponseActionDto<UserReadDto>> Create(UserCreateDto userCreateDto);
-        Task<ResponseActionDto<UserReadDto>> Update(UserUpdateDto userUpdateDto);
-        Task<ResponseActionDto<UserReadDto>> Delete(int userId);
-        Task<ResponseDataDto<UserReadDto>> GetAll();
-        Task<ResponseActionDto<UserReadDto>> GetById(int userId);
+        ResponseActionDto<UserReadDto> Create(UserCreateDto userCreateDto);
+        ResponseActionDto<UserReadDto> Update(UserUpdateDto userUpdateDto);
+        ResponseActionDto<UserReadDto> Delete(int userId);
+        ResponseDataDto<UserReadDto> GetAll();
+        ResponseActionDto<UserReadDto> GetById(int userId);
+
     }
 }

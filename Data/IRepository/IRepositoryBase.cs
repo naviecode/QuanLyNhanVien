@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Data.IRepository
 {
     public interface IRepositoryBase<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         T GetById(int id);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(int id);
-        void SaveChanges();
+        int? Add(T entity);
+        bool Update(T entity);
+        bool Delete(int id);
+        bool SaveChanges();
     }
 }
