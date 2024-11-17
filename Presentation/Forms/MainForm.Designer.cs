@@ -53,6 +53,7 @@
             btnThem = new Button();
             btnSua = new Button();
             btnXoa = new Button();
+            lblUserCurrent = new Label();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             menuContainer.SuspendLayout();
@@ -62,6 +63,7 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(lblUserCurrent);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -412,6 +414,17 @@
             btnXoa.UseVisualStyleBackColor = true;
             btnXoa.Click += btnXoa_Click;
             // 
+            // lblUserCurrent
+            // 
+            lblUserCurrent.AutoSize = true;
+            lblUserCurrent.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUserCurrent.Location = new Point(874, 13);
+            lblUserCurrent.Name = "lblUserCurrent";
+            lblUserCurrent.Size = new Size(40, 15);
+            lblUserCurrent.TabIndex = 3;
+            lblUserCurrent.Text = "label2";
+            lblUserCurrent.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -428,6 +441,7 @@
             FormClosed += MainForm_FormClosed;
             Load += MainForm_Load;
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             menuContainer.ResumeLayout(false);
             palNav.ResumeLayout(false);
@@ -461,5 +475,6 @@
         private Button btnThem;
         private Button btnTim;
         private Label lblTitlePageCurrent;
+        private Label lblUserCurrent;
     }
 }

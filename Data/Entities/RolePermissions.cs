@@ -14,7 +14,7 @@ namespace Data.Entities
         public int PermissionID { get; set; }
 
         [Key, Column(Order = 0)]
-        public int RolePermissionID { get; set; }
+        public int Id { get; set; }
 
         public Roles Role { get; set; }
         public Permissions Permission { get; set; }

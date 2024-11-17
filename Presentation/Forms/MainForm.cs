@@ -179,7 +179,7 @@ namespace Presentation.Forms
             SetNavigation(true);
             if (menuUsers == null)
             {
-                menuUsers = new Menu_Users(this);
+                menuUsers = new Menu_Users(this, _serviceManager);
                 menuUsers.FormClosed += MenuUsers_FormClosed;
                 menuUsers.MdiParent = this;
                 menuUsers.Dock = DockStyle.Fill;
@@ -229,6 +229,7 @@ namespace Presentation.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            lblUserCurrent.Text = $"Xin chào bạn: {UserSession.Username}";
         }
     }
 }

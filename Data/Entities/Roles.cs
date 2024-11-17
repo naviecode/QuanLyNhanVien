@@ -6,7 +6,7 @@ namespace Data.Entities
     public class Roles
     {
         [Key]
-        public int RoleID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]

@@ -11,6 +11,10 @@ namespace Data.Repository
             _databaseContext = databaseContext;
         }
         private IUsersRepository _usersRepository;
+        private IRolesRepository _rolesRepository;
+
         public IUsersRepository UsersRepository => _usersRepository ?? new UsersRepository(_databaseContext);
+        public IRolesRepository RolesRepository => _rolesRepository ?? new RolesRepository(_databaseContext);
+
     }
 }

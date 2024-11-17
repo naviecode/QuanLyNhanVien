@@ -6,7 +6,7 @@ namespace Data.Entities
     public class Permissions
     {
         [Key]
-        public int PermissionID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]

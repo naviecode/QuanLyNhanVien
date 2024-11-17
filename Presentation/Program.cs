@@ -36,6 +36,7 @@ namespace Presentation
             services.AddSingleton(configuration);
 
             services.AddAutoMapper(typeof(UserMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(RolesMapperProfile).Assembly);
 
 
             services.AddDbContext<DatabaseContext>(options =>

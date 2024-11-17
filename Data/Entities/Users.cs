@@ -6,14 +6,14 @@ namespace Data.Entities
     public class Users
     {
         [Key]
-        public int UserID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string Username { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         [Required]
         [ForeignKey("Role")]

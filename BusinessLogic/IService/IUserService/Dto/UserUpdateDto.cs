@@ -5,13 +5,13 @@ namespace BusinessLogic.IService.IUserService.Dto
     public class UserUpdateDto
     {
         [Required]
-        public int UserID { get; set; }
+        public int Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string Username { get; set; }
 
         [Required]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         [Required]
         public int RoleID { get; set; }

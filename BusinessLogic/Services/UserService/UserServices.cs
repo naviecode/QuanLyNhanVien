@@ -20,8 +20,14 @@ namespace BusinessLogic.Services.UserService
 
         public ResponseActionDto<UserReadDto> Create(UserCreateDto userCreateDto)
         {
-            var idNew  = _repositoryManager.UsersRepository.Add(_mapper.Map<UserCreateDto, Users>(userCreateDto));
-            if(idNew != null && idNew != 0)
+            var checkIsExist = _repositoryManager.UsersRepository.GetAll().Any(x=>x.Username == userCreateDto.Username);
+            if (checkIsExist)
+            {
+                return new ResponseActionDto<UserReadDto>(null, -1, "Thêm mới thất bại", "Trùng username");
+
+            }
+            var idNew = _repositoryManager.UsersRepository.Add(_mapper.Map<UserCreateDto, Users>(userCreateDto));
+            if (idNew != null && idNew != 0)
             {
                 return new ResponseActionDto<UserReadDto>(null, 0, "Thêm mới thành công", idNew.ToString());
             }
@@ -29,7 +35,6 @@ namespace BusinessLogic.Services.UserService
             {
                 return new ResponseActionDto<UserReadDto>(null, -1, "Thêm mới thất bại", "");
             }
-
         }
         public ResponseActionDto<UserReadDto> Delete(int userId)
         {
@@ -54,12 +59,25 @@ namespace BusinessLogic.Services.UserService
 
         public ResponseActionDto<UserReadDto> GetById(int userId)
         {
-            throw new NotImplementedException();
+            var result = _repositoryManager.UsersRepository.GetById(userId);
+            if(result != null)
+            {
+                return new ResponseActionDto<UserReadDto>(_mapper.Map<Users, UserReadDto>(result), 0, "", "");
+            }
+            return new ResponseActionDto<UserReadDto>(new UserReadDto(), -1, "Không tìm thấy", "");
+
         }
 
         public ResponseActionDto<UserReadDto> Update(UserUpdateDto userUpdateDto)
         {
-            throw new NotImplementedException();
+            var result = _repositoryManager.UsersRepository.GetById(userUpdateDto.Id);
+            if(result != null)
+            {
+                _repositoryManager.UsersRepository.Update(_mapper.Map<UserUpdateDto, Users>(userUpdateDto));
+                return new ResponseActionDto<UserReadDto>(new UserReadDto(), 0, "Cập nhập thành công", "");
+            }
+            return new ResponseActionDto<UserReadDto>(new UserReadDto(), -1, "Không tìm thấy", "");
+
         }
     }
 }

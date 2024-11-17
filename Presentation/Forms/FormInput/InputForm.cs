@@ -1,18 +1,21 @@
 ﻿namespace Presentation.Forms.FormInput
 {
-    public partial class InputForm : BaseForm
+    public partial class InputForm : Form
     {
+        private object _entity;
         private List<InputField> _fields;
         private Dictionary<string, Control> _inputControls;
 
-        public InputForm(List<InputField> fields)
+        public InputForm(List<InputField> fields, object entity)
         {
             InitializeComponent();
             _fields = fields;
             _inputControls = new Dictionary<string, Control>();
             this.StartPosition = FormStartPosition.CenterParent;
             InitializeDynamicInputs();
+            _entity = entity;
         }
+
 
         private void InitializeDynamicInputs()
         {
@@ -87,13 +90,20 @@
                         inputControl = new ComboBox
                         {
                             Width = 200,
-                            DataSource = field.Options,
-                            SelectedItem = field.Options.FirstOrDefault(option => option.Value == field.Value),
-                            DisplayMember = "Text",
-                            ValueMember = "Value",
                             Location = new Point(150, y),
                             Enabled = !field.IsReadOnly
                         };
+
+                        foreach (var option in field.Options)
+                        {
+                            ((ComboBox)inputControl).Items.Add(option);
+                        } 
+                        ((ComboBox)inputControl).DisplayMember = "Text";
+                        ((ComboBox)inputControl).ValueMember = "Value";
+                        var selectedOption = field.Options.FirstOrDefault(o => o.Value == field.Value);
+
+                        ((ComboBox)inputControl).SelectedIndex = field.Options.IndexOf(selectedOption);
+
                         break;
 
                     case "radiobutton":
@@ -133,7 +143,10 @@
                     inputControl.Tag = field.Label; 
                     _inputControls[field.Label] = inputControl;
                     Controls.Add(inputControl);
-                    if(field.Type.ToLower() == "radiobutton")
+                    if(field.Type.ToLower() == "combobox")
+                    {
+                    }
+                    if (field.Type.ToLower() == "radiobutton")
                     {
                         y += 40 + radioBtnHTotal;
                     }
@@ -141,7 +154,6 @@
                     {
                         y += 40;
                     }
-
                 }
             }
 
@@ -192,13 +204,12 @@
                         TextBox textBox => textBox.Text,
                         DateTimePicker datePicker => datePicker.Value.ToString("yyyy-MM-dd"),
                         CheckBox checkBox => checkBox.Checked.ToString(),
-                        ComboBox comboBox => comboBox.SelectedValue != null ? comboBox.SelectedValue.ToString() : string.Empty,
+                        ComboBox comboBox => comboBox.SelectedItem != null ? ((OptionItem)comboBox.SelectedItem).Value.ToString() : string.Empty,
                         FlowLayoutPanel flowPanel =>
                             flowPanel.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)?.Text ?? string.Empty,
                         _ => string.Empty
                     };
 
-                    // Kiểm tra trường bắt buộc không được bỏ trống
                     if (field.IsRequired && string.IsNullOrWhiteSpace(value))
                     {
                         MessageBox.Show($"{field.Label} không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -206,7 +217,6 @@
                         break;
                     }
 
-                    // Kiểm tra nếu là số và không được nhỏ hơn 0
                     if (field.Type.ToLower() == "text" && decimal.TryParse(value, out var numberValue) && numberValue < 0)
                     {
                         MessageBox.Show($"{field.Label} không được nhỏ hơn 0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -219,14 +229,34 @@
             }
             if (isValid)
             {
-                string display = string.Join(Environment.NewLine, result.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
-                MessageBox.Show(display, "Kết quả nhập");
+                var entity = ConvertDictionaryToObject(result);
+                _entity = entity;
+                //string display = string.Join(Environment.NewLine, result.Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+                //MessageBox.Show(display, "Kết quả nhập");
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
 
             }
             
+        }
+        private object ConvertDictionaryToObject(Dictionary<string, string> dictionary)
+        {
+            var entity = Activator.CreateInstance(_entity.GetType());
+            foreach (var kvp in dictionary)
+            {
+                var property = entity.GetType().GetProperty(kvp.Key);
+                if (property != null && property.CanWrite)
+                {
+                    var value = Convert.ChangeType(kvp.Value, property.PropertyType);
+                    property.SetValue(entity, value);
+                }
+            }
+            return entity;
+        }
+        public object GetEntity()
+        {
+            return _entity;
         }
 
     }
