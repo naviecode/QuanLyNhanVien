@@ -20,5 +20,9 @@ namespace Data.Entities
         public int RoleID { get; set; }
 
         public Roles Role { get; set; }
+
+        public Students Student { get; set; }
+
+        public Faculty Faculty { get; set; }
     }
 }
