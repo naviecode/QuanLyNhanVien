@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Helpers;
 using BusinessLogic.IService;
+using BusinessLogic.IService.IUserService.Dto;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation.Forms
@@ -21,13 +22,15 @@ namespace Presentation.Forms
         {
             string username = txtUserName.Text;
             string password = txtPassWord.Text;
-            var result = _serviceManager.UserService.GetAll().Items;
+            //validation
+            var result = _serviceManager.UserService.Login(username, password).Data;
 
-            if (ValidateUser(username, password) || username == "admin")
+            if (result != null)
             {
                 // Lưu thông tin người dùng vào UserSession
-                UserSession.Username = username;
-                UserSession.Initialize(GetUserPermissions(username));
+                UserSession.Username =  result.Username;
+
+                //UserSession.Initialize(result.Role.RolePermissions.ToList());
 
                 // Hiển thị MainForm
                 this.Hide();
@@ -47,12 +50,6 @@ namespace Presentation.Forms
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-        private bool ValidateUser(string username, string password)
-        {
-            var result = _serviceManager.UserService.GetAll().Items;
-
-            return result.Any(x => x.Username == username);
         }
 
         private List<string> GetUserPermissions(string username)

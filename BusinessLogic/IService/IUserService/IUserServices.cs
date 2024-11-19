@@ -9,6 +9,8 @@ namespace BusinessLogic.IService.IUserService
         ResponseActionDto<UserReadDto> Delete(int userId);
         ResponseDataDto<UserReadDto> GetAll();
         ResponseActionDto<UserReadDto> GetById(int userId);
+        ResponseActionDto<UserReadDto> Login(string username, string password);
+        ResponseActionDto<UserReadDto> ChangePassword(string username, string passwordOld, string passwordNew);
 
     }
 }
