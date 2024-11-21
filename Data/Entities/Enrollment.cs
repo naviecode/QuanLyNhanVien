@@ -8,9 +8,9 @@ namespace Data.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        public int StudentID { get; set; }
+        public int StudentId { get; set; }
         [Required]
-        public int CourseID { get; set; }
+        public int CourseId { get; set; }
         [Required]
         public DateTime EnrollmentDate { get; set; }
         public decimal? Grade { get; set; }
