@@ -22,24 +22,24 @@ namespace Presentation.Forms
         {
             string username = txtUserName.Text;
             string password = txtPassWord.Text;
-            //validation
             var permission = _serviceManager.PermissionService.GetAll().Items;
             var role = _serviceManager.RoleService.GetAll().Items;
+
+            //validation
             var result = _serviceManager.UserService.Login(username, password).Data;
 
             if (result != null)
             {
-                // Lưu thông tin người dùng vào UserSession
                 UserSession.Username =  result.Username;
+                UserSession.RoleName = result.Role.RoleName;
+                UserSession.UserId = result.Id;
                 var lstPermission = _serviceManager.RolePermissionService.GetAll().Items.Where(x=>x.RoleID == result.RoleID).ToList();
                 UserSession.Initialize(lstPermission);
-
-                // Hiển thị MainForm
+                
                 this.Hide();
                 var mainForm = _serviceProvider.GetService<MainForm>();
                 mainForm.Show();
 
-                // Khi LoginScreen bị đóng, thoát ứng dụng nếu không có form nào khác
                 this.FormClosed += (s, args) => Application.Exit();
 
             }
@@ -52,12 +52,6 @@ namespace Presentation.Forms
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private List<string> GetUserPermissions(string username)
-        {
-            // Trả về danh sách quyền của người dùng (ví dụ, từ cơ sở dữ liệu)
-            return new List<string> { "Read", "Write", "Execute" };
         }
     }
 }

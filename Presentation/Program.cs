@@ -40,6 +40,11 @@ namespace Presentation
             services.AddAutoMapper(typeof(UserMapperProfile).Assembly);
             services.AddAutoMapper(typeof(RolesMapperProfile).Assembly);
             services.AddAutoMapper(typeof(PermissionsMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(ClassMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(CourseMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(DepartmentMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(FacultyMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(StudentMapperProfile).Assembly);
             services.AddAutoMapper(typeof(RolePermissionsMapperProfile).Assembly);
 
 

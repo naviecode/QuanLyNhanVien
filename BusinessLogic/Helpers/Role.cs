@@ -2,8 +2,8 @@
 {
     public enum Role
     {
-        Admin,
-        Teacher,
-        Student
+        ADMIN,
+        GIANGVIEN,
+        SINHVIEN
     }
 }
