@@ -11,5 +11,7 @@
         IEnrollmentsRepository EnrollmentsRepository { get; }
         IFacultysRepository FacultysRepository { get; }
         IStudentsRepository StudentsRepository { get; }
+        IPermissionsRepository PermissionsRepository { get; }
+        IRolePermissionsRepository RolePermissionsRepository { get; }
     }
 }

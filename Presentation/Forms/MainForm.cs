@@ -1,7 +1,9 @@
 ﻿using BusinessLogic.Helpers;
 using BusinessLogic.IService;
 using Microsoft.Extensions.DependencyInjection;
+using Presentation.Forms.Menus;
 using Presentation.Forms.SubMenu;
+using Presentation.Forms.SubSettings;
 
 namespace Presentation.Forms
 {
@@ -12,12 +14,17 @@ namespace Presentation.Forms
         public event EventHandler EditButtonClicked;
         public event EventHandler DeleteButtonClicked;
         bool menuExpand = false;
+        bool settingExpand = false;
 
         #region Form
         Dashboard dashboard;
-        Settings settings;
+        ViewGrades viewGrades;
+        ViewStudentInfo viewStudentInfo;
         Menu_QLSV menuQLSV;
         Menu_Users menuUsers;
+        Setting_Role settingRole;
+        Setting_Permission settingPermission;
+        Setting_RolePermission settingRolePermission;
         #endregion
 
         #region Service
@@ -33,6 +40,63 @@ namespace Presentation.Forms
             _serviceProvider = serviceProvider;
             InitializeComponent();
             OpenDashboard();
+            ConfigureMenu();
+        }
+
+        private void ConfigureMenu()
+        {
+            if (!UserSession.HasPermissionName("ViewDashBoard"))
+            {
+                btnTongQuan.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageStudents"))
+            {
+                btnChucNang1.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageCourses"))
+            {
+                btnChucNang2.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("EnrollCourses"))
+            {
+                btnChucNang3.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageEnroll"))
+            {
+                btnChucNang4.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ViewGrades"))
+            {
+                btnViewGrades.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageFaculty"))
+            {
+                btnChucNang5.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageClasses"))
+            {
+                btnChucNang6.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageDepartments"))
+            {
+                btnChucNang7.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("GenerateReports"))
+            {
+                btnChucNang8.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ViewStudentInfo"))
+            {
+                btnViewStudentInfo.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ManageAccounts"))
+            {
+                btnChucNang9.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("AssignPermissions"))
+            {
+                flpSettingContainer.Visible = false;
+            }
         }
 
         private void menuTransition_Tick(object sender, EventArgs e)
@@ -57,15 +121,48 @@ namespace Presentation.Forms
             }
         }
 
+
+        private void settingsTransition_Tick(object sender, EventArgs e)
+        {
+            if (settingExpand == false)
+            {
+                flpSettingContainer.Height += 20;
+                if (flpSettingContainer.Height >= 170)
+                {
+                    settingsTransition.Stop();
+                    settingExpand = true;
+                }
+            }
+            else
+            {
+                flpSettingContainer.Height -= 20;
+                if (flpSettingContainer.Height <= 43)
+                {
+                    settingsTransition.Stop();
+                    settingExpand = false;
+                }
+            }
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            settingsTransition.Start();
+        }
         private void btnChucNang_Click(object sender, EventArgs e)
         {
             menuTransition.Start();
         }
-
         private void btnThoat_Click(object sender, EventArgs e)
         {
-            UserSession.Clear();
-            this.Close();
+            var result = MessageBox.Show("Bạn có chắc chắn muốn thoát không?",
+                                "Xác nhận thoát",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                UserSession.Clear();
+                this.Close();
+            }
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -75,34 +172,13 @@ namespace Presentation.Forms
                 var loginForm = _serviceProvider.GetService<LoginScreen>();
                 if (loginForm != null)
                 {
-                    loginForm.Show(); 
+                    loginForm.Show();
                 }
             }
             else
             {
                 Application.Exit();
             }
-        }
-
-        private async void btnCaidat_Click(object sender, EventArgs e)
-        {
-            if (settings == null)
-            {
-                settings = new Settings();
-                settings.FormClosed += Settings_FormClosed;
-                settings.MdiParent = this;
-                settings.Dock = DockStyle.Fill;
-                settings.Show();
-            }
-            else
-            {
-                settings.Activate();
-            }
-        }
-
-        private void Settings_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            settings = null;
         }
 
         private void btnTongQuan_Click(object sender, EventArgs e)
@@ -113,6 +189,7 @@ namespace Presentation.Forms
         private void OpenDashboard()
         {
             SetNavigation(false);
+            CloseAllChildForms();
             if (dashboard == null)
             {
                 dashboard = new Dashboard(this);
@@ -125,7 +202,6 @@ namespace Presentation.Forms
             {
                 dashboard.Activate();
             }
-
         }
 
         private void Dashboard_FormClosed(object sender, FormClosedEventArgs e)
@@ -194,6 +270,136 @@ namespace Presentation.Forms
         {
             dashboard = null;
         }
+
+        private void btnRole_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Quản lý chức danh";
+            SetNavigation(true);
+            CloseAllChildForms();
+
+            if (settingRole == null)
+            {
+                settingRole = new Setting_Role(this, _serviceManager);
+                settingRole.FormClosed += SettingRole_FormClosed;
+                settingRole.MdiParent = this;
+                settingRole.Dock = DockStyle.Fill;
+                settingRole.Show();
+            }
+            else
+            {
+                settingRole.Activate();
+            }
+        }
+
+        private void SettingRole_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            settingRole = null;
+        }
+
+        private void btnPermission_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Quản lý quyền hệ thống";
+            SetNavigation(true);
+            CloseAllChildForms();
+
+            if (settingPermission == null)
+            {
+                settingPermission = new Setting_Permission(this, _serviceManager);
+                settingPermission.FormClosed += SettingPermission_FormClosed;
+                settingPermission.MdiParent = this;
+                settingPermission.Dock = DockStyle.Fill;
+                settingPermission.Show();
+            }
+            else
+            {
+                settingPermission.Activate();
+            }
+        }
+
+        private void SettingPermission_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            settingPermission = null;
+        }
+
+        private void btnRolePermission_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Quản lý cấp quyền cho chức danh";
+            SetNavigation(true);
+            CloseAllChildForms();
+
+            if (settingRolePermission == null)
+            {
+                settingRolePermission = new Setting_RolePermission(this, _serviceManager);
+                settingRolePermission.FormClosed += SettingRolePermission_FormClosed;
+                settingRolePermission.MdiParent = this;
+                settingRolePermission.Dock = DockStyle.Fill;
+                settingRolePermission.Show();
+            }
+            else
+            {
+                settingRolePermission.Activate();
+            }
+        }
+
+        private void SettingRolePermission_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            settingRolePermission = null;
+        }
+
+        private void btnViewStudentInfo_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Thông tin cá nhân sinh viên";
+            SetNavigation(false);
+            CloseAllChildForms();
+
+            if (viewStudentInfo == null)
+            {
+                viewStudentInfo = new ViewStudentInfo(this, _serviceManager);
+                viewStudentInfo.FormClosed += ViewStudentInfo_FormClosed;
+                viewStudentInfo.MdiParent = this;
+                viewStudentInfo.Dock = DockStyle.Fill;
+                viewStudentInfo.Show();
+            }
+            else
+            {
+                viewStudentInfo.Activate();
+            }
+        }
+
+        private void ViewStudentInfo_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            viewStudentInfo = null;
+        }
+
+        private void btnViewGrades_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Thông tin điểm số của sinh viên";
+            SetNavigation(false);
+            CloseAllChildForms();
+
+            if (viewGrades == null)
+            {
+                viewGrades = new ViewGrades(this, _serviceManager);
+                viewGrades.FormClosed += ViewGrades_FormClosed;
+                viewGrades.MdiParent = this;
+                viewGrades.Dock = DockStyle.Fill;
+                viewGrades.Show();
+            }
+            else
+            {
+                viewGrades.Activate();
+            }
+        }
+
+        private void ViewGrades_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            viewGrades = null;
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            lblUserCurrent.Text = $"Xin chào bạn: {UserSession.Username}";
+
+        }
         private void btnTim_Click(object sender, EventArgs e)
         {
             SearchButtonClicked?.Invoke(this, EventArgs.Empty);
@@ -227,9 +433,22 @@ namespace Presentation.Forms
             btnXoa.Visible = showDelete;
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+
+        public void SetMenuVisibility()
         {
-            lblUserCurrent.Text = $"Xin chào bạn: {UserSession.Username}";
+
         }
+
+
+
+        private void CloseAllChildForms()
+        {
+            foreach (var childForm in this.MdiChildren)
+            {
+                childForm.Close();
+            }
+        }
+
+      
     }
 }

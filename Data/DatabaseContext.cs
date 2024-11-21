@@ -49,8 +49,12 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //modelBuilder.Entity<RolePermissions>()
+            //    .HasKey(rp => rp.Id);
+            //Chạy lại migration thì khi getall rolePermission sẽ đi kèm permission name luôn khỏi phải left join
             modelBuilder.Entity<RolePermissions>()
-                .HasKey(rp => new { rp.RoleID, rp.PermissionID });
+                           .HasKey(rp => new { rp.RoleID, rp.PermissionID });
 
             modelBuilder.Entity<Users>()
                 .HasOne(u => u.Role)
@@ -66,16 +70,6 @@ namespace Data
                 .HasOne(rp => rp.Permission)
                 .WithMany(p => p.RolePermissions)
                 .HasForeignKey(rp => rp.PermissionID);
-
-            modelBuilder.Entity<Students>()
-                .HasOne(s => s.User)
-                .WithOne(u => u.Student)
-                .HasForeignKey<Students>(s => s.UserId);
-
-            modelBuilder.Entity<Faculty>()
-                .HasOne(f => f.User)
-                .WithOne(u => u.Faculty)
-                .HasForeignKey<Faculty>(f => f.UserId);
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)

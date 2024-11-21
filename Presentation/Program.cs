@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Forms;
+using System.Globalization;
 
 namespace Presentation
 {
@@ -17,6 +18,8 @@ namespace Presentation
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("vi");
+
             var configuration = new ConfigurationBuilder()
                .SetBasePath(AppContext.BaseDirectory)
                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -25,7 +28,6 @@ namespace Presentation
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection, configuration);
             ServiceProvider = serviceCollection.BuildServiceProvider();
-
 
             ApplicationConfiguration.Initialize();
             var form1 = ServiceProvider.GetService<HostForm>();
@@ -37,6 +39,8 @@ namespace Presentation
 
             services.AddAutoMapper(typeof(UserMapperProfile).Assembly);
             services.AddAutoMapper(typeof(RolesMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(PermissionsMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(RolePermissionsMapperProfile).Assembly);
 
 
             services.AddDbContext<DatabaseContext>(options =>

@@ -6,6 +6,8 @@ using BusinessLogic.IService.IDepartmentService;
 using BusinessLogic.IService.IFacultyService;
 using BusinessLogic.IService.IGradeService;
 using BusinessLogic.IService.IRegistCourseService;
+using BusinessLogic.IService.IPermissions;
+using BusinessLogic.IService.IRolePermissions;
 using BusinessLogic.IService.IRoleService;
 using BusinessLogic.IService.IStudentService;
 using BusinessLogic.IService.IUserService;
@@ -16,6 +18,9 @@ using BusinessLogic.Services.FacultyService;
 using BusinessLogic.Services.GradeService;
 using BusinessLogic.Services.RegistCourseService;
 using BusinessLogic.Services.StudentService;
+using BusinessLogic.Services.PermissionsService;
+using BusinessLogic.Services.RolePermissionsService;
+using BusinessLogic.Services.RoleService;
 using BusinessLogic.Services.UserService;
 using Data.IRepository;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -33,6 +38,8 @@ namespace BusinessLogic.Services
         private readonly Lazy<IFacultyServices> _lazyfacultyService;
         private readonly Lazy<IGradeServices> _lazygradeService;
         private readonly Lazy<IRegistCourseServices> _lazyregistCourseService;
+        private readonly Lazy<IPermissionService> _lazyPermissionService;
+        private readonly Lazy<IRolePermissionService> _lazyRolePermissionService;
         public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper) 
         {
             _lazyUserService = new Lazy<IUserServices>(()=> new UserServices(repositoryManager, mapper));
@@ -44,6 +51,8 @@ namespace BusinessLogic.Services
             _lazyfacultyService = new Lazy<IFacultyServices>(() => new FacultyServices(repositoryManager, mapper));
             _lazygradeService = new Lazy<IGradeServices>(() => new GradeServices(repositoryManager, mapper));
             _lazyregistCourseService = new Lazy<IRegistCourseServices>(() => new RegistCourseServices(repositoryManager, mapper));
+            _lazyPermissionService = new Lazy<IPermissionService>(()=> new PermissionsServices(repositoryManager, mapper));
+            _lazyRolePermissionService = new Lazy<IRolePermissionService> (()=> new RolePermissionsServices(repositoryManager, mapper));
         }
 
         public IUserServices UserService => _lazyUserService.Value;
@@ -55,6 +64,7 @@ namespace BusinessLogic.Services
         public IFacultyServices FacultyService => _lazyfacultyService.Value;
         public IGradeServices GradeService => _lazygradeService.Value;
         public IRegistCourseServices RegistCourseService => _lazyregistCourseService.Value;
-
+        public IPermissionService PermissionService => _lazyPermissionService.Value;
+        public IRolePermissionService RolePermissionService => _lazyRolePermissionService.Value;
     }
 }

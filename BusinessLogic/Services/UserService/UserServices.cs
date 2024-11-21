@@ -18,6 +18,11 @@ namespace BusinessLogic.Services.UserService
             _mapper = mapper;
         }
 
+        public ResponseActionDto<UserReadDto> ChangePassword(string username, string passwordOld, string passwordNew)
+        {
+            throw new NotImplementedException();
+        }
+
         public ResponseActionDto<UserReadDto> Create(UserCreateDto userCreateDto)
         {
             var checkIsExist = _repositoryManager.UsersRepository.GetAll().Any(x=>x.Username == userCreateDto.Username);
@@ -68,16 +73,25 @@ namespace BusinessLogic.Services.UserService
 
         }
 
+        public ResponseActionDto<UserReadDto> Login(string username, string password)
+        {
+            var result = _repositoryManager.UsersRepository.GetAll().Where(x=> x.Username == username && x.PasswordHash == password).FirstOrDefault();
+            if (result != null)
+            {
+                return new ResponseActionDto<UserReadDto>(_mapper.Map<Users, UserReadDto>(result), 0, "", "");
+            }
+            return new ResponseActionDto<UserReadDto>(null, -1, "Tên đăng nhập hoặc mật khẩu không đúng", "");
+        }
+
         public ResponseActionDto<UserReadDto> Update(UserUpdateDto userUpdateDto)
         {
             var result = _repositoryManager.UsersRepository.GetById(userUpdateDto.Id);
             if(result != null)
             {
-                _repositoryManager.UsersRepository.Update(_mapper.Map<UserUpdateDto, Users>(userUpdateDto));
-                return new ResponseActionDto<UserReadDto>(new UserReadDto(), 0, "Cập nhập thành công", "");
+                _repositoryManager.UsersRepository.Update(_mapper.Map(userUpdateDto, result));
+                return new ResponseActionDto<UserReadDto>(null, 0, "Cập nhập thành công", "");
             }
-            return new ResponseActionDto<UserReadDto>(new UserReadDto(), -1, "Không tìm thấy", "");
-
+            return new ResponseActionDto<UserReadDto>(null, -1, "Không tìm thấy", "");
         }
     }
 }

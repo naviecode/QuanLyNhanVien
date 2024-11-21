@@ -1,3 +1,4 @@
+
 ﻿using BusinessLogic.IService.IClassService;
 using BusinessLogic.IService.ICourseService;
 using BusinessLogic.IService.IDepartmentService;
@@ -6,6 +7,9 @@ using BusinessLogic.IService.IGradeService;
 using BusinessLogic.IService.IRegistCourseService;
 using BusinessLogic.IService.IRoleService;
 using BusinessLogic.IService.IStudentService;
+﻿using BusinessLogic.IService.IPermissions;
+using BusinessLogic.IService.IRolePermissions;
+using BusinessLogic.IService.IRoleService;
 using BusinessLogic.IService.IUserService;
 
 namespace BusinessLogic.IService
@@ -21,5 +25,7 @@ namespace BusinessLogic.IService
         IFacultyServices FacultyService { get; }
         IGradeServices GradeService { get; }
         IRegistCourseServices RegistCourseService { get; }
+        IPermissionService PermissionService { get; }
+        IRolePermissionService RolePermissionService { get; }
     }
 }

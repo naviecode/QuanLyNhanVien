@@ -1,11 +1,14 @@
-﻿namespace Presentation.Forms.FormInput
+﻿using System.Globalization;
+using System.Resources;
+
+namespace Presentation.Forms.FormInput
 {
     public partial class InputForm : Form
     {
         private object _entity;
         private List<InputField> _fields;
         private Dictionary<string, Control> _inputControls;
-
+        private ResourceManager rm = new ResourceManager("Presentation.Resources.Languages", typeof(InputForm).Assembly);
         public InputForm(List<InputField> fields, object entity)
         {
             InitializeComponent();
@@ -15,11 +18,10 @@
             InitializeDynamicInputs();
             _entity = entity;
         }
-
-
         private void InitializeDynamicInputs()
         {
-            int y = 20; 
+
+            int y = 20;
             int radioBtnHTotal = 0;
             foreach (var field in _fields)
             {
@@ -31,13 +33,13 @@
 
                 if (field.IsRequired)
                 {
-                    lbl.Text = $"{field.Label} *";  
-                    lbl.ForeColor = Color.Red;      
+                    lbl.Text = $"{rm.GetString(field.Label, CultureInfo.CurrentUICulture) ?? field.Label} *";
+                    lbl.ForeColor = Color.Red;
                 }
                 else
                 {
-                    lbl.Text = field.Label;
-                    lbl.ForeColor = Color.Black; 
+                    lbl.Text = rm.GetString(field.Label, CultureInfo.CurrentUICulture) ?? field.Label;
+                    lbl.ForeColor = Color.Black;
                 }
 
                 Controls.Add(lbl);
@@ -71,7 +73,7 @@
                             Width = 200,
                             Value = DateTime.TryParse(field.Value, out var dateValue) ? dateValue : DateTime.Now,
                             Location = new Point(150, y),
-                            Format = DateTimePickerFormat.Custom, 
+                            Format = DateTimePickerFormat.Custom,
                             CustomFormat = "dd/MM/yyyy",
                             Enabled = !field.IsReadOnly
                         };
@@ -97,7 +99,7 @@
                         foreach (var option in field.Options)
                         {
                             ((ComboBox)inputControl).Items.Add(option);
-                        } 
+                        }
                         ((ComboBox)inputControl).DisplayMember = "Text";
                         ((ComboBox)inputControl).ValueMember = "Value";
                         var selectedOption = field.Options.FirstOrDefault(o => o.Value == field.Value);
@@ -107,13 +109,13 @@
                         break;
 
                     case "radiobutton":
-                        int radioButtonHeight = 30; 
+                        int radioButtonHeight = 30;
 
                         inputControl = new FlowLayoutPanel
                         {
                             Width = 200,
                             Location = new Point(150, y),
-                            AutoSize = false, 
+                            AutoSize = false,
                             FlowDirection = FlowDirection.TopDown,
                             Enabled = !field.IsReadOnly
                         };
@@ -140,10 +142,10 @@
 
                 if (inputControl != null)
                 {
-                    inputControl.Tag = field.Label; 
+                    inputControl.Tag = field.Label;
                     _inputControls[field.Label] = inputControl;
                     Controls.Add(inputControl);
-                    if(field.Type.ToLower() == "combobox")
+                    if (field.Type.ToLower() == "combobox")
                     {
                     }
                     if (field.Type.ToLower() == "radiobutton")
@@ -158,10 +160,10 @@
             }
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
-            flowLayoutPanel.Dock = DockStyle.Bottom; 
-            flowLayoutPanel.FlowDirection = FlowDirection.RightToLeft; 
+            flowLayoutPanel.Dock = DockStyle.Bottom;
+            flowLayoutPanel.FlowDirection = FlowDirection.RightToLeft;
             flowLayoutPanel.Padding = new Padding(10);
-            flowLayoutPanel.Margin = new Padding(10); 
+            flowLayoutPanel.Margin = new Padding(10);
             flowLayoutPanel.WrapContents = false;
 
             var btnExit = new Button
@@ -180,7 +182,7 @@
             };
             btnSave.Click += BtnSave_Click;
 
-           
+
             flowLayoutPanel.Controls.Add(btnExit);
             flowLayoutPanel.Controls.Add(btnSave);
 
@@ -212,14 +214,14 @@
 
                     if (field.IsRequired && string.IsNullOrWhiteSpace(value))
                     {
-                        MessageBox.Show($"{field.Label} không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"{rm.GetString(field.Label, CultureInfo.CurrentUICulture) ?? field.Label} không được để trống", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         isValid = false;
                         break;
                     }
 
                     if (field.Type.ToLower() == "text" && decimal.TryParse(value, out var numberValue) && numberValue < 0)
                     {
-                        MessageBox.Show($"{field.Label} không được nhỏ hơn 0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"{rm.GetString(field.Label, CultureInfo.CurrentUICulture) ?? field.Label} không được nhỏ hơn 0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         isValid = false;
                         break;
                     }
@@ -238,7 +240,7 @@
                 this.Close();
 
             }
-            
+
         }
         private object ConvertDictionaryToObject(Dictionary<string, string> dictionary)
         {
@@ -248,7 +250,17 @@
                 var property = entity.GetType().GetProperty(kvp.Key);
                 if (property != null && property.CanWrite)
                 {
-                    var value = Convert.ChangeType(kvp.Value, property.PropertyType);
+                    object value = null;
+
+                    if (!string.IsNullOrEmpty(kvp.Value))
+                    {
+                        var propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+                        value = Convert.ChangeType(kvp.Value, propertyType);
+                    }
+                    else if (Nullable.GetUnderlyingType(property.PropertyType) == null && property.PropertyType.IsValueType)
+                    {
+                        value = Activator.CreateInstance(property.PropertyType);
+                    }
                     property.SetValue(entity, value);
                 }
             }

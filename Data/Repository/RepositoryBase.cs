@@ -55,8 +55,7 @@ namespace Data.Repository
             try
             {
                 _context.Entry(entity).State = EntityState.Modified;
-                SaveChanges();
-                return true; 
+                return SaveChanges();
             }
             catch (Exception ex)
             {
@@ -73,8 +72,7 @@ namespace Data.Repository
                 if (entity != null)
                 {
                     _dbSet.Remove(entity);
-                    SaveChanges();
-                    return true;
+                    return SaveChanges();
                 }
                 return false;
             }
