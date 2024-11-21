@@ -44,6 +44,7 @@ namespace Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
         public DbSet<Class> Classes { get; set; }
+        public DbSet<ClassSection> ClassSections { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,27 +74,27 @@ namespace Data
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
-                .HasForeignKey(e => e.StudentID);
+                .HasForeignKey(e => e.StudentId);
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
-                .HasForeignKey(e => e.CourseID);
+                .HasForeignKey(e => e.CourseId);
 
             modelBuilder.Entity<Faculty>()
                 .HasOne(f => f.Department)
                 .WithMany(d => d.Faculties)
                 .HasForeignKey(f => f.DepartmentID);
 
-            modelBuilder.Entity<Class>()
+            modelBuilder.Entity<ClassSection>()
                 .HasOne(c => c.Faculty)
                 .WithMany(f => f.Classes)
-                .HasForeignKey(c => c.FacultyID);
+                .HasForeignKey(c => c.FacultyId);
 
-            modelBuilder.Entity<Class>()
+            modelBuilder.Entity<ClassSection>()
                 .HasOne(c => c.Course)
                 .WithMany(c => c.Classes)
-                .HasForeignKey(c => c.CourseID);
+                .HasForeignKey(c => c.CourseId);
 
             modelBuilder.Entity<Enrollment>()
                 .Property(e => e.Grade)

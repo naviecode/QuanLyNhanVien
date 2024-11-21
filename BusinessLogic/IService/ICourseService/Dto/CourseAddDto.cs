@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Data.Entities
+namespace BusinessLogic.IService.ICourseService.Dto
 {
-    public class Course
+    public class CourseAddDto
     {
-        [Key]
-        public int Id { get; set; } 
         [Required]
         public string CourseName { get; set; }
         [Required]
@@ -18,7 +19,5 @@ namespace Data.Entities
         public DateTime EndRegisterDate { get; set; }
         [Required]
         public int MaxAmountRegist { get; set; }
-        public ICollection<Enrollment> Enrollments { get; set; }
-        public ICollection<ClassSection> Classes { get; set; }
     }
 }
