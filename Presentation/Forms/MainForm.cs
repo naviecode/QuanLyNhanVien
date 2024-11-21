@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Helpers;
 using BusinessLogic.IService;
+using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Forms.Menus;
 using Presentation.Forms.SubMenu;
@@ -14,6 +15,7 @@ namespace Presentation.Forms
         public event EventHandler EditButtonClicked;
         public event EventHandler DeleteButtonClicked;
         bool menuExpand = false;
+        private int heightMenuExpand = 430;
         bool settingExpand = false;
 
         #region Form
@@ -21,7 +23,15 @@ namespace Presentation.Forms
         ViewGrades viewGrades;
         ViewStudentInfo viewStudentInfo;
         Menu_QLSV menuQLSV;
+        Menu_Grade menuGrade;
+        Menu_Class menuClass;
+        Menu_ClassSection menuClassSection;
+        Menu_Course menuCourse;
+        Menu_Department menuDepartment;
+        Menu_Enrollment menuEnroollment;
+        Menu_Faculty menuFaclty;
         Menu_Users menuUsers;
+        Menu_Report menuReport;
         Setting_Role settingRole;
         Setting_Permission settingPermission;
         Setting_RolePermission settingRolePermission;
@@ -48,22 +58,27 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ViewDashBoard"))
             {
                 btnTongQuan.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("ManageStudents"))
             {
                 btnChucNang1.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("ManageCourses"))
             {
                 btnChucNang2.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("EnrollCourses"))
             {
                 btnChucNang3.Visible = false;
+                heightMenuExpand -= 43;
             }
-            if (!UserSession.HasPermissionName("ManageEnroll"))
+            if (!UserSession.HasPermissionName("ManageGrade"))
             {
                 btnChucNang4.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("ViewGrades"))
             {
@@ -72,6 +87,8 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageFaculty"))
             {
                 btnChucNang5.Visible = false;
+                heightMenuExpand -= 43;
+
             }
             if (!UserSession.HasPermissionName("ManageClasses"))
             {
@@ -80,10 +97,12 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageDepartments"))
             {
                 btnChucNang7.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("GenerateReports"))
             {
                 btnChucNang8.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("ViewStudentInfo"))
             {
@@ -92,10 +111,15 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageAccounts"))
             {
                 btnChucNang9.Visible = false;
+                heightMenuExpand -= 43;
             }
             if (!UserSession.HasPermissionName("AssignPermissions"))
             {
                 flpSettingContainer.Visible = false;
+            }
+            if (!UserSession.HasPermissionName("ViewTimeTable"))
+            {
+                btnThoiKhoaBieu.Visible = false;
             }
         }
 
@@ -104,7 +128,7 @@ namespace Presentation.Forms
             if (menuExpand == false)
             {
                 menuContainer.Height += 40;
-                if (menuContainer.Height >= 430)
+                if (menuContainer.Height >= this.heightMenuExpand)
                 {
                     menuTransition.Stop();
                     menuExpand = true;
@@ -211,44 +235,178 @@ namespace Presentation.Forms
 
         private void btnChucNang1_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý sinh viên";
 
         }
 
+
         private void btnChucNang2_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý khóa học";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuCourse == null)
+            {
+                menuCourse = new Menu_Course();
+                menuCourse.FormClosed += Course_FormClosed;
+                menuCourse.MdiParent = this;
+                menuCourse.Dock = DockStyle.Fill;
+                menuCourse.Show();
+            }
+            else
+            {
+                menuCourse.Activate();
+            }
 
+        }
+
+        private void Course_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuCourse = null;
         }
 
         private void btnChucNang3_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Đăng ký khóa học";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuEnroollment == null)
+            {
+                menuEnroollment = new Menu_Enrollment();
+                menuEnroollment.FormClosed += Enrollment_FormClosed;
+                menuEnroollment.MdiParent = this;
+                menuEnroollment.Dock = DockStyle.Fill;
+                menuEnroollment.Show();
+            }
+            else
+            {
+                menuEnroollment.Activate();
+            }
 
+        }
+        private void Enrollment_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuEnroollment = null;
         }
 
         private void btnChucNang4_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý điểm";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuGrade == null)
+            {
+                menuGrade = new Menu_Grade();
+                menuGrade.FormClosed += Grade_FormClosed;
+                menuGrade.MdiParent = this;
+                menuGrade.Dock = DockStyle.Fill;
+                menuGrade.Show();
+            }
+            else
+            {
+                menuGrade.Activate();
+            }
 
         }
+        private void Grade_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuGrade = null;
+        }
+
 
         private void btnChucNang5_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý giảng viên";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuFaclty == null)
+            {
+                menuFaclty = new Menu_Faculty(this, _serviceManager);
+                menuFaclty.FormClosed += Faculty_FormClosed;
+                menuFaclty.MdiParent = this;
+                menuFaclty.Dock = DockStyle.Fill;
+                menuFaclty.Show();
+            }
+            else
+            {
+                menuFaclty.Activate();
+            }
 
+        }
+        private void Faculty_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuFaclty = null;
         }
 
         private void btnChucNang6_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý lớp học";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuClass == null)
+            {
+                menuClass = new Menu_Class();
+                menuClass.FormClosed += Class_FormClosed;
+                menuClass.MdiParent = this;
+                menuClass.Dock = DockStyle.Fill;
+                menuClass.Show();
+            }
+            else
+            {
+                menuClass.Activate();
+            }
 
+        }
+        private void Class_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuClass = null;
         }
 
         private void btnChucNang7_Click(object sender, EventArgs e)
         {
+            lblTitlePageCurrent.Text = "Quản lý khoa";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuDepartment == null)
+            {
+                menuDepartment = new Menu_Department();
+                menuDepartment.FormClosed += Department_FormClosed;
+                menuDepartment.MdiParent = this;
+                menuDepartment.Dock = DockStyle.Fill;
+                menuDepartment.Show();
+            }
+            else
+            {
+                menuDepartment.Activate();
+            }
 
         }
-
+        private void Department_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuDepartment = null;
+        }
         private void btnChucNang8_Click(object sender, EventArgs e)
         {
-
+            lblTitlePageCurrent.Text = "Báo cáo";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuReport == null)
+            {
+                menuReport = new Menu_Report();
+                menuReport.FormClosed += Report_FormClosed;
+                menuReport.MdiParent = this;
+                menuReport.Dock = DockStyle.Fill;
+                menuReport.Show();
+            }
+            else
+            {
+                menuReport.Activate();
+            }
         }
-
+        private void Report_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuReport = null;
+        }
         private void btnChucNang9_Click(object sender, EventArgs e)
         {
             lblTitlePageCurrent.Text = "Quản lý tài khoản";
@@ -349,7 +507,7 @@ namespace Presentation.Forms
         private void btnViewStudentInfo_Click(object sender, EventArgs e)
         {
             lblTitlePageCurrent.Text = "Thông tin cá nhân sinh viên";
-            SetNavigation(false);
+            SetNavigation(true);
             CloseAllChildForms();
 
             if (viewStudentInfo == null)
@@ -449,6 +607,9 @@ namespace Presentation.Forms
             }
         }
 
-      
+        private void btnThoiKhoaBieu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

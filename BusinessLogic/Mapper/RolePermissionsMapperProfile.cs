@@ -13,7 +13,7 @@ namespace BusinessLogic.Mapper
             CreateMap<RolePermissions, RolePermissionsUpdateDto>();
             CreateMap<RolePermissionsCreateDto, RolePermissions>();
             CreateMap<RolePermissionsReadDto, RolePermissions>();
-            CreateMap<RolePermissionsUpdateDto, RolePermissions>().ForMember(x => x.Id, opt => opt.Ignore()); ;
+            CreateMap<RolePermissionsUpdateDto, RolePermissions>().ForMember(x => x.Id, opt => opt.Ignore()); 
         }
     }
 }

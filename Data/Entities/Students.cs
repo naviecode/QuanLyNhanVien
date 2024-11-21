@@ -22,6 +22,9 @@ namespace Data.Entities
         [Required]
         public DateTime EnrollmentDate { get; set; }
         [Required]
+        [ForeignKey("Class")]
+        public int ClassId { get; set; }
+        [Required]
         [ForeignKey("User")]
         public int UserId { get; set; }
 

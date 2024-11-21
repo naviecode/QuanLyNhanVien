@@ -37,7 +37,7 @@ namespace Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
-
+        public DbSet<ClassSection> ClassSection { get;set; }
         public DbSet<Students> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
@@ -70,30 +70,104 @@ namespace Data
                 .WithMany(p => p.RolePermissions)
                 .HasForeignKey(rp => rp.PermissionID);
 
+            //modelBuilder.Entity<Enrollment>()
+            //    .HasOne(e => e.Student)
+            //    .WithMany(s => s.Enrollments)
+            //    .HasForeignKey(e => e.StudentID);
+
+            //modelBuilder.Entity<Enrollment>()
+            //    .HasOne(e => e.Course)
+            //    .WithMany(c => c.Enrollments)
+            //    .HasForeignKey(e => e.CourseID);
+
+            //modelBuilder.Entity<Faculty>()
+            //    .HasOne(f => f.Department)
+            //    .WithMany(d => d.Faculties)
+            //    .HasForeignKey(f => f.DepartmentID);
+
+            //modelBuilder.Entity<Class>()
+            //    .HasOne(c => c.Faculty)
+            //    .WithMany(f => f.Classes)
+            //    .HasForeignKey(c => c.FacultyID);
+
+            //modelBuilder.Entity<Class>()
+            //    .HasOne(c => c.Course)
+            //    .WithMany(c => c.Classes)
+            //    .HasForeignKey(c => c.CourseID);
+
+            //modelBuilder.Entity<Enrollment>()
+            //    .Property(e => e.Grade)   
+            //    .HasColumnType("decimal(5,2)");
+            // Class-Department (One-to-Many)
+
+            modelBuilder.Entity<Class>()
+                .HasOne<Department>()
+                .WithMany()
+                .HasForeignKey(c => c.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ClassSection-Class (One-to-Many)
+            modelBuilder.Entity<ClassSection>()
+                .HasOne<Class>()
+                .WithMany()
+                .HasForeignKey(cs => cs.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ClassSection-Course (One-to-Many)
+            modelBuilder.Entity<ClassSection>()
+                .HasOne(cs => cs.Course)
+                .WithMany(c => c.Classes)
+                .HasForeignKey(cs => cs.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ClassSection-Faculty (One-to-Many)
+            modelBuilder.Entity<ClassSection>()
+                .HasOne(cs => cs.Faculty)
+                .WithMany(f => f.Classes)
+                .HasForeignKey(cs => cs.FacultyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Enrollment-Student (One-to-Many)
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
-                .HasForeignKey(e => e.StudentID);
+                .HasForeignKey(e => e.StudentID)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // Enrollment-Course (One-to-Many)
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
-                .HasForeignKey(e => e.CourseID);
+                .HasForeignKey(e => e.CourseID)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // Student-Class (One-to-Many)
+            modelBuilder.Entity<Students>()
+                .HasOne<Class>()
+                .WithMany()
+                .HasForeignKey(s => s.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Student-User (One-to-One)
+            modelBuilder.Entity<Students>()
+                .HasOne(s => s.User)
+                .WithMany()
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Faculty-Department (One-to-Many)
             modelBuilder.Entity<Faculty>()
                 .HasOne(f => f.Department)
                 .WithMany(d => d.Faculties)
-                .HasForeignKey(f => f.DepartmentID);
+                .HasForeignKey(f => f.DepartmentID)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Class>()
-                .HasOne(c => c.Faculty)
-                .WithMany(f => f.Classes)
-                .HasForeignKey(c => c.FacultyID);
-
-            modelBuilder.Entity<Class>()
-                .HasOne(c => c.Course)
-                .WithMany(c => c.Classes)
-                .HasForeignKey(c => c.CourseID);
+            // Faculty-User (One-to-One)
+            modelBuilder.Entity<Faculty>()
+                .HasOne(f => f.User)
+                .WithMany()
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
                 .Property(e => e.Grade)

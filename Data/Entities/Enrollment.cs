@@ -6,7 +6,7 @@ namespace Data.Entities
     public class Enrollment
     {
         [Key]
-        public int Id { get; set; }  
+        public int Id { get; set; }
         [Required]
         public int StudentID { get; set; }
         [Required]
@@ -14,6 +14,7 @@ namespace Data.Entities
         [Required]
         public DateTime EnrollmentDate { get; set; }
         public decimal? Grade { get; set; }
+        public bool? IsCanceled { get; set; }
 
         public Students Student { get; set; }
         public Course Course { get; set; }
