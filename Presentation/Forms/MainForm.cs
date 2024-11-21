@@ -32,6 +32,7 @@ namespace Presentation.Forms
         Menu_Faculty menuFaclty;
         Menu_Users menuUsers;
         Menu_Report menuReport;
+        ViewTimeTable viewTimeTable;
         Setting_Role settingRole;
         Setting_Permission settingPermission;
         Setting_RolePermission settingRolePermission;
@@ -553,6 +554,31 @@ namespace Presentation.Forms
         {
             viewGrades = null;
         }
+
+
+        private void btnThoiKhoaBieu_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Thời khóa biểu";
+            SetNavigation(true);
+            CloseAllChildForms();
+
+            if (viewTimeTable == null)
+            {
+                viewTimeTable = new ViewTimeTable(this, _serviceManager);
+                viewTimeTable.FormClosed += ViewTimeTable_FormClosed;
+                viewTimeTable.MdiParent = this;
+                viewTimeTable.Dock = DockStyle.Fill;
+                viewTimeTable.Show();
+            }
+            else
+            {
+                viewTimeTable.Activate();
+            }
+        }
+        private void ViewTimeTable_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            viewGrades = null;
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
             lblUserCurrent.Text = $"Xin chào bạn: {UserSession.Username}";
@@ -607,9 +633,5 @@ namespace Presentation.Forms
             }
         }
 
-        private void btnThoiKhoaBieu_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

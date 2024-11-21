@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using BusinessLogic.IService;
 
 namespace Presentation.Forms.Menus
 {
     public partial class ViewTimeTable : Form
     {
-        public ViewTimeTable()
+        private MainForm mainForm;
+        private readonly IServiceManager _serviceManager;
+        public ViewTimeTable(MainForm mainForm, IServiceManager serviceManager)
         {
             InitializeComponent();
+            this.mainForm = mainForm;
+            this._serviceManager = serviceManager;
         }
 
         private void ViewTimeTable_Load(object sender, EventArgs e)

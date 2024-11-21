@@ -37,6 +37,9 @@
             dtpFromDate = new DateTimePicker();
             label4 = new Label();
             dtpToDate = new DateTimePicker();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -51,13 +54,13 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5F));
-            tableLayoutPanel1.Dock = DockStyle.Bottom;
-            tableLayoutPanel1.Location = new Point(0, 97);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(886, 404);
+            tableLayoutPanel1.Size = new Size(886, 417);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -128,11 +131,30 @@
             dtpToDate.Size = new Size(200, 23);
             dtpToDate.TabIndex = 3;
             // 
+            // panel1
+            // 
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(tableLayoutPanel1);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 84);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(886, 417);
+            panel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 324);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(886, 93);
+            panel2.TabIndex = 1;
+            // 
             // ViewTimeTable
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 501);
+            Controls.Add(panel1);
             Controls.Add(dtpToDate);
             Controls.Add(dtpFromDate);
             Controls.Add(label4);
@@ -141,11 +163,11 @@
             Controls.Add(label2);
             Controls.Add(cboNamHoc);
             Controls.Add(label1);
-            Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ViewTimeTable";
             Text = "ViewTimeTable";
             Load += ViewTimeTable_Load;
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,5 +183,7 @@
         private DateTimePicker dtpFromDate;
         private Label label4;
         private DateTimePicker dtpToDate;
+        private Panel panel1;
+        private Panel panel2;
     }
 }
