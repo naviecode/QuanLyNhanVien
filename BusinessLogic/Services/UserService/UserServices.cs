@@ -88,10 +88,10 @@ namespace BusinessLogic.Services.UserService
             var result = _repositoryManager.UsersRepository.GetById(userUpdateDto.Id);
             if(result != null)
             {
-                _repositoryManager.UsersRepository.Update(_mapper.Map<UserUpdateDto, Users>(userUpdateDto));
-                return new ResponseActionDto<UserReadDto>(new UserReadDto(), 0, "Cập nhập thành công", "");
+                _repositoryManager.UsersRepository.Update(_mapper.Map(userUpdateDto, result));
+                return new ResponseActionDto<UserReadDto>(null, 0, "Cập nhập thành công", "");
             }
-            return new ResponseActionDto<UserReadDto>(new UserReadDto(), -1, "Không tìm thấy", "");
+            return new ResponseActionDto<UserReadDto>(null, -1, "Không tìm thấy", "");
         }
     }
 }

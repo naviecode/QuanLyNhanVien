@@ -21,8 +21,5 @@ namespace Data.Entities
 
         public Roles Role { get; set; }
 
-        public Students Student { get; set; }
-
-        public Faculty Faculty { get; set; }
     }
 }

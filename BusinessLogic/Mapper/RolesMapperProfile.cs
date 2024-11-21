@@ -8,9 +8,12 @@ namespace BusinessLogic.Mapper
     {
         public RolesMapperProfile() 
         {
-            CreateMap<RoleReadDto, Roles>();
             CreateMap<Roles, RoleReadDto>();
-
+            CreateMap<Roles, RoleUpdateDto>();
+            CreateMap<Roles, RoleCreateDto>();
+            CreateMap<RoleReadDto, Roles>();
+            CreateMap<RoleUpdateDto, Roles>().ForMember(x => x.Id, opt => opt.Ignore()); ;
+            CreateMap<RoleCreateDto, Roles>();
         }
     }
 }

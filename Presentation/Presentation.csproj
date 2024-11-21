@@ -54,7 +54,6 @@
 
   <ItemGroup>
     <Folder Include="Images\Icons\" />
-    <Folder Include="ValidationForm\" />
   </ItemGroup>
 
 </Project>

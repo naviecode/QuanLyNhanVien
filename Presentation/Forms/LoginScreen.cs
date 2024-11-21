@@ -23,14 +23,16 @@ namespace Presentation.Forms
             string username = txtUserName.Text;
             string password = txtPassWord.Text;
             //validation
+            var permission = _serviceManager.PermissionService.GetAll().Items;
+            var role = _serviceManager.RoleService.GetAll().Items;
             var result = _serviceManager.UserService.Login(username, password).Data;
 
             if (result != null)
             {
                 // Lưu thông tin người dùng vào UserSession
                 UserSession.Username =  result.Username;
-
-                //UserSession.Initialize(result.Role.RolePermissions.ToList());
+                var lstPermission = _serviceManager.RolePermissionService.GetAll().Items.Where(x=>x.RoleID == result.RoleID).ToList();
+                UserSession.Initialize(lstPermission);
 
                 // Hiển thị MainForm
                 this.Hide();

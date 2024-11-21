@@ -13,8 +13,7 @@ namespace BusinessLogic.Mapper
             CreateMap<Users, UserUpdateDto>();
             CreateMap<UserCreateDto, Users>();
             CreateMap<UserReadDto, Users>();
-            CreateMap<UserUpdateDto, Users>();
-        
+            CreateMap<UserUpdateDto, Users>().ForMember(x => x.Id, opt => opt.Ignore()); ;
         }
     }
 }

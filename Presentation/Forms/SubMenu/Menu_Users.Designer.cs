@@ -131,6 +131,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Users";
             Text = "Menu_Users";
+            FormClosed += Menu_Users_FormClosed;
             Load += Menu_Users_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

@@ -39,6 +39,8 @@ namespace Presentation
 
             services.AddAutoMapper(typeof(UserMapperProfile).Assembly);
             services.AddAutoMapper(typeof(RolesMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(PermissionsMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(RolePermissionsMapperProfile).Assembly);
 
 
             services.AddDbContext<DatabaseContext>(options =>

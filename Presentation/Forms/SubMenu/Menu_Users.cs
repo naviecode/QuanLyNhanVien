@@ -68,7 +68,7 @@ namespace Presentation.Forms.SubMenu
             {
                 UserCreateDto userCreate = (UserCreateDto)inputForm.GetEntity();
                 var result = _serviceManager.UserService.Create(userCreate);
-                if(result.Code == 0)
+                if (result.Code == 0)
                 {
                     MessageBox.Show("Thêm mới thành công");
                     this.OnSearch();
@@ -108,8 +108,8 @@ namespace Presentation.Forms.SubMenu
                     {
                         MessageBox.Show(result.Message);
                     }
-                }  
-                    
+                }
+
             }
             else
             {
@@ -129,7 +129,7 @@ namespace Presentation.Forms.SubMenu
                 {
                     // Nếu người dùng chọn "Yes", thực hiện hành động xóa
                     var delete = _serviceManager.UserService.Delete(this.IdSelectListView);
-                    if(delete.Code == 0)
+                    if (delete.Code == 0)
                     {
                         MessageBox.Show("Xóa thành công");
                         this.OnSearch();
@@ -145,7 +145,7 @@ namespace Presentation.Forms.SubMenu
                 MessageBox.Show("Vui lòng chọn dòng cần xóa");
             }
         }
-        
+
 
         private void customListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -166,6 +166,14 @@ namespace Presentation.Forms.SubMenu
         {
             customListView1.NextPage();
             lblPageInfo.Text = customListView1.GetPageInfo();
+        }
+
+        private void Menu_Users_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.AddButtonClicked -= MainForm_AddButtonClicked;
+            mainForm.EditButtonClicked -= MainForm_EditButtonClicked;
+            mainForm.DeleteButtonClicked -= MainForm_DeleteButtonClicked;
+            mainForm.SearchButtonClicked -= MainForm_SearchButtonClicked;
         }
     }
 }

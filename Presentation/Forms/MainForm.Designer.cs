@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
+            lblUserCurrent = new Label();
             label1 = new Label();
             btnTongQuan = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -44,7 +46,11 @@
             btnChucNang7 = new Button();
             btnChucNang8 = new Button();
             btnChucNang9 = new Button();
-            btnCaidat = new Button();
+            flpSettingContainer = new FlowLayoutPanel();
+            btnSettings = new Button();
+            btnRole = new Button();
+            btnPermission = new Button();
+            btnRolePermission = new Button();
             btnThoat = new Button();
             menuTransition = new System.Windows.Forms.Timer(components);
             palNav = new Panel();
@@ -53,16 +59,21 @@
             btnThem = new Button();
             btnSua = new Button();
             btnXoa = new Button();
-            lblUserCurrent = new Label();
+            settingsTransition = new System.Windows.Forms.Timer(components);
+            btnViewStudentInfo = new Button();
+            btnViewGrades = new Button();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             menuContainer.SuspendLayout();
+            flpSettingContainer.SuspendLayout();
             palNav.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(lblUserCurrent);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
@@ -70,6 +81,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1030, 41);
             panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.user_login;
+            pictureBox1.Location = new Point(848, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(29, 22);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
+            // 
+            // lblUserCurrent
+            // 
+            lblUserCurrent.AutoSize = true;
+            lblUserCurrent.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUserCurrent.Location = new Point(874, 13);
+            lblUserCurrent.Name = "lblUserCurrent";
+            lblUserCurrent.Size = new Size(40, 15);
+            lblUserCurrent.TabIndex = 3;
+            lblUserCurrent.Text = "label2";
+            lblUserCurrent.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -90,7 +122,7 @@
             btnTongQuan.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnTongQuan.ForeColor = Color.White;
             btnTongQuan.ImageAlign = ContentAlignment.MiddleLeft;
-            btnTongQuan.Location = new Point(0, 30);
+            btnTongQuan.Location = new Point(0, 0);
             btnTongQuan.Margin = new Padding(0);
             btnTongQuan.Name = "btnTongQuan";
             btnTongQuan.Size = new Size(200, 43);
@@ -101,17 +133,21 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.FromArgb(23, 24, 29);
             flowLayoutPanel1.Controls.Add(btnTongQuan);
             flowLayoutPanel1.Controls.Add(menuContainer);
-            flowLayoutPanel1.Controls.Add(btnCaidat);
+            flowLayoutPanel1.Controls.Add(btnViewStudentInfo);
+            flowLayoutPanel1.Controls.Add(btnViewGrades);
+            flowLayoutPanel1.Controls.Add(flpSettingContainer);
             flowLayoutPanel1.Controls.Add(btnThoat);
             flowLayoutPanel1.Dock = DockStyle.Left;
+            flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(0, 41);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Padding = new Padding(0, 30, 0, 0);
             flowLayoutPanel1.Size = new Size(200, 660);
             flowLayoutPanel1.TabIndex = 1;
+            flowLayoutPanel1.WrapContents = false;
             // 
             // menuContainer
             // 
@@ -126,7 +162,7 @@
             menuContainer.Controls.Add(btnChucNang7);
             menuContainer.Controls.Add(btnChucNang8);
             menuContainer.Controls.Add(btnChucNang9);
-            menuContainer.Location = new Point(3, 76);
+            menuContainer.Location = new Point(3, 46);
             menuContainer.Name = "menuContainer";
             menuContainer.Size = new Size(200, 43);
             menuContainer.TabIndex = 6;
@@ -311,23 +347,90 @@
             btnChucNang9.UseVisualStyleBackColor = false;
             btnChucNang9.Click += btnChucNang9_Click;
             // 
-            // btnCaidat
+            // flpSettingContainer
             // 
-            btnCaidat.AccessibleRole = AccessibleRole.None;
-            btnCaidat.BackColor = Color.FromArgb(23, 24, 29);
-            btnCaidat.FlatAppearance.BorderSize = 0;
-            btnCaidat.FlatStyle = FlatStyle.Flat;
-            btnCaidat.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnCaidat.ForeColor = Color.White;
-            btnCaidat.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCaidat.Location = new Point(0, 122);
-            btnCaidat.Margin = new Padding(0);
-            btnCaidat.Name = "btnCaidat";
-            btnCaidat.Size = new Size(200, 43);
-            btnCaidat.TabIndex = 3;
-            btnCaidat.Text = "Cài đặt";
-            btnCaidat.UseVisualStyleBackColor = false;
-            btnCaidat.Click += btnCaidat_Click;
+            flpSettingContainer.BackColor = Color.FromArgb(32, 33, 36);
+            flpSettingContainer.Controls.Add(btnSettings);
+            flpSettingContainer.Controls.Add(btnRole);
+            flpSettingContainer.Controls.Add(btnPermission);
+            flpSettingContainer.Controls.Add(btnRolePermission);
+            flpSettingContainer.ForeColor = Color.Black;
+            flpSettingContainer.Location = new Point(3, 181);
+            flpSettingContainer.Name = "flpSettingContainer";
+            flpSettingContainer.Size = new Size(201, 43);
+            flpSettingContainer.TabIndex = 7;
+            // 
+            // btnSettings
+            // 
+            btnSettings.AccessibleRole = AccessibleRole.None;
+            btnSettings.BackColor = Color.FromArgb(23, 24, 29);
+            btnSettings.FlatAppearance.BorderSize = 0;
+            btnSettings.FlatStyle = FlatStyle.Flat;
+            btnSettings.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSettings.ForeColor = Color.White;
+            btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSettings.Location = new Point(0, 0);
+            btnSettings.Margin = new Padding(0);
+            btnSettings.Name = "btnSettings";
+            btnSettings.Size = new Size(200, 43);
+            btnSettings.TabIndex = 7;
+            btnSettings.Text = "Cài đặt";
+            btnSettings.UseVisualStyleBackColor = false;
+            btnSettings.Click += btnSettings_Click;
+            // 
+            // btnRole
+            // 
+            btnRole.AccessibleRole = AccessibleRole.None;
+            btnRole.BackColor = Color.FromArgb(32, 33, 36);
+            btnRole.FlatAppearance.BorderSize = 0;
+            btnRole.FlatStyle = FlatStyle.Flat;
+            btnRole.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnRole.ForeColor = Color.White;
+            btnRole.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRole.Location = new Point(0, 43);
+            btnRole.Margin = new Padding(0);
+            btnRole.Name = "btnRole";
+            btnRole.Size = new Size(200, 43);
+            btnRole.TabIndex = 10;
+            btnRole.Text = "Chức danh";
+            btnRole.UseVisualStyleBackColor = false;
+            btnRole.Click += btnRole_Click;
+            // 
+            // btnPermission
+            // 
+            btnPermission.AccessibleRole = AccessibleRole.None;
+            btnPermission.BackColor = Color.FromArgb(32, 33, 36);
+            btnPermission.FlatAppearance.BorderSize = 0;
+            btnPermission.FlatStyle = FlatStyle.Flat;
+            btnPermission.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnPermission.ForeColor = Color.White;
+            btnPermission.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPermission.Location = new Point(0, 86);
+            btnPermission.Margin = new Padding(0);
+            btnPermission.Name = "btnPermission";
+            btnPermission.Size = new Size(200, 43);
+            btnPermission.TabIndex = 8;
+            btnPermission.Text = "Quyền hệ thống";
+            btnPermission.UseVisualStyleBackColor = false;
+            btnPermission.Click += btnPermission_Click;
+            // 
+            // btnRolePermission
+            // 
+            btnRolePermission.AccessibleRole = AccessibleRole.None;
+            btnRolePermission.BackColor = Color.FromArgb(32, 33, 36);
+            btnRolePermission.FlatAppearance.BorderSize = 0;
+            btnRolePermission.FlatStyle = FlatStyle.Flat;
+            btnRolePermission.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnRolePermission.ForeColor = Color.White;
+            btnRolePermission.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRolePermission.Location = new Point(0, 129);
+            btnRolePermission.Margin = new Padding(0);
+            btnRolePermission.Name = "btnRolePermission";
+            btnRolePermission.Size = new Size(200, 43);
+            btnRolePermission.TabIndex = 9;
+            btnRolePermission.Text = "Cấp quyền";
+            btnRolePermission.UseVisualStyleBackColor = false;
+            btnRolePermission.Click += btnRolePermission_Click;
             // 
             // btnThoat
             // 
@@ -338,7 +441,7 @@
             btnThoat.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnThoat.ForeColor = Color.White;
             btnThoat.ImageAlign = ContentAlignment.MiddleLeft;
-            btnThoat.Location = new Point(0, 165);
+            btnThoat.Location = new Point(0, 227);
             btnThoat.Margin = new Padding(0);
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(200, 43);
@@ -414,16 +517,45 @@
             btnXoa.UseVisualStyleBackColor = true;
             btnXoa.Click += btnXoa_Click;
             // 
-            // lblUserCurrent
+            // settingsTransition
             // 
-            lblUserCurrent.AutoSize = true;
-            lblUserCurrent.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            lblUserCurrent.Location = new Point(874, 13);
-            lblUserCurrent.Name = "lblUserCurrent";
-            lblUserCurrent.Size = new Size(40, 15);
-            lblUserCurrent.TabIndex = 3;
-            lblUserCurrent.Text = "label2";
-            lblUserCurrent.TextAlign = ContentAlignment.MiddleCenter;
+            settingsTransition.Tick += settingsTransition_Tick;
+            // 
+            // btnViewStudentInfo
+            // 
+            btnViewStudentInfo.AccessibleRole = AccessibleRole.None;
+            btnViewStudentInfo.BackColor = Color.FromArgb(23, 24, 29);
+            btnViewStudentInfo.FlatAppearance.BorderSize = 0;
+            btnViewStudentInfo.FlatStyle = FlatStyle.Flat;
+            btnViewStudentInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnViewStudentInfo.ForeColor = Color.White;
+            btnViewStudentInfo.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewStudentInfo.Location = new Point(0, 92);
+            btnViewStudentInfo.Margin = new Padding(0);
+            btnViewStudentInfo.Name = "btnViewStudentInfo";
+            btnViewStudentInfo.Size = new Size(200, 43);
+            btnViewStudentInfo.TabIndex = 7;
+            btnViewStudentInfo.Text = "Thông tin sinh viên";
+            btnViewStudentInfo.UseVisualStyleBackColor = false;
+            btnViewStudentInfo.Click += btnViewStudentInfo_Click;
+            // 
+            // btnViewGrades
+            // 
+            btnViewGrades.AccessibleRole = AccessibleRole.None;
+            btnViewGrades.BackColor = Color.FromArgb(23, 24, 29);
+            btnViewGrades.FlatAppearance.BorderSize = 0;
+            btnViewGrades.FlatStyle = FlatStyle.Flat;
+            btnViewGrades.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnViewGrades.ForeColor = Color.White;
+            btnViewGrades.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewGrades.Location = new Point(0, 135);
+            btnViewGrades.Margin = new Padding(0);
+            btnViewGrades.Name = "btnViewGrades";
+            btnViewGrades.Size = new Size(200, 43);
+            btnViewGrades.TabIndex = 8;
+            btnViewGrades.Text = "Xem điểm";
+            btnViewGrades.UseVisualStyleBackColor = false;
+            btnViewGrades.Click += btnViewGrades_Click;
             // 
             // MainForm
             // 
@@ -442,8 +574,10 @@
             Load += MainForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             menuContainer.ResumeLayout(false);
+            flpSettingContainer.ResumeLayout(false);
             palNav.ResumeLayout(false);
             palNav.PerformLayout();
             ResumeLayout(false);
@@ -454,7 +588,6 @@
         private Panel panel1;
         private Button btnTongQuan;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button btnCaidat;
         private Button btnThoat;
         private Button btnChucNang;
         private FlowLayoutPanel menuContainer;
@@ -476,5 +609,14 @@
         private Button btnTim;
         private Label lblTitlePageCurrent;
         private Label lblUserCurrent;
+        private FlowLayoutPanel flpSettingContainer;
+        private Button btnSettings;
+        private Button btnPermission;
+        private Button btnRolePermission;
+        private Button btnRole;
+        private System.Windows.Forms.Timer settingsTransition;
+        private PictureBox pictureBox1;
+        private Button btnViewStudentInfo;
+        private Button btnViewGrades;
     }
 }
