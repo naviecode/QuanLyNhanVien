@@ -13,12 +13,14 @@ namespace Data.Entities
         [Required]
         public string LastName { get; set; }
         public int DepartmentID { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         [Required]
         [ForeignKey("User")]
         public int UserId { get; set; }
 
         public Users User { get; set; }
         public Department Department { get; set; }
-        public ICollection<Class> Classes { get; set; }
+        public ICollection<ClassSection> Classes { get; set; }
     }
 }

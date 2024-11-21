@@ -5,6 +5,7 @@
         IUsersRepository UsersRepository { get; }
         IRolesRepository RolesRepository { get; }
         IClassesRepository ClassesRepository { get; }
+        IClassSectionsRepository ClassSectionsRepository { get; }
         ICoursesRepository CoursesRepository { get; }
         IDepartmentsRepository DepartmentsRepository { get; }
         IEnrollmentsRepository EnrollmentsRepository { get; }
