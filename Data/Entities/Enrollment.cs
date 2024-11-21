@@ -6,7 +6,7 @@ namespace Data.Entities
     public class Enrollment
     {
         [Key]
-        public int Id { get; set; }  
+        public int Id { get; set; }
         [Required]
         public int StudentId { get; set; }
         [Required]

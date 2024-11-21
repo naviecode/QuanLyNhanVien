@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Forms;
+using Presentation.Forms.Menus;
 using System.Globalization;
 
 namespace Presentation
@@ -30,7 +31,7 @@ namespace Presentation
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
             ApplicationConfiguration.Initialize();
-            var form1 = ServiceProvider.GetService<HostForm>();
+            var form1 = ServiceProvider.GetService<ViewTimeTable>();
             Application.Run(form1);
         }
         private static void ConfigureServices(ServiceCollection services, IConfiguration configuration)
@@ -52,6 +53,7 @@ namespace Presentation
             services.AddTransient<HostForm>();
             services.AddTransient<MainForm>();
             services.AddTransient<LoginScreen>();
+            services.AddTransient<ViewTimeTable>();
         }
     }
 }

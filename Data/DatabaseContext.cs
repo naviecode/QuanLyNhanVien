@@ -37,7 +37,7 @@ namespace Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Permissions> Permissions { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
-
+        public DbSet<ClassSection> ClassSection { get;set; }
         public DbSet<Students> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
@@ -50,7 +50,7 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<RolePermissions>()
+                        //modelBuilder.Entity<RolePermissions>()
             //    .HasKey(rp => rp.Id);
             //Chạy lại migration thì khi getall rolePermission sẽ đi kèm permission name luôn khỏi phải left join
             modelBuilder.Entity<RolePermissions>()
@@ -71,30 +71,66 @@ namespace Data
                 .WithMany(p => p.RolePermissions)
                 .HasForeignKey(rp => rp.PermissionID);
 
+
+            modelBuilder.Entity<Class>()
+                .HasOne<Department>()
+                .WithMany()
+                .HasForeignKey(c => c.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ClassSection>()
+                .HasOne<Class>()
+                .WithMany()
+                .HasForeignKey(cs => cs.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ClassSection>()
+                .HasOne(cs => cs.Course)
+                .WithMany(c => c.Classes)
+                .HasForeignKey(cs => cs.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ClassSection>()
+                .HasOne(cs => cs.Faculty)
+                .WithMany(f => f.Classes)
+                .HasForeignKey(cs => cs.FacultyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
-                .HasForeignKey(e => e.StudentId);
+                .HasForeignKey(e => e.StudentID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
-                .HasForeignKey(e => e.CourseId);
+                .HasForeignKey(e => e.CourseID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Students>()
+                .HasOne<Class>()
+                .WithMany()
+                .HasForeignKey(s => s.ClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Students>()
+                .HasOne(s => s.User)
+                .WithMany()
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Faculty>()
                 .HasOne(f => f.Department)
                 .WithMany(d => d.Faculties)
-                .HasForeignKey(f => f.DepartmentID);
+                .HasForeignKey(f => f.DepartmentID)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ClassSection>()
-                .HasOne(c => c.Faculty)
-                .WithMany(f => f.Classes)
-                .HasForeignKey(c => c.FacultyId);
-
-            modelBuilder.Entity<ClassSection>()
-                .HasOne(c => c.Course)
-                .WithMany(c => c.Classes)
-                .HasForeignKey(c => c.CourseId);
+            modelBuilder.Entity<Faculty>()
+                .HasOne(f => f.User)
+                .WithMany()
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
                 .Property(e => e.Grade)

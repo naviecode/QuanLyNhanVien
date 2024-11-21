@@ -7,7 +7,7 @@ namespace Data.Entities
     public class Course
     {
         [Key]
-        public int Id { get; set; } 
+        public int Id { get; set; }
         [Required]
         public string CourseName { get; set; }
         [Required]
