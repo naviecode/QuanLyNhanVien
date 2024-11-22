@@ -247,9 +247,25 @@ namespace Presentation.Forms
         private void btnChucNang1_Click(object sender, EventArgs e)
         {
             lblTitlePageCurrent.Text = "Quản lý sinh viên";
-
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuQLSV == null)
+            {
+                menuQLSV = new Menu_QLSV(this, _serviceManager);
+                menuQLSV.FormClosed += QLSV_FormClosed;
+                menuQLSV.MdiParent = this;
+                menuQLSV.Dock = DockStyle.Fill;
+                menuQLSV.Show();
+            }
+            else
+            {
+                menuQLSV.Activate();
+            }
         }
-
+        private void QLSV_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuQLSV = null;
+        }
 
         private void btnChucNang2_Click(object sender, EventArgs e)
         {
