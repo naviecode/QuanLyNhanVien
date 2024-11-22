@@ -69,6 +69,13 @@ namespace BusinessLogic.Services.RoleService
 
         }
 
+        public ResponseDataDto<RoleReadDto> Search(string filter)
+        {
+            var result = _repositoryManager.RolesRepository.GetAll().Where(x=>x.RoleName.Contains(filter) || string.IsNullOrEmpty(filter)).ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<RoleReadDto>(_mapper.Map<List<Roles>, List<RoleReadDto>>(result), totalItem);
+        }
+
         public ResponseActionDto<RoleReadDto> Update(RoleUpdateDto input)
         {
             var result = _repositoryManager.RolesRepository.GetById(input.Id);

@@ -121,7 +121,41 @@ namespace BusinessLogic.Services.CourseService
 
             return new ResponseDataDto<CourseSearchResultDto>(result, totalItem);
         }
+        public ResponseDataDto<CourseNearCloseDto> CourseNearClose()
+        {   /*
+                ĐÃ ĐÓNG:
+                CÒN MỞ: 
+                SẮP ĐÓNG: CÒN 5 NGÀY NỮA HẾT HẠN ĐĂNG KÝ
+             */
+            var courses = _repositoryManager.CoursesRepository.GetAll();
+            var query = from course in courses
+                        where course.EndRegisterDate >= DateTime.Now && course.MaxAmountRegist != 0
+                        orderby course.EndRegisterDate ascending
+                        select new CourseNearCloseDto
+                        {
+                            CourseName = course.CourseName,
+                            EndRegisterDate = course.EndRegisterDate,
+                            MaxAmountRegist = course.MaxAmountRegist,
+                            Status = (course.EndRegisterDate - DateTime.Now).Days < 5 ? "Sắp đóng" : "Còn mở"
+                        };
 
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<CourseNearCloseDto>(result, totalItem);
+        }
 
+        public ResponseDataDto<CourseSearchResultDto> GetCombobox()
+        {
+            var courses = _repositoryManager.CoursesRepository.GetAll();
+            var query = from course in courses
+                        select new CourseSearchResultDto
+                        {
+                            Id = course.Id,
+                            CourseName = course.CourseName
+                        };
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<CourseSearchResultDto>(result, totalItem);
+        }
     }
 }

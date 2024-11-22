@@ -18,9 +18,31 @@ namespace BusinessLogic.Services.UserService
             _mapper = mapper;
         }
 
-        public ResponseActionDto<UserReadDto> ChangePassword(string username, string passwordOld, string passwordNew)
+        public ResponseActionDto<UserReadDto> ChangePassword(int userId, string passwordOld, string passwordNew)
         {
-            throw new NotImplementedException();
+            if(passwordOld == passwordNew)
+            {
+                return new ResponseActionDto<UserReadDto>(null, -1, "Mật khẩu mới và cũ không trùng nhau", "");
+            }
+            if (_repositoryManager.UsersRepository.GetAll().Any(x=>x.Id == userId && x.PasswordHash != passwordOld))
+            {
+                return new ResponseActionDto<UserReadDto>(null, -1, "Mật khẩu cũ bị sai", "");
+            }
+            var result = _repositoryManager.UsersRepository.GetById(userId);
+            if (result != null)
+            {
+                var updateUser = new UserUpdateDto()
+                {
+                    Id = userId,
+                    Username = result.Username,
+                    PasswordHash = passwordNew,
+                    RoleID = result.RoleID,
+                };
+
+                _repositoryManager.UsersRepository.Update(_mapper.Map(updateUser, result));
+                return new ResponseActionDto<UserReadDto>(null, 0, "Cập nhập thành công", "");
+            }
+            return new ResponseActionDto<UserReadDto>(null, -1, "Không tìm thấy", "");
         }
 
         public ResponseActionDto<UserReadDto> Create(UserCreateDto userCreateDto)
@@ -81,6 +103,13 @@ namespace BusinessLogic.Services.UserService
                 return new ResponseActionDto<UserReadDto>(_mapper.Map<Users, UserReadDto>(result), 0, "", "");
             }
             return new ResponseActionDto<UserReadDto>(null, -1, "Tên đăng nhập hoặc mật khẩu không đúng", "");
+        }
+
+        public ResponseDataDto<UserReadDto> Search(string filter)
+        {
+            var result = _repositoryManager.UsersRepository.GetAll().Where(x=>x.Username.Contains(filter) || string.IsNullOrEmpty(filter)).ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<UserReadDto>(_mapper.Map<List<Users>, List<UserReadDto>>(result), totalItem);
         }
 
         public ResponseActionDto<UserReadDto> Update(UserUpdateDto userUpdateDto)

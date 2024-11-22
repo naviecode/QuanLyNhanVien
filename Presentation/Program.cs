@@ -46,6 +46,7 @@ namespace Presentation
             services.AddAutoMapper(typeof(FacultyMapperProfile).Assembly);
             services.AddAutoMapper(typeof(StudentMapperProfile).Assembly);
             services.AddAutoMapper(typeof(RolePermissionsMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(TeachingScheduleMapperProfile).Assembly);
 
 
             services.AddDbContext<DatabaseContext>(options =>

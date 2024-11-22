@@ -20,6 +20,7 @@ namespace Presentation.Forms.SubSettings
             mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            mainForm.SetButtonVisibility(true, true, true, true);
         }
         private void MainForm_SearchButtonClicked(object sender, EventArgs e)
         {
@@ -28,7 +29,7 @@ namespace Presentation.Forms.SubSettings
 
         private void OnSearch()
         {
-            var result = _serviceManager.PermissionService.GetAll().Items;
+            var result = _serviceManager.PermissionService.Search(txtUserName.Text).Items;
             List<Dictionary<string, string>> data = result.Select((e, index) => new Dictionary<string, string>
             {
                 { "ID", e.Id.ToString() },

@@ -1,10 +1,4 @@
 ﻿using BusinessLogic.IService.IStudentService.Dto;
-using BusinessLogic.IService.IUserService.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.IService.IStudentService
 {
@@ -15,5 +9,8 @@ namespace BusinessLogic.IService.IStudentService
         ResponseActionDto<StudentSearchResultDto> Delete(int id);
         public ResponseActionDto<StudentSearchResultDto> Update(StudentUpdateDto data);
         ResponseActionDto<StudentResultByIdDto> GetById(int id);
+        ResponseActionDto<StudentGetInfoDto> GetInfoUser(StudentGetInfoFilterDto input);
+        ResponseDataDto<StudentTrendDto> StudentTrend();
+
     }
 }

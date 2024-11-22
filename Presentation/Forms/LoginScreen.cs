@@ -33,6 +33,7 @@ namespace Presentation.Forms
                 UserSession.Username =  result.Username;
                 UserSession.RoleName = result.Role.RoleName;
                 UserSession.UserId = result.Id;
+                var test123 = _serviceManager.RolePermissionService.GetAll();
                 var lstPermission = _serviceManager.RolePermissionService.GetAll().Items.Where(x=>x.RoleID == result.RoleID).ToList();
                 UserSession.Initialize(lstPermission);
                 

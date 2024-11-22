@@ -10,5 +10,7 @@ namespace BusinessLogic.IService.IRoleService
         ResponseActionDto<RoleReadDto> GetById(int id);
         ResponseDataDto<RoleReadDto> GetAll();
         ResponseDataDto<RoleReadDto> GetCombobox();
+        ResponseDataDto<RoleReadDto> Search(string filter);
+
     }
 }

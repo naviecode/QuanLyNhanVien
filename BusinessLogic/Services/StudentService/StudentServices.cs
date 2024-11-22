@@ -131,5 +131,56 @@ namespace BusinessLogic.Services.StudentService
 
         }
 
+        public ResponseActionDto<StudentGetInfoDto> GetInfoUser(StudentGetInfoFilterDto input)
+        {
+            var students = _repositoryManager.StudentsRepository.GetAll();
+            var departments = _repositoryManager.DepartmentsRepository.GetAll();
+            var classes = _repositoryManager.ClassesRepository.GetAll();
+            var classSections = _repositoryManager.ClassSectionsRepository.GetAll();
+
+            var studentInfoFull = from student in students
+                                  join classe in classes on student.ClassId equals classe.Id into intoStudentClass
+                                  from classe in intoStudentClass.DefaultIfEmpty()
+                                  join department in departments on classe.DepartmentId equals department.Id into ClassDepartment
+                                  from department in ClassDepartment.DefaultIfEmpty()
+                                  where (string.IsNullOrEmpty(input.StudentName) || EF.Functions.Like((student.LastName + " " + student.FirstName), $"%{input.StudentName}%"))
+                                  && (input.UserCurrentId == 0 || student.UserId == input.UserCurrentId)
+                                  && (input.StudentId  == 0 || student.Id == input.StudentId)
+                                  && (input.DepartmentId == 0 || department.Id == input.DepartmentId)
+                                  select new StudentGetInfoDto
+                                  {
+                                      StudentId = student.Id,
+                                      FullName = student.FirstName + ' ' + student.LastName,
+                                      DateOfBirth = student.DateOfBirth,
+                                      Gender = student.Gender,
+                                      Email = student.Email,
+                                      PhoneNumber = student.PhoneNumber,
+                                      Address = student.Address,
+                                      EnrollmentDate = student.EnrollmentDate,
+                                      Country = "HCM",
+                                      UserId = student.UserId,
+                                      DepartmentName = department.DepartmentName,
+                                      ClassName = classe.ClassName
+                                  };
+
+            return new ResponseActionDto<StudentGetInfoDto>(studentInfoFull.FirstOrDefault() ?? new StudentGetInfoDto(), 0, "", "");
+        }
+
+        public ResponseDataDto<StudentTrendDto> StudentTrend()
+        {
+            var students = _repositoryManager.StudentsRepository.GetAll();
+            var query = from student in students
+                        group student by student.EnrollmentDate.Year into studentGroup
+                        select new StudentTrendDto
+                        {
+                           Year = studentGroup.Key,
+                           CountStudent = studentGroup.Count(x=> x!= null)
+
+                        };
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<StudentTrendDto>(result, totalItem);
+        }
+
     }
 }

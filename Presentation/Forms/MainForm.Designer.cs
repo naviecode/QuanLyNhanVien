@@ -45,10 +45,13 @@
             btnChucNang5 = new Button();
             btnChucNang6 = new Button();
             btnChucNang7 = new Button();
-            btnChucNang8 = new Button();
             btnChucNang9 = new Button();
+            btnChucNang10 = new Button();
+            btnChucNang11 = new Button();
+            btnChucNang8 = new Button();
             btnViewStudentInfo = new Button();
             btnViewGrades = new Button();
+            btnThoiKhoaBieu = new Button();
             flpSettingContainer = new FlowLayoutPanel();
             btnSettings = new Button();
             btnRole = new Button();
@@ -63,7 +66,6 @@
             btnSua = new Button();
             btnXoa = new Button();
             settingsTransition = new System.Windows.Forms.Timer(components);
-            btnThoiKhoaBieu = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -148,10 +150,10 @@
             flowLayoutPanel1.AutoScroll = true;
             flowLayoutPanel1.BackColor = Color.FromArgb(23, 24, 29);
             flowLayoutPanel1.Controls.Add(btnTongQuan);
-            flowLayoutPanel1.Controls.Add(menuContainer);
             flowLayoutPanel1.Controls.Add(btnViewStudentInfo);
             flowLayoutPanel1.Controls.Add(btnViewGrades);
             flowLayoutPanel1.Controls.Add(btnThoiKhoaBieu);
+            flowLayoutPanel1.Controls.Add(menuContainer);
             flowLayoutPanel1.Controls.Add(flpSettingContainer);
             flowLayoutPanel1.Controls.Add(btnThoat);
             flowLayoutPanel1.Dock = DockStyle.Left;
@@ -173,9 +175,11 @@
             menuContainer.Controls.Add(btnChucNang5);
             menuContainer.Controls.Add(btnChucNang6);
             menuContainer.Controls.Add(btnChucNang7);
-            menuContainer.Controls.Add(btnChucNang8);
             menuContainer.Controls.Add(btnChucNang9);
-            menuContainer.Location = new Point(3, 46);
+            menuContainer.Controls.Add(btnChucNang10);
+            menuContainer.Controls.Add(btnChucNang11);
+            menuContainer.Controls.Add(btnChucNang8);
+            menuContainer.Location = new Point(3, 175);
             menuContainer.Name = "menuContainer";
             menuContainer.Size = new Size(200, 43);
             menuContainer.TabIndex = 6;
@@ -324,24 +328,6 @@
             btnChucNang7.UseVisualStyleBackColor = false;
             btnChucNang7.Click += btnChucNang7_Click;
             // 
-            // btnChucNang8
-            // 
-            btnChucNang8.AccessibleRole = AccessibleRole.None;
-            btnChucNang8.BackColor = Color.FromArgb(32, 33, 36);
-            btnChucNang8.FlatAppearance.BorderSize = 0;
-            btnChucNang8.FlatStyle = FlatStyle.Flat;
-            btnChucNang8.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnChucNang8.ForeColor = Color.White;
-            btnChucNang8.ImageAlign = ContentAlignment.MiddleLeft;
-            btnChucNang8.Location = new Point(0, 344);
-            btnChucNang8.Margin = new Padding(0);
-            btnChucNang8.Name = "btnChucNang8";
-            btnChucNang8.Size = new Size(200, 43);
-            btnChucNang8.TabIndex = 13;
-            btnChucNang8.Text = "Báo cáo";
-            btnChucNang8.UseVisualStyleBackColor = false;
-            btnChucNang8.Click += btnChucNang8_Click;
-            // 
             // btnChucNang9
             // 
             btnChucNang9.AccessibleRole = AccessibleRole.None;
@@ -351,7 +337,7 @@
             btnChucNang9.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnChucNang9.ForeColor = Color.White;
             btnChucNang9.ImageAlign = ContentAlignment.MiddleLeft;
-            btnChucNang9.Location = new Point(0, 387);
+            btnChucNang9.Location = new Point(0, 344);
             btnChucNang9.Margin = new Padding(0);
             btnChucNang9.Name = "btnChucNang9";
             btnChucNang9.Size = new Size(200, 43);
@@ -359,6 +345,60 @@
             btnChucNang9.Text = "Quản lý tài khoản";
             btnChucNang9.UseVisualStyleBackColor = false;
             btnChucNang9.Click += btnChucNang9_Click;
+            // 
+            // btnChucNang10
+            // 
+            btnChucNang10.AccessibleRole = AccessibleRole.None;
+            btnChucNang10.BackColor = Color.FromArgb(32, 33, 36);
+            btnChucNang10.FlatAppearance.BorderSize = 0;
+            btnChucNang10.FlatStyle = FlatStyle.Flat;
+            btnChucNang10.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnChucNang10.ForeColor = Color.White;
+            btnChucNang10.ImageAlign = ContentAlignment.MiddleLeft;
+            btnChucNang10.Location = new Point(0, 387);
+            btnChucNang10.Margin = new Padding(0);
+            btnChucNang10.Name = "btnChucNang10";
+            btnChucNang10.Size = new Size(200, 43);
+            btnChucNang10.TabIndex = 15;
+            btnChucNang10.Text = "Đăng ký lịch dạy";
+            btnChucNang10.UseVisualStyleBackColor = false;
+            btnChucNang10.Click += btnChucNang10_Click;
+            // 
+            // btnChucNang11
+            // 
+            btnChucNang11.AccessibleRole = AccessibleRole.None;
+            btnChucNang11.BackColor = Color.FromArgb(32, 33, 36);
+            btnChucNang11.FlatAppearance.BorderSize = 0;
+            btnChucNang11.FlatStyle = FlatStyle.Flat;
+            btnChucNang11.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnChucNang11.ForeColor = Color.White;
+            btnChucNang11.ImageAlign = ContentAlignment.MiddleLeft;
+            btnChucNang11.Location = new Point(0, 430);
+            btnChucNang11.Margin = new Padding(0);
+            btnChucNang11.Name = "btnChucNang11";
+            btnChucNang11.Size = new Size(200, 43);
+            btnChucNang11.TabIndex = 16;
+            btnChucNang11.Text = "Quản lý khóa học cho lớp";
+            btnChucNang11.UseVisualStyleBackColor = false;
+            btnChucNang11.Click += btnChucNang11_Click;
+            // 
+            // btnChucNang8
+            // 
+            btnChucNang8.AccessibleRole = AccessibleRole.None;
+            btnChucNang8.BackColor = Color.FromArgb(32, 33, 36);
+            btnChucNang8.FlatAppearance.BorderSize = 0;
+            btnChucNang8.FlatStyle = FlatStyle.Flat;
+            btnChucNang8.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnChucNang8.ForeColor = Color.White;
+            btnChucNang8.ImageAlign = ContentAlignment.MiddleLeft;
+            btnChucNang8.Location = new Point(0, 473);
+            btnChucNang8.Margin = new Padding(0);
+            btnChucNang8.Name = "btnChucNang8";
+            btnChucNang8.Size = new Size(200, 43);
+            btnChucNang8.TabIndex = 13;
+            btnChucNang8.Text = "Báo cáo";
+            btnChucNang8.UseVisualStyleBackColor = false;
+            btnChucNang8.Click += btnChucNang8_Click;
             // 
             // btnViewStudentInfo
             // 
@@ -369,7 +409,7 @@
             btnViewStudentInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnViewStudentInfo.ForeColor = Color.White;
             btnViewStudentInfo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewStudentInfo.Location = new Point(0, 92);
+            btnViewStudentInfo.Location = new Point(0, 43);
             btnViewStudentInfo.Margin = new Padding(0);
             btnViewStudentInfo.Name = "btnViewStudentInfo";
             btnViewStudentInfo.Size = new Size(200, 43);
@@ -387,7 +427,7 @@
             btnViewGrades.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             btnViewGrades.ForeColor = Color.White;
             btnViewGrades.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewGrades.Location = new Point(0, 135);
+            btnViewGrades.Location = new Point(0, 86);
             btnViewGrades.Margin = new Padding(0);
             btnViewGrades.Name = "btnViewGrades";
             btnViewGrades.Size = new Size(200, 43);
@@ -395,6 +435,24 @@
             btnViewGrades.Text = "Xem điểm";
             btnViewGrades.UseVisualStyleBackColor = false;
             btnViewGrades.Click += btnViewGrades_Click;
+            // 
+            // btnThoiKhoaBieu
+            // 
+            btnThoiKhoaBieu.AccessibleRole = AccessibleRole.None;
+            btnThoiKhoaBieu.BackColor = Color.FromArgb(23, 24, 29);
+            btnThoiKhoaBieu.FlatAppearance.BorderSize = 0;
+            btnThoiKhoaBieu.FlatStyle = FlatStyle.Flat;
+            btnThoiKhoaBieu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnThoiKhoaBieu.ForeColor = Color.White;
+            btnThoiKhoaBieu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnThoiKhoaBieu.Location = new Point(0, 129);
+            btnThoiKhoaBieu.Margin = new Padding(0);
+            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
+            btnThoiKhoaBieu.Size = new Size(200, 43);
+            btnThoiKhoaBieu.TabIndex = 8;
+            btnThoiKhoaBieu.Text = "Thời khóa biểu";
+            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
+            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
             // 
             // flpSettingContainer
             // 
@@ -570,24 +628,6 @@
             // 
             settingsTransition.Tick += settingsTransition_Tick;
             // 
-            // btnThoiKhoaBieu
-            // 
-            btnThoiKhoaBieu.AccessibleRole = AccessibleRole.None;
-            btnThoiKhoaBieu.BackColor = Color.FromArgb(23, 24, 29);
-            btnThoiKhoaBieu.FlatAppearance.BorderSize = 0;
-            btnThoiKhoaBieu.FlatStyle = FlatStyle.Flat;
-            btnThoiKhoaBieu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnThoiKhoaBieu.ForeColor = Color.White;
-            btnThoiKhoaBieu.ImageAlign = ContentAlignment.MiddleLeft;
-            btnThoiKhoaBieu.Location = new Point(0, 178);
-            btnThoiKhoaBieu.Margin = new Padding(0);
-            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
-            btnThoiKhoaBieu.Size = new Size(200, 43);
-            btnThoiKhoaBieu.TabIndex = 8;
-            btnThoiKhoaBieu.Text = "Thời khóa biểu";
-            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
-            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -652,5 +692,7 @@
         private Button btnViewGrades;
         private Panel panel2;
         private Button btnThoiKhoaBieu;
+        private Button btnChucNang10;
+        private Button btnChucNang11;
     }
 }

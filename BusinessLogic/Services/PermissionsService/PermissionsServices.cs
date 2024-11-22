@@ -81,5 +81,12 @@ namespace BusinessLogic.Services.PermissionsService
             return new ResponseDataDto<PermissionsReadDto>(_mapper.Map<List<Permissions>, List<PermissionsReadDto>>(result), totalItem);
 
         }
+
+        public ResponseDataDto<PermissionsReadDto> Search(string filter)
+        {
+            var result = _repositoryManager.PermissionsRepository.GetAll().Where(x=>x.PermissionName.Contains(filter) || string.IsNullOrEmpty(filter)).ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<PermissionsReadDto>(_mapper.Map<List<Permissions>, List<PermissionsReadDto>>(result), totalItem);
+        }
     }
 }

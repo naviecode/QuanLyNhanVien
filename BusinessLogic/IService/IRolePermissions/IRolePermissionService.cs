@@ -9,5 +9,7 @@ namespace BusinessLogic.IService.IRolePermissions
         ResponseActionDto<RolePermissionsReadDto> Delete(int id);
         ResponseActionDto<RolePermissionsReadDto> GetById(int id);
         ResponseDataDto<RolePermissionsReadDto> GetAll();
+        ResponseDataDto<RolePermissionsReadDto> Search(string Role, string Permission);
+
     }
 }

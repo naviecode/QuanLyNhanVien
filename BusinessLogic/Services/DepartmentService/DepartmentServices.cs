@@ -6,6 +6,7 @@ using BusinessLogic.IService.IDepartmentService.Dto;
 using Data.Entities;
 using Data.IRepository;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BusinessLogic.Services.DepartmentService
 {
@@ -98,6 +99,28 @@ namespace BusinessLogic.Services.DepartmentService
             int totalItem = result.Count();
 
             return new ResponseDataDto<DepartmentSearchResultDto>(result, totalItem);
+        }
+
+        public ResponseDataDto<DepartmentCountStudentsDto> DepartmentCountStudent()
+        {
+            var departments = _repositoryManager.DepartmentsRepository.GetAll();
+            var classes = _repositoryManager.ClassesRepository.GetAll();
+            var students = _repositoryManager.StudentsRepository.GetAll();
+
+            var query = from department in departments
+                         join classe in classes on department.Id equals classe.DepartmentId into departmentClass
+                         from classe in departmentClass.DefaultIfEmpty()
+                         join student in students on classe.Id equals student.ClassId into classesStudent
+                         from student in classesStudent.DefaultIfEmpty()
+                         group student by department.DepartmentName into departmentGroup
+                         select new DepartmentCountStudentsDto
+                         {
+                             DepartmentName = departmentGroup.Key,
+                             StudentCount = departmentGroup.Count(x=>x != null),
+                         };
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<DepartmentCountStudentsDto>(result, totalItem);
         }
         public ResponseDataDto<DepartmentSearchResultDto> GetCombobox()
         {

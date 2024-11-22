@@ -23,7 +23,10 @@ namespace BusinessLogic.Services.RolePermissionsService
             {
                 return new ResponseActionDto<RolePermissionsReadDto>(null, -1, "Thêm mới thất bại", "Quyền đã được cấp");
             }
-            var idNew = _repositoryManager.RolePermissionsRepository.Add(_mapper.Map<RolePermissionsCreateDto, RolePermissions>(input));
+            var maxId =_repositoryManager.RolePermissionsRepository.GetAll().Max(x => x.Id) + 1;
+            var mapperInsert = _mapper.Map<RolePermissionsCreateDto, RolePermissions>(input);
+            mapperInsert.Id = maxId;
+            var idNew = _repositoryManager.RolePermissionsRepository.Add(mapperInsert);
             if (idNew != null && idNew != 0)
             {
                 return new ResponseActionDto<RolePermissionsReadDto>(null, 0, "Thêm mới thành công", idNew.ToString());
@@ -36,7 +39,13 @@ namespace BusinessLogic.Services.RolePermissionsService
 
         public ResponseActionDto<RolePermissionsReadDto> Delete(int id)
         {
-            var isSuccess = _repositoryManager.RolePermissionsRepository.Delete(id);
+            var RolePermissionFind = _repositoryManager.RolePermissionsRepository.GetAll().Where(x => x.Id == id).FirstOrDefault();
+            if(RolePermissionFind == null)
+            {
+                return new ResponseActionDto<RolePermissionsReadDto>(null, -1, "Không tìm thấy để xóa", "");
+
+            }
+            var isSuccess = _repositoryManager.RolePermissionsRepository.Delete(RolePermissionFind);
             if (isSuccess)
             {
                 return new ResponseActionDto<RolePermissionsReadDto>(null, 0, "Xóa thành công", "");
@@ -49,25 +58,7 @@ namespace BusinessLogic.Services.RolePermissionsService
 
         public ResponseDataDto<RolePermissionsReadDto> GetAll()
         {
-            //var RolePermissions = _repositoryManager.RolePermissionsRepository.GetAll().ToList();
-            //var Permissions = _repositoryManager.PermissionsRepository.GetAll().ToList();
-            //var query = from rolePermission in RolePermissions
-            //            join permission in Permissions
-            //            on rolePermission.PermissionID equals permission.Id into rolePermissionNames
-            //            from permissonNames in rolePermissionNames
-            //            select new
-            //            {
-            //                RoleID = rolePermission.RoleID,
-            //                PermissionName = permissonNames.PermissionName
-            //            };
-            //List<RolePermissionsReadDto> result = query.Select(q=> new RolePermissionsReadDto
-            //{
-            //    RoleID =q.RoleID,
-            //    PermissionName =q.PermissionName,
-            //}).ToList();
-
             var result = _repositoryManager.RolePermissionsRepository.GetAll();
-
             int totalItem = result.Count();
             return new ResponseDataDto<RolePermissionsReadDto>(_mapper.Map<List<RolePermissions>, List<RolePermissionsReadDto>>(result), totalItem);
         }
@@ -82,16 +73,31 @@ namespace BusinessLogic.Services.RolePermissionsService
             return new ResponseActionDto<RolePermissionsReadDto>(null, -1, "Không tìm thấy", "");
         }
 
+        public ResponseDataDto<RolePermissionsReadDto> Search(string Role, string Permission)
+        {
+            var result = _repositoryManager.RolePermissionsRepository.GetAll().Where(x=> (x.Permission.PermissionName.Contains(Permission) || string.IsNullOrEmpty(Permission)) && (x.Role.RoleName.Contains(Role) || string.IsNullOrEmpty(Role))).ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<RolePermissionsReadDto>(_mapper.Map<List<RolePermissions>, List<RolePermissionsReadDto>>(result), totalItem);
+        }
+
         public ResponseActionDto<RolePermissionsReadDto> Update(RolePermissionsUpdateDto input)
         {
             if (_repositoryManager.RolePermissionsRepository.GetAll().Any(x => x.PermissionID == input.PermissionID && x.RoleID == input.RoleID))
             {
                 return new ResponseActionDto<RolePermissionsReadDto>(null, -1, "Cập nhập thất bại", "Quyền đã được cấp");
             }
-            var result = _repositoryManager.RolePermissionsRepository.GetById(input.Id);
+            var result = _repositoryManager.RolePermissionsRepository.GetAll().Where(x => x.Id == input.Id).FirstOrDefault();
             if (result != null)
             {
-                _repositoryManager.RolePermissionsRepository.Update(_mapper.Map(input, result));
+                var maxId = _repositoryManager.RolePermissionsRepository.GetAll().Max(x => x.Id) + 1;
+                var newRolePermission = new RolePermissions()
+                {
+                    Id = maxId,
+                    RoleID = input.RoleID,
+                    PermissionID = input.PermissionID,
+                };
+                _repositoryManager.RolePermissionsRepository.Delete(result);
+                _repositoryManager.RolePermissionsRepository.Add(newRolePermission);
                 return new ResponseActionDto<RolePermissionsReadDto>(null, 0, "Cập nhập thành công", "");
             }
             return new ResponseActionDto<RolePermissionsReadDto>(null, -1, "Không tìm thấy", "");
