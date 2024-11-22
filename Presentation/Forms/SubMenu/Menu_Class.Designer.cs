@@ -36,6 +36,10 @@
             btnNext = new Button();
             btnPrev = new Button();
             panel1 = new Panel();
+            txtClassYear = new TextBox();
+            label3 = new Label();
+            txtDepartmentName = new TextBox();
+            label2 = new Label();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -55,7 +59,7 @@
             // 
             // txtLopHoc
             // 
-            txtLopHoc.Location = new Point(116, 12);
+            txtLopHoc.Location = new Point(116, 8);
             txtLopHoc.Name = "txtLopHoc";
             txtLopHoc.Size = new Size(193, 23);
             txtLopHoc.TabIndex = 0;
@@ -63,7 +67,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(9, 16);
+            label1.Location = new Point(9, 11);
             label1.Name = "label1";
             label1.Size = new Size(68, 15);
             label1.TabIndex = 1;
@@ -109,6 +113,10 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(txtClassYear);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(txtDepartmentName);
+            panel1.Controls.Add(label2);
             panel1.Controls.Add(txtLopHoc);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
@@ -116,6 +124,38 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 64);
             panel1.TabIndex = 5;
+            // 
+            // txtClassYear
+            // 
+            txtClassYear.Location = new Point(116, 38);
+            txtClassYear.Name = "txtClassYear";
+            txtClassYear.Size = new Size(193, 23);
+            txtClassYear.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(9, 46);
+            label3.Name = "label3";
+            label3.Size = new Size(61, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Niên khóa";
+            // 
+            // txtDepartmentName
+            // 
+            txtDepartmentName.Location = new Point(445, 8);
+            txtDepartmentName.Name = "txtDepartmentName";
+            txtDepartmentName.Size = new Size(193, 23);
+            txtDepartmentName.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(365, 11);
+            label2.Name = "label2";
+            label2.Size = new Size(54, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Tên khoa";
             // 
             // Menu_Class
             // 
@@ -128,6 +168,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Class";
             Text = "Menu_Class";
+            FormClosed += Menu_Class_FormClosed;
+            Load += Menu_Class_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -144,5 +186,9 @@
         private Button btnNext;
         private Button btnPrev;
         private Panel panel1;
+        private TextBox txtDepartmentName;
+        private Label label2;
+        private TextBox txtClassYear;
+        private Label label3;
     }
 }

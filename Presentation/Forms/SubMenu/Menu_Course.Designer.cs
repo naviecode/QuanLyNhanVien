@@ -29,13 +29,19 @@
         private void InitializeComponent()
         {
             customListView1 = new CustomControls.CustomListView();
-            txtKhoaHoc = new TextBox();
+            txtCourseName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
             btnNext = new Button();
             btnPrev = new Button();
             panel1 = new Panel();
+            label4 = new Label();
+            label3 = new Label();
+            dtpEndRegisterDate = new DateTimePicker();
+            txtCredits = new TextBox();
+            dtpStartRegisterDate = new DateTimePicker();
+            label2 = new Label();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -53,17 +59,17 @@
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
             // 
-            // txtKhoaHoc
+            // txtCourseName
             // 
-            txtKhoaHoc.Location = new Point(116, 12);
-            txtKhoaHoc.Name = "txtKhoaHoc";
-            txtKhoaHoc.Size = new Size(193, 23);
-            txtKhoaHoc.TabIndex = 0;
+            txtCourseName.Location = new Point(115, 6);
+            txtCourseName.Name = "txtCourseName";
+            txtCourseName.Size = new Size(193, 23);
+            txtCourseName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(9, 16);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
             label1.Size = new Size(77, 15);
             label1.TabIndex = 1;
@@ -109,13 +115,67 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtKhoaHoc);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(dtpEndRegisterDate);
+            panel1.Controls.Add(txtCredits);
+            panel1.Controls.Add(dtpStartRegisterDate);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(txtCourseName);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 64);
             panel1.TabIndex = 5;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(369, 35);
+            label4.Name = "label4";
+            label4.Size = new Size(120, 15);
+            label4.TabIndex = 7;
+            label4.Text = "Ngày hết hạn đăng kí";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(369, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(120, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Ngày bắt đầu đăng kí";
+            // 
+            // dtpEndRegisterDate
+            // 
+            dtpEndRegisterDate.Location = new Point(495, 32);
+            dtpEndRegisterDate.Name = "dtpEndRegisterDate";
+            dtpEndRegisterDate.Size = new Size(200, 23);
+            dtpEndRegisterDate.TabIndex = 5;
+            // 
+            // txtCredits
+            // 
+            txtCredits.Location = new Point(115, 32);
+            txtCredits.Name = "txtCredits";
+            txtCredits.Size = new Size(193, 23);
+            txtCredits.TabIndex = 4;
+            // 
+            // dtpStartRegisterDate
+            // 
+            dtpStartRegisterDate.Location = new Point(495, 6);
+            dtpStartRegisterDate.Name = "dtpStartRegisterDate";
+            dtpStartRegisterDate.Size = new Size(200, 23);
+            dtpStartRegisterDate.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 35);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Số tín chỉ";
             // 
             // Menu_Course
             // 
@@ -128,6 +188,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Course";
             Text = "Menu_Course";
+            FormClosed += Menu_Course_FormClosed;
+            Load += Menu_Course_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -137,12 +199,18 @@
         #endregion
 
         private CustomControls.CustomListView customListView1;
-        private TextBox txtKhoaHoc;
+        private TextBox txtCourseName;
         private Label label1;
         private Panel panel2;
         private Label lblPageInfo;
         private Button btnNext;
         private Button btnPrev;
         private Panel panel1;
+        private Label label2;
+        private DateTimePicker dtpStartRegisterDate;
+        private TextBox txtCredits;
+        private Label label4;
+        private Label label3;
+        private DateTimePicker dtpEndRegisterDate;
     }
 }

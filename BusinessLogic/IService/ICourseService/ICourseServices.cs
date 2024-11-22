@@ -14,5 +14,6 @@ namespace BusinessLogic.IService.ICourseService
         ResponseActionDto<CourseSearchResultDto> Delete(int id);
         ResponseActionDto<CourseSearchResultDto> Update(CourseUpdateDto data);
         ResponseActionDto<CourseResultByIdDto> GetById(int userId);
+        ResponseDataDto<CourseSearchResultDto> GetCombobox();
     }
 }
