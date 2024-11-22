@@ -120,7 +120,7 @@ namespace Data
             modelBuilder.Entity<Faculty>()
                 .HasOne(f => f.Department)
                 .WithMany(d => d.Faculties)
-                .HasForeignKey(f => f.DepartmentID)
+                .HasForeignKey(f => f.DepartmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Faculty>()

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Resources;
 
 namespace Presentation.Forms.FormInput
@@ -106,6 +107,53 @@ namespace Presentation.Forms.FormInput
 
                         ((ComboBox)inputControl).SelectedIndex = field.Options.IndexOf(selectedOption);
 
+                        break;
+
+                    case "search_combobox":
+                        var comboBox = new ComboBox
+                        {
+                            Width = 200,
+                            Location = new Point(150, y),
+                            Enabled = !field.IsReadOnly,
+                            DropDownStyle = ComboBoxStyle.DropDown
+                        };
+
+                        var originalOptions = field.Options.ToList();
+
+                        comboBox.DataSource = new BindingList<OptionItem>(originalOptions);
+                        comboBox.DisplayMember = "Text";
+                        comboBox.ValueMember = "Value";
+                        comboBox.SelectedIndex = -1; 
+
+                        comboBox.TextUpdate += (s, e) =>
+                        {
+                            string searchText = comboBox.Text.ToLower();
+
+                            var filteredOptions = originalOptions
+                                .Where(o => o.Text.ToLower().Contains(searchText))
+                                .ToList();
+
+                            comboBox.DataSource = new BindingList<OptionItem>(filteredOptions);
+                            comboBox.DroppedDown = true;
+
+                            comboBox.Text = searchText;
+                            comboBox.SelectionStart = comboBox.Text.Length;
+                        };
+
+                        comboBox.DropDown += (s, e) =>
+                        {
+                            comboBox.DataSource = new BindingList<OptionItem>(originalOptions);
+                            comboBox.SelectedIndex = -1;
+                            comboBox.Text = string.Empty; 
+                        };
+
+                        comboBox.SelectionChangeCommitted += (s, e) =>
+                        {
+                            var selectedOption = (OptionItem)comboBox.SelectedItem;
+                            comboBox.Text = selectedOption?.Text ?? string.Empty;
+                        };
+
+                        inputControl = comboBox;
                         break;
 
                     case "radiobutton":
@@ -224,6 +272,15 @@ namespace Presentation.Forms.FormInput
                         MessageBox.Show($"{rm.GetString(field.Label, CultureInfo.CurrentUICulture) ?? field.Label} không được nhỏ hơn 0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         isValid = false;
                         break;
+                    }
+
+                    if (control is Panel panelControl)
+                    {
+                        var comboBoxControl = panelControl.Controls.OfType<ComboBox>().FirstOrDefault();
+                        if (comboBoxControl?.SelectedItem != null)
+                        {
+                            value = ((OptionItem)comboBoxControl.SelectedItem).Value.ToString();
+                        }
                     }
 
                     result[field.Label] = value;

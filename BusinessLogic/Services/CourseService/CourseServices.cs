@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.IService;
+using BusinessLogic.IService.IClassService.Dto;
 using BusinessLogic.IService.ICourseService;
 using BusinessLogic.IService.ICourseService.Dto;
 using Data.Entities;
@@ -21,13 +22,16 @@ namespace BusinessLogic.Services.CourseService
         {
             var courses = _repositoryManager.CoursesRepository.GetAll();
             var query = from course in courses
-                        where (string.IsNullOrEmpty(filterInput.CourseName) || EF.Functions.Like(course.CourseName, $"%{filterInput.CourseName}%"))
+                        where (string.IsNullOrEmpty(filterInput.CourseName) || course.CourseName.ToLower().Contains(filterInput.CourseName.ToLower()))
                         && (filterInput.Credits == 0 || course.Credits == filterInput.Credits)
                         select new CourseSearchResultDto
                         {
                             Id = course.Id,
                             CourseName = course.CourseName,
                             Credits = course.Credits,
+                            StartRegisterDate = course.StartRegisterDate,
+                            EndRegisterDate = course.EndRegisterDate,
+                            MaxAmountRegist = course.MaxAmountRegist,
                         };
 
             var result = query.ToList();
@@ -87,9 +91,36 @@ namespace BusinessLogic.Services.CourseService
                 return new ResponseActionDto<CourseResultByIdDto>(_mapper.Map<Course, CourseResultByIdDto>(result), 0, "", "");
             }
             return new ResponseActionDto<CourseResultByIdDto>(new CourseResultByIdDto(), -1, "Không tìm thấy", "");
-
         }
+        public ResponseDataDto<CourseSearchResultDto> GetCombobox()
+        {
+            var currentDate = DateTime.Now;
 
+            var courses = _repositoryManager.CoursesRepository.GetAll();
+            var classSections = _repositoryManager.ClassSectionsRepository.GetAll();
+
+            var registeredCourseIds = classSections.Select(cs => cs.CourseId).Distinct().ToHashSet();
+
+            var query = from course in courses
+                        where course.StartRegisterDate <= currentDate
+                           && course.EndRegisterDate >= currentDate
+                           && course.MaxAmountRegist > 0
+                           && !registeredCourseIds.Contains(course.Id) 
+                        select new CourseSearchResultDto
+                        {
+                            Id = course.Id,
+                            CourseName = course.CourseName,
+                            Credits = course.Credits,
+                            StartRegisterDate = course.StartRegisterDate,
+                            EndRegisterDate = course.EndRegisterDate,
+                            MaxAmountRegist = course.MaxAmountRegist
+                        };
+
+            var result = query.ToList();
+            int totalItem = result.Count();
+
+            return new ResponseDataDto<CourseSearchResultDto>(result, totalItem);
+        }
         public ResponseDataDto<CourseNearCloseDto> CourseNearClose()
         {   /*
                 ĐÃ ĐÓNG:

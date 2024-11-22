@@ -59,8 +59,8 @@ namespace BusinessLogic.Services.GradeService
                         join cs in classSections on e.CourseId equals cs.CourseId
                         join s in students on e.StudentId equals s.Id
                         join c in courses on cs.CourseId equals c.Id
-                        where (string.IsNullOrEmpty(filterInput.StudentName) || EF.Functions.Like((s.LastName + " " + s.FirstName), $"%{filterInput.StudentName}%"))
-                           && (string.IsNullOrEmpty(filterInput.CourseName) || EF.Functions.Like(c.CourseName, $"%{filterInput.CourseName}%"))
+                        where (string.IsNullOrEmpty(filterInput.StudentName) || ((s.LastName + " " + s.FirstName).ToLower().Contains(filterInput.StudentName.ToLower())))
+                           && (string.IsNullOrEmpty(filterInput.CourseName) || c.CourseName.ToLower().Contains(filterInput.CourseName.ToLower()))
                            && (!filterInput.Grade.HasValue || e.Grade == filterInput.Grade)
                            && (string.IsNullOrEmpty(filterInput.Semester) || cs.Semester == filterInput.Semester)
                            && (filterInput.Year == 0 || cs.Year == filterInput.Year)

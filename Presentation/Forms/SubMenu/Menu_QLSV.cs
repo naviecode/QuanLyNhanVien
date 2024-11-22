@@ -15,20 +15,19 @@ namespace Presentation.Forms.SubMenu
     {
         private MainForm _mainForm;
         private readonly IServiceManager _serviceManager;
-        private readonly StudentsRepository _studentsRepository;
         private List<OptionItem> lstGender = new List<OptionItem>
         {
             new OptionItem { Text = "Nam", Value = "Nam" },
             new OptionItem { Text = "Nữ", Value = "Nữ" }
         };
         private int IdSelectListView;
+        private List<OptionItem> lstClass = new List<OptionItem>();
 
-        public Menu_QLSV(MainForm mainForm, StudentsRepository studentsRepository, IServiceManager serviceManager)
+        public Menu_QLSV(MainForm mainForm, IServiceManager serviceManager)
         {
             InitializeComponent();
             _mainForm = mainForm;
             _serviceManager = serviceManager;
-            _studentsRepository = studentsRepository;
             // Đăng ký sự kiện
             _mainForm.AddButtonClicked += MainForm_AddButtonClicked;
             _mainForm.EditButtonClicked += MainForm_EditButtonClicked;
@@ -37,6 +36,12 @@ namespace Presentation.Forms.SubMenu
         }
         private void Menu_Students_Load(object sender, EventArgs e)
         {
+            var resultLstClass = _serviceManager.ClassService.GetCombobox().Items;
+            lstClass = resultLstClass.Select(x => new OptionItem
+            {
+                Value = x.ClassId.ToString(),
+                Text = x.ClassName
+            }).ToList();
             this.OnSearch(GetSearchFilterInput());
         }
         private void MainForm_SearchButtonClicked(object sender, EventArgs e)
@@ -53,12 +58,14 @@ namespace Presentation.Forms.SubMenu
                 { "ID", e.StudentId.ToString() },
                 { "STT", (index + 1).ToString() },
                 { "Họ và tên", e.FullName },
+                { "Lớp", e.ClassName },
                 { "Ngày sinh", e.DateOfBirth.ToString("dd/mm/yyyy") },
                 { "Họ và tên", e.FullName },
                 { "Giới tính", e.Gender },
                 { "Email", e.Email },
                 { "Số điện thoại", e.PhoneNumber },
                 { "Địa chỉ", e.Address },
+                { "Quê quán", e.HomeTown },
                 { "Ngày vào học", e.EnrollmentDate.ToString("dd/mm/yyyy") },
             }).ToList();
 
@@ -76,6 +83,8 @@ namespace Presentation.Forms.SubMenu
                 new InputField(label:"Email",type:"text"),
                 new InputField(label:"PhoneNumber",type:"text"),
                 new InputField(label:"Address",type:"text"),
+                new InputField(label:"HomeTown",type:"text"),
+                new InputField(label:"ClassName", type: "combobox", value: "", options: this.lstClass),
                 new InputField(label:"EnrollmentDate",type:"date", required: true),
                 new InputField(label:"Username",type:"text", required: true),
                 new InputField(label:"PasswordHash",type: "text_password", required : true),
@@ -114,6 +123,8 @@ namespace Presentation.Forms.SubMenu
                     new InputField(label:"Email",type:"text", value: valueById.Data.Email),
                     new InputField(label:"PhoneNumber",type:"text", value: valueById.Data.PhoneNumber),
                     new InputField(label:"Address",type:"text", value : valueById.Data.Address),
+                    new InputField(label:"HomeTown",type:"text", value : valueById.Data.HomeTown),
+                    new InputField(label:"ClassName", type: "combobox", value: valueById.Data.ClassId.ToString(), options: this.lstClass, isReadOnly: true),
                     new InputField(label:"EnrollmentDate",type:"date", value: valueById.Data.EnrollmentDate.ToString("dd/mm/yyyy"), required: true),
                     new InputField(label:"Username",type:"text",value: valueById.Data.Username, required: true, isReadOnly: true),
                     new InputField(label:"PasswordHash",type: "text_password", value: valueById.Data.PasswordHash, required : true),
@@ -179,6 +190,8 @@ namespace Presentation.Forms.SubMenu
                 Email = txtEmail.Text.Trim(),
                 PhoneNumber = txtPhoneNumber.Text.Trim(),
                 Address = txtAddr.Text.Trim(),
+                ClassName = txtClassName.Text.Trim(),
+                HomeTown = txtHomeTown.Text.Trim(),
             };
 
             return filterInput;
@@ -201,6 +214,14 @@ namespace Presentation.Forms.SubMenu
         {
             customListView1.NextPage();
             lblPageInfo.Text = customListView1.GetPageInfo();
+        }
+
+        private void Menu_QLSV_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _mainForm.AddButtonClicked -= MainForm_AddButtonClicked;
+            _mainForm.EditButtonClicked -= MainForm_EditButtonClicked;
+            _mainForm.DeleteButtonClicked -= MainForm_DeleteButtonClicked;
+            _mainForm.SearchButtonClicked -= MainForm_SearchButtonClicked;
         }
     }
 }

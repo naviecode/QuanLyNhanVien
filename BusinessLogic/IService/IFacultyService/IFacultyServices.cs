@@ -15,6 +15,5 @@ namespace BusinessLogic.IService.IFacultyService
         ResponseActionDto<FacultyResultSearchDto> Delete(int id);
         ResponseActionDto<FacultyByIdDto> GetById(int id);
         ResponseDataDto<FacultyResultSearchDto> GetCombobox();
-
     }
 }

@@ -16,5 +16,7 @@ namespace BusinessLogic.IService.IClassService
         ResponseActionDto<ClassSearchResultDto> Update(ClassUpdateDto data);
         ResponseActionDto<ClassSearchResultDto> AssignStudentToClass(AssignStudentToClassDto data);
         ResponseActionDto<ClassSearchResultDto> AddCourseToClass(AddCourseToClassDto data);
+        ResponseDataDto<ClassSectionSearchResultDto> ClassSectionSearch(ClassSectionFilterSearchDto filterInput);
+        ResponseDataDto<ClassSearchResultDto> GetCombobox();
     }
 }

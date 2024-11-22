@@ -13,6 +13,5 @@ namespace BusinessLogic.IService.ICourseService.Dto
         public int Credits { get; set; }
         public DateTime StartRegisterDate { get; set; }
         public DateTime EndRegisterDate { get; set; }
-        public int MaxAmountRegist { get; set; }
     }
 }
