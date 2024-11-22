@@ -1,4 +1,6 @@
 ﻿using BusinessLogic.IService;
+using BusinessLogic.IService.IDepartmentService.Dto;
+using BusinessLogic.IService.IFacultyService.Dto;
 using BusinessLogic.IService.IUserService.Dto;
 using Presentation.Forms.FormInput;
 using System.Data;
@@ -10,6 +12,7 @@ namespace Presentation.Forms.SubMenu
         private MainForm mainForm;
         private readonly IServiceManager _serviceManager;
         private int IdSelectListView;
+        private List<OptionItem> lstDepartment = new List<OptionItem>();
 
         public Menu_Faculty(MainForm mainForm, IServiceManager serviceManager)
         {
@@ -23,18 +26,20 @@ namespace Presentation.Forms.SubMenu
         }
         private void MainForm_SearchButtonClicked(object sender, EventArgs e)
         {
-            this.OnSearch();
+            this.OnSearch(GetSearchFilterInput());
         }
 
-        private void OnSearch()
+        private void OnSearch(FacultyFilterSearchDto filterInput)
         {
-            var result = _serviceManager.UserService.GetAll().Items;
+            var result = _serviceManager.FacultyService.Search(filterInput).Items;
             List<Dictionary<string, string>> data = result.Select((e, index) => new Dictionary<string, string>
             {
-                { "ID", e.Id.ToString() },
+                { "ID", e.FacultyId.ToString() },
                 { "STT", (index + 1).ToString() },
-                { "Name", e.Username },
-                { "RoleName", e.Role.RoleName.ToString() }
+                { "Tên giảng viên", e.FullName },
+                { "Email", e.Email },
+                { "Số điện thoại", e.PhoneNumber },
+                { "Khoa", e.DepartmentName },
             }).ToList();
 
             customListView1.SetData(data);
@@ -45,20 +50,24 @@ namespace Presentation.Forms.SubMenu
         {
             var fields = new List<InputField>
             {
+                new InputField(label:"LastName",type:"text", required: true),
+                new InputField(label:"FirstName",type:"text", required: true),
+                new InputField(label:"Email",type:"text"),
+                new InputField(label:"PhoneNumber",type:"text"),
+                new InputField(label:"DepartmentId", type: "combobox", value: "", options: this.lstDepartment),
                 new InputField(label:"Username",type:"text", required: true),
                 new InputField(label:"PasswordHash",type: "text_password", required : true),
-                //new InputField(label: "RoleID", type: "combobox", value: "", options: this.lstRole)
             };
 
-            var inputForm = new InputForm(fields, entity: new UserCreateDto());
+            var inputForm = new InputForm(fields, entity: new FacultyAddDto());
             if (inputForm.ShowDialog() == DialogResult.OK)
             {
-                UserCreateDto userCreate = (UserCreateDto)inputForm.GetEntity();
-                var result = _serviceManager.UserService.Create(userCreate);
+                FacultyAddDto facultyCreate = (FacultyAddDto)inputForm.GetEntity();
+                var result = _serviceManager.FacultyService.Create(facultyCreate);
                 if (result.Code == 0)
                 {
                     MessageBox.Show("Thêm mới thành công");
-                    this.OnSearch();
+                    this.OnSearch(GetSearchFilterInput());
                 }
                 else
                 {
@@ -72,24 +81,29 @@ namespace Presentation.Forms.SubMenu
         {
             if (this.IdSelectListView != 0)
             {
-                var valueById = _serviceManager.UserService.GetById(this.IdSelectListView);
+                var valueById = _serviceManager.FacultyService.GetById(this.IdSelectListView);
                 var fields = new List<InputField>
                 {
-                    new InputField(label:"Id",type:"text", value: valueById.Data.Id.ToString(), required: true, isReadOnly: true),
-                    new InputField(label:"Username",type:"text", value: valueById.Data.Username, required: true, isReadOnly: true),
-                    new InputField(label:"PasswordHash",type: "text_password",value: valueById.Data.PasswordHash, required : true),
-                    //new InputField(label: "RoleID", type: "combobox", value: valueById.Data.RoleID.ToString(), options: this.lstRole)
+                    new InputField(label:"FacultyId",type:"text", required: true, isReadOnly: true),
+                    new InputField(label:"LastName",type:"text", required: true),
+                    new InputField(label:"FirstName",type:"text", required: true),
+                    new InputField(label:"Email",type:"text"),
+                    new InputField(label:"PhoneNumber",type:"text"),
+                    new InputField(label:"DepartmentId", type: "combobox", value: "", options: this.lstDepartment),
+                    new InputField(label:"UserId",type:"text", required: true, isReadOnly: true),
+                    new InputField(label:"Username",type:"text", required: true),
+                    new InputField(label:"PasswordHash",type: "text_password", required : true),
                 };
-                var inputForm = new InputForm(fields, entity: new UserUpdateDto());
+                var inputForm = new InputForm(fields, entity: new FacultyUpdateDto());
 
                 if (inputForm.ShowDialog() == DialogResult.OK)
                 {
-                    UserUpdateDto userCreate = (UserUpdateDto)inputForm.GetEntity();
-                    var result = _serviceManager.UserService.Update(userCreate);
+                    FacultyUpdateDto facultyCreate = (FacultyUpdateDto)inputForm.GetEntity();
+                    var result = _serviceManager.FacultyService.Update(facultyCreate);
                     if (result.Code == 0)
                     {
                         MessageBox.Show("Cập nhập thành công");
-                        this.OnSearch();
+                        this.OnSearch(GetSearchFilterInput());
                     }
                     else
                     {
@@ -115,11 +129,11 @@ namespace Presentation.Forms.SubMenu
                 if (result == DialogResult.Yes)
                 {
                     // Nếu người dùng chọn "Yes", thực hiện hành động xóa
-                    var delete = _serviceManager.UserService.Delete(this.IdSelectListView);
+                    var delete = _serviceManager.FacultyService.Delete(this.IdSelectListView);
                     if (delete.Code == 0)
                     {
                         MessageBox.Show("Xóa thành công");
-                        this.OnSearch();
+                        this.OnSearch(GetSearchFilterInput());
                     }
                     else
                     {
@@ -131,6 +145,18 @@ namespace Presentation.Forms.SubMenu
             {
                 MessageBox.Show("Vui lòng chọn dòng cần xóa");
             }
+        }
+        private FacultyFilterSearchDto GetSearchFilterInput()
+        {
+            var filterInput = new FacultyFilterSearchDto
+            {
+                FullName = txtFacultyName.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                PhoneNumber = txtPhoneNumber.Text.Trim(),
+                DepartmentName = txtDepartmentName.Text.Trim(),
+            };
+
+            return filterInput;
         }
 
 
@@ -165,14 +191,13 @@ namespace Presentation.Forms.SubMenu
 
         private void Menu_Faculty_Load(object sender, EventArgs e)
         {
-            //var resultLstRole = _serviceManager.RoleService.GetCombobox().Items;
-            //lstRole = resultLstRole.Select(x => new OptionItem
-            //{
-            //    Value = x.Id.ToString(),
-            //    Text = x.RoleName
-            //}).ToList();
-
-            this.OnSearch();
+            var resultLstDepartment = _serviceManager.DepartmentService.GetCombobox().Items;
+            lstDepartment = resultLstDepartment.Select(x => new OptionItem
+            {
+                Value = x.DepartmentId.ToString(),
+                Text = x.DepartmentName
+            }).ToList();
+            this.OnSearch(GetSearchFilterInput());
         }
     }
 }

@@ -2,6 +2,7 @@
 using BusinessLogic.IService;
 using BusinessLogic.IService.IClassService;
 using BusinessLogic.IService.IClassService.Dto;
+using BusinessLogic.IService.IRoleService.Dto;
 using Data.Entities;
 using Data.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -19,10 +20,10 @@ namespace BusinessLogic.Services.ClassService
         }
         public ResponseActionDto<ClassSearchResultDto> Create(ClassAddDto data)
         {
-            var checkIsExist = _repositoryManager.ClassesRepository.GetAll().Any(x => x.ClassName == data.ClassName);
+            var checkIsExist = _repositoryManager.ClassesRepository.GetAll().Any(x => x.ClassName == data.ClassName && x.ClassYear == data.ClassYear && x.DepartmentId == data.DepartmentId);
             if (checkIsExist)
             {
-                return new ResponseActionDto<ClassSearchResultDto>(null, -1, "Thêm mới thất bại", "Tên lớp đã tồn tại trong hệ thống!");
+                return new ResponseActionDto<ClassSearchResultDto>(null, -1, "Thêm mới thất bại", "Lớp đã tồn tại trong hệ thống!");
 
             }
             var idNew = _repositoryManager.ClassesRepository.Add(_mapper.Map<ClassAddDto, Class>(data));
@@ -67,12 +68,14 @@ namespace BusinessLogic.Services.ClassService
                         join dept in departments
                         on cls.DepartmentId equals dept.Id into deptJoin
                         from department in deptJoin.DefaultIfEmpty() 
-                        where (string.IsNullOrEmpty(filterInput.ClassName) || EF.Functions.Like(cls.ClassName, $"%{filterInput.ClassName}%"))
-                           && (string.IsNullOrEmpty(filterInput.DepartmentName) || EF.Functions.Like(department.DepartmentName, $"%{filterInput.DepartmentName}%"))
+                        where (string.IsNullOrEmpty(filterInput.ClassName) || cls.ClassName.ToLower().Contains(filterInput.ClassName.ToLower()))
+                           && (string.IsNullOrEmpty(filterInput.ClassYear) || cls.ClassYear.ToLower().Contains(filterInput.ClassYear.ToLower()))
+                           && (string.IsNullOrEmpty(filterInput.DepartmentName) || department.DepartmentName.ToLower().Contains(filterInput.DepartmentName.ToLower()))
                         select new ClassSearchResultDto
                         {
                             ClassId = cls.Id,
                             ClassName = cls.ClassName,
+                            ClassYear = cls.ClassYear,
                             DepartmentName = department != null ? department.DepartmentName : string.Empty 
                         };
 
@@ -218,7 +221,48 @@ namespace BusinessLogic.Services.ClassService
 
             return new ResponseActionDto<ClassSearchResultDto>(null, 0, "Thêm học phần thành công!", "");
         }
+        public ResponseDataDto<ClassSectionSearchResultDto> ClassSectionSearch(ClassSectionFilterSearchDto filterInput)
+        {
+            var classSections = _repositoryManager.ClassSectionsRepository.GetAll();
+            var classes = _repositoryManager.ClassesRepository.GetAll();
+            var courses = _repositoryManager.CoursesRepository.GetAll();
+            var faculty = _repositoryManager.FacultysRepository.GetAll();
 
+            var query = from cs in classSections
+                        join cls in classes on cs.ClassId equals cls.Id
+                        join crs in courses on cs.CourseId equals crs.Id
+                        join fac in faculty on cs.FacultyId equals fac.Id into facJoin
+                        from facultyMember in facJoin.DefaultIfEmpty()
+                        where (string.IsNullOrEmpty(filterInput.ClassName) || cls.ClassName.ToLower().Contains(filterInput.ClassName.ToLower()))
+                           && (string.IsNullOrEmpty(filterInput.CourseName) || crs.CourseName.ToLower().Contains(filterInput.CourseName.ToLower()))
+                           && (string.IsNullOrEmpty(filterInput.FacultyName) ||
+                               (facultyMember.LastName + " " + facultyMember.FirstName).ToLower().Contains(filterInput.FacultyName.ToLower()))
+                           && (string.IsNullOrEmpty(filterInput.Semester) || cs.Semester.ToLower().Contains(filterInput.Semester.ToLower()))
+                           && (!filterInput.Year.HasValue || filterInput.Year == 0 || cs.Year == filterInput.Year)
+                        select new ClassSectionSearchResultDto
+                        {
+                            ClassSectionId = cs.Id,
+                            ClassName = cls.ClassName,
+                            CourseName = crs.CourseName,
+                            FacultyName = facultyMember != null
+                                ? facultyMember.LastName + " " + facultyMember.FirstName
+                                : string.Empty,
+                            Semester = cs.Semester,
+                            Year = cs.Year
+                        };
+
+            var result = query.ToList();
+            int totalItem = result.Count();
+
+            return new ResponseDataDto<ClassSectionSearchResultDto>(result, totalItem);
+        }
+
+        public ResponseDataDto<ClassSearchResultDto> GetCombobox()
+        {
+            var result = _repositoryManager.ClassesRepository.GetAll();
+            int totalItem = result.Count();
+            return new ResponseDataDto<ClassSearchResultDto>(_mapper.Map<List<Class>, List<ClassSearchResultDto>>(result), totalItem);
+        }
 
     }
 }

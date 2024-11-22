@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.IService;
+using BusinessLogic.IService.IClassService.Dto;
 using BusinessLogic.IService.IDepartmentService;
 using BusinessLogic.IService.IDepartmentService.Dto;
 using Data.Entities;
@@ -86,7 +87,7 @@ namespace BusinessLogic.Services.DepartmentService
 
             var query = from dept in departments
                         where (string.IsNullOrEmpty(filterInput.DepartmentName) ||
-                               EF.Functions.Like(dept.DepartmentName, $"%{filterInput.DepartmentName}%"))
+                                dept.DepartmentName.ToLower().Contains(filterInput.DepartmentName.ToLower()))
                         select new DepartmentSearchResultDto
                         {
                             DepartmentId = dept.Id,
@@ -98,6 +99,11 @@ namespace BusinessLogic.Services.DepartmentService
 
             return new ResponseDataDto<DepartmentSearchResultDto>(result, totalItem);
         }
-
+        public ResponseDataDto<DepartmentSearchResultDto> GetCombobox()
+        {
+            var result = _repositoryManager.DepartmentsRepository.GetAll();
+            int totalItem = result.Count();
+            return new ResponseDataDto<DepartmentSearchResultDto>(_mapper.Map<List<Department>, List<DepartmentSearchResultDto>>(result), totalItem);
+        }
     }
 }

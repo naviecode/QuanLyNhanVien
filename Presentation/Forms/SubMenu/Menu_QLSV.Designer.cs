@@ -39,6 +39,10 @@
             txtPhoneNumber = new TextBox();
             txtAddr = new TextBox();
             panel1 = new Panel();
+            txtHomeTown = new TextBox();
+            label5 = new Label();
+            txtClassName = new TextBox();
+            label4 = new Label();
             cbGender = new ComboBox();
             panel2 = new Panel();
             lblPageInfo = new Label();
@@ -130,13 +134,17 @@
             // 
             // txtAddr
             // 
-            txtAddr.Location = new Point(424, 43);
+            txtAddr.Location = new Point(424, 40);
             txtAddr.Name = "txtAddr";
             txtAddr.Size = new Size(193, 23);
             txtAddr.TabIndex = 17;
             // 
             // panel1
             // 
+            panel1.Controls.Add(txtHomeTown);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(txtClassName);
+            panel1.Controls.Add(label4);
             panel1.Controls.Add(cbGender);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(txtAddr);
@@ -145,6 +153,38 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(928, 115);
             panel1.TabIndex = 19;
+            // 
+            // txtHomeTown
+            // 
+            txtHomeTown.Location = new Point(725, 6);
+            txtHomeTown.Name = "txtHomeTown";
+            txtHomeTown.Size = new Size(193, 23);
+            txtHomeTown.TabIndex = 21;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(660, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 15);
+            label5.TabIndex = 25;
+            label5.Text = "Quê quán";
+            // 
+            // txtClassName
+            // 
+            txtClassName.Location = new Point(424, 72);
+            txtClassName.Name = "txtClassName";
+            txtClassName.Size = new Size(193, 23);
+            txtClassName.TabIndex = 24;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(342, 75);
+            label4.Name = "label4";
+            label4.Size = new Size(45, 15);
+            label4.TabIndex = 23;
+            label4.Text = "Tên lớp";
             // 
             // cbGender
             // 
@@ -211,6 +251,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_QLSV";
             Text = "Menu_QLSV";
+            FormClosed += Menu_QLSV_FormClosed;
             Load += Menu_Students_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -237,5 +278,9 @@
         private Label lblPageInfo;
         private Button btnNext;
         private Button btnPrev;
+        private TextBox txtClassName;
+        private Label label4;
+        private Label label5;
+        private TextBox txtHomeTown;
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             customListView1 = new CustomControls.CustomListView();
-            txtKhoa = new TextBox();
+            txtDepartmentName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
@@ -53,12 +53,12 @@
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
             // 
-            // txtKhoa
+            // txtDepartmentName
             // 
-            txtKhoa.Location = new Point(116, 12);
-            txtKhoa.Name = "txtKhoa";
-            txtKhoa.Size = new Size(193, 23);
-            txtKhoa.TabIndex = 0;
+            txtDepartmentName.Location = new Point(116, 12);
+            txtDepartmentName.Name = "txtDepartmentName";
+            txtDepartmentName.Size = new Size(193, 23);
+            txtDepartmentName.TabIndex = 0;
             // 
             // label1
             // 
@@ -109,7 +109,7 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtKhoa);
+            panel1.Controls.Add(txtDepartmentName);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -128,6 +128,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Department";
             Text = "Menu_Department";
+            FormClosed += Menu_Department_FormClosed;
+            Load += Menu_Department_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -137,7 +139,7 @@
         #endregion
 
         private CustomControls.CustomListView customListView1;
-        private TextBox txtKhoa;
+        private TextBox txtDepartmentName;
         private Label label1;
         private Panel panel2;
         private Label lblPageInfo;

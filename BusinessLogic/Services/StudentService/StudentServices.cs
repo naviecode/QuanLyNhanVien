@@ -22,12 +22,17 @@ namespace BusinessLogic.Services.StudentService
         public ResponseDataDto<StudentSearchResultDto> Search(StudentSearchFilterDto filterInput)
         {
             var students = _repositoryManager.StudentsRepository.GetAll();
+            var classes = _repositoryManager.ClassesRepository.GetAll();
             var query = from student in students
-                        where (string.IsNullOrEmpty(filterInput.FullName) || EF.Functions.Like((student.LastName + " " + student.FirstName), $"%{filterInput.FullName}%"))
+                        join lop in classes on student.ClassId equals lop.Id into lop
+                        from subItem in lop.DefaultIfEmpty()
+                        where (string.IsNullOrEmpty(filterInput.FullName) || (student.LastName + " " + student.FirstName).ToLower().Contains(filterInput.FullName.ToLower()))
                         && (string.IsNullOrEmpty(filterInput.Gender) || student.Gender.ToLower() == filterInput.Gender.ToLower())
                         && (string.IsNullOrEmpty(filterInput.Email) || student.Email.ToLower().Contains(filterInput.Email.ToLower()))
                         && (string.IsNullOrEmpty(filterInput.PhoneNumber) || student.PhoneNumber.ToLower().Contains(filterInput.PhoneNumber.ToLower()))
                         && (string.IsNullOrEmpty(filterInput.Address) || student.Address.ToLower().Contains(filterInput.Address.ToLower()))
+                        && (string.IsNullOrEmpty(filterInput.ClassName) || subItem.ClassName.ToLower().Contains(filterInput.ClassName.ToLower()))
+                        && (filterInput.UserId == null || student.UserId == filterInput.UserId)
                         select new StudentSearchResultDto
                         {
                             StudentId = student.Id,
@@ -38,6 +43,7 @@ namespace BusinessLogic.Services.StudentService
                             PhoneNumber = student.PhoneNumber,
                             Address = student.Address,
                             EnrollmentDate = student.EnrollmentDate,
+                            ClassName = subItem.ClassName,
                         };
             var result = query.ToList();
             int totalItem = result.Count();
@@ -124,5 +130,6 @@ namespace BusinessLogic.Services.StudentService
             return new ResponseActionDto<StudentResultByIdDto>(new StudentResultByIdDto(), -1, "Không tìm thấy", "");
 
         }
+
     }
 }

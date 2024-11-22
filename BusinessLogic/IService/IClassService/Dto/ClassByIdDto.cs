@@ -10,9 +10,7 @@ namespace BusinessLogic.IService.IClassService.Dto
     {
         public int ClassId { get; set; }
         public string ClassName { get; set; }
-        public string CourseName { get; set; }
-        public string FacultyName { get; set; }
-        public string Semester { get; set; }
-        public int Year { get; set; }
+        public string ClassYear { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

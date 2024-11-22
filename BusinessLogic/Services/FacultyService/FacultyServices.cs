@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.Helpers;
 using BusinessLogic.IService;
+using BusinessLogic.IService.ICourseService.Dto;
 using BusinessLogic.IService.IFacultyService;
 using BusinessLogic.IService.IFacultyService.Dto;
 using BusinessLogic.IService.IUserService.Dto;
@@ -25,9 +26,9 @@ namespace BusinessLogic.Services.FacultyService
             var departments = _repositoryManager.DepartmentsRepository.GetAll();
 
             var query = from faculty in faculties
-                        join department in departments on faculty.DepartmentID equals department.Id
+                        join department in departments on faculty.DepartmentId equals department.Id
                         where (string.IsNullOrEmpty(filterInput.FullName) ||
-                               EF.Functions.Like((faculty.LastName + " " + faculty.FirstName), $"%{filterInput.FullName}%"))
+                               (faculty.LastName + " " + faculty.FirstName).ToLower().Contains(filterInput.FullName.ToLower()))
                               && (string.IsNullOrEmpty(filterInput.Email) ||
                                   faculty.Email.ToLower().Contains(filterInput.Email.ToLower()))
                               && (string.IsNullOrEmpty(filterInput.PhoneNumber) ||
@@ -68,7 +69,7 @@ namespace BusinessLogic.Services.FacultyService
             checkIsExist = _repositoryManager.FacultysRepository.GetAll()
                             .Any(x => x.FirstName == data.FirstName &&
                                       x.LastName == data.LastName &&
-                                      x.DepartmentID == data.DepartmentID &&
+                                      x.DepartmentId == data.DepartmentID &&
                                       x.Email == data.Email &&
                                       x.PhoneNumber == data.PhoneNumber);
             if (checkIsExist)
@@ -141,5 +142,29 @@ namespace BusinessLogic.Services.FacultyService
             }
             return new ResponseActionDto<FacultyByIdDto>(new FacultyByIdDto(), -1, "Không tìm thấy", "");
         }
+        public ResponseDataDto<FacultyResultSearchDto> GetCombobox()
+        {
+            var faculties = _repositoryManager.FacultysRepository.GetAll();
+            var departments = _repositoryManager.DepartmentsRepository.GetAll();
+
+            var query = from faculty in faculties
+                        join department in departments
+                        on faculty.DepartmentId equals department.Id into departmentJoin
+                        from dept in departmentJoin.DefaultIfEmpty()
+                        select new FacultyResultSearchDto
+                        {
+                            FacultyId = faculty.Id,
+                            FullName = faculty.LastName + " " + faculty.FirstName,
+                            Email = faculty.Email,
+                            PhoneNumber = faculty.PhoneNumber,
+                            DepartmentName = dept != null ? dept.DepartmentName : string.Empty
+                        };
+
+            var result = query.ToList();
+            int totalItem = result.Count();
+
+            return new ResponseDataDto<FacultyResultSearchDto>(result, totalItem);
+        }
+
     }
 }
