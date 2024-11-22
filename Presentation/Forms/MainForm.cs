@@ -258,7 +258,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuCourse == null)
             {
-                menuCourse = new Menu_Course();
+                menuCourse = new Menu_Course(this, _serviceManager);
                 menuCourse.FormClosed += Course_FormClosed;
                 menuCourse.MdiParent = this;
                 menuCourse.Dock = DockStyle.Fill;
@@ -356,7 +356,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuClass == null)
             {
-                menuClass = new Menu_Class();
+                menuClass = new Menu_Class(this, _serviceManager);
                 menuClass.FormClosed += Class_FormClosed;
                 menuClass.MdiParent = this;
                 menuClass.Dock = DockStyle.Fill;
@@ -380,7 +380,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuDepartment == null)
             {
-                menuDepartment = new Menu_Department();
+                menuDepartment = new Menu_Department(this, _serviceManager);
                 menuDepartment.FormClosed += Department_FormClosed;
                 menuDepartment.MdiParent = this;
                 menuDepartment.Dock = DockStyle.Fill;
@@ -471,7 +471,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuClassSection == null)
             {
-                menuClassSection = new Menu_ClassSection();
+                menuClassSection = new Menu_ClassSection(this, _serviceManager);
                 menuClassSection.FormClosed += MenuClassSection_FormClosed;
                 menuClassSection.MdiParent = this;
                 menuClassSection.Dock = DockStyle.Fill;

@@ -36,6 +36,9 @@
             label1 = new Label();
             btnTongQuan = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            btnViewStudentInfo = new Button();
+            btnViewGrades = new Button();
+            btnThoiKhoaBieu = new Button();
             menuContainer = new FlowLayoutPanel();
             btnChucNang = new Button();
             btnChucNang1 = new Button();
@@ -49,9 +52,6 @@
             btnChucNang10 = new Button();
             btnChucNang11 = new Button();
             btnChucNang8 = new Button();
-            btnViewStudentInfo = new Button();
-            btnViewGrades = new Button();
-            btnThoiKhoaBieu = new Button();
             flpSettingContainer = new FlowLayoutPanel();
             btnSettings = new Button();
             btnRole = new Button();
@@ -163,6 +163,60 @@
             flowLayoutPanel1.Size = new Size(200, 660);
             flowLayoutPanel1.TabIndex = 1;
             flowLayoutPanel1.WrapContents = false;
+            // 
+            // btnViewStudentInfo
+            // 
+            btnViewStudentInfo.AccessibleRole = AccessibleRole.None;
+            btnViewStudentInfo.BackColor = Color.FromArgb(23, 24, 29);
+            btnViewStudentInfo.FlatAppearance.BorderSize = 0;
+            btnViewStudentInfo.FlatStyle = FlatStyle.Flat;
+            btnViewStudentInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnViewStudentInfo.ForeColor = Color.White;
+            btnViewStudentInfo.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewStudentInfo.Location = new Point(0, 43);
+            btnViewStudentInfo.Margin = new Padding(0);
+            btnViewStudentInfo.Name = "btnViewStudentInfo";
+            btnViewStudentInfo.Size = new Size(200, 43);
+            btnViewStudentInfo.TabIndex = 7;
+            btnViewStudentInfo.Text = "Thông tin sinh viên";
+            btnViewStudentInfo.UseVisualStyleBackColor = false;
+            btnViewStudentInfo.Click += btnViewStudentInfo_Click;
+            // 
+            // btnViewGrades
+            // 
+            btnViewGrades.AccessibleRole = AccessibleRole.None;
+            btnViewGrades.BackColor = Color.FromArgb(23, 24, 29);
+            btnViewGrades.FlatAppearance.BorderSize = 0;
+            btnViewGrades.FlatStyle = FlatStyle.Flat;
+            btnViewGrades.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnViewGrades.ForeColor = Color.White;
+            btnViewGrades.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewGrades.Location = new Point(0, 86);
+            btnViewGrades.Margin = new Padding(0);
+            btnViewGrades.Name = "btnViewGrades";
+            btnViewGrades.Size = new Size(200, 43);
+            btnViewGrades.TabIndex = 8;
+            btnViewGrades.Text = "Xem điểm";
+            btnViewGrades.UseVisualStyleBackColor = false;
+            btnViewGrades.Click += btnViewGrades_Click;
+            // 
+            // btnThoiKhoaBieu
+            // 
+            btnThoiKhoaBieu.AccessibleRole = AccessibleRole.None;
+            btnThoiKhoaBieu.BackColor = Color.FromArgb(23, 24, 29);
+            btnThoiKhoaBieu.FlatAppearance.BorderSize = 0;
+            btnThoiKhoaBieu.FlatStyle = FlatStyle.Flat;
+            btnThoiKhoaBieu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            btnThoiKhoaBieu.ForeColor = Color.White;
+            btnThoiKhoaBieu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnThoiKhoaBieu.Location = new Point(0, 129);
+            btnThoiKhoaBieu.Margin = new Padding(0);
+            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
+            btnThoiKhoaBieu.Size = new Size(200, 43);
+            btnThoiKhoaBieu.TabIndex = 8;
+            btnThoiKhoaBieu.Text = "Thời khóa biểu";
+            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
+            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
             // 
             // menuContainer
             // 
@@ -399,60 +453,6 @@
             btnChucNang8.Text = "Báo cáo";
             btnChucNang8.UseVisualStyleBackColor = false;
             btnChucNang8.Click += btnChucNang8_Click;
-            // 
-            // btnViewStudentInfo
-            // 
-            btnViewStudentInfo.AccessibleRole = AccessibleRole.None;
-            btnViewStudentInfo.BackColor = Color.FromArgb(23, 24, 29);
-            btnViewStudentInfo.FlatAppearance.BorderSize = 0;
-            btnViewStudentInfo.FlatStyle = FlatStyle.Flat;
-            btnViewStudentInfo.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnViewStudentInfo.ForeColor = Color.White;
-            btnViewStudentInfo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewStudentInfo.Location = new Point(0, 43);
-            btnViewStudentInfo.Margin = new Padding(0);
-            btnViewStudentInfo.Name = "btnViewStudentInfo";
-            btnViewStudentInfo.Size = new Size(200, 43);
-            btnViewStudentInfo.TabIndex = 7;
-            btnViewStudentInfo.Text = "Thông tin sinh viên";
-            btnViewStudentInfo.UseVisualStyleBackColor = false;
-            btnViewStudentInfo.Click += btnViewStudentInfo_Click;
-            // 
-            // btnViewGrades
-            // 
-            btnViewGrades.AccessibleRole = AccessibleRole.None;
-            btnViewGrades.BackColor = Color.FromArgb(23, 24, 29);
-            btnViewGrades.FlatAppearance.BorderSize = 0;
-            btnViewGrades.FlatStyle = FlatStyle.Flat;
-            btnViewGrades.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnViewGrades.ForeColor = Color.White;
-            btnViewGrades.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewGrades.Location = new Point(0, 86);
-            btnViewGrades.Margin = new Padding(0);
-            btnViewGrades.Name = "btnViewGrades";
-            btnViewGrades.Size = new Size(200, 43);
-            btnViewGrades.TabIndex = 8;
-            btnViewGrades.Text = "Xem điểm";
-            btnViewGrades.UseVisualStyleBackColor = false;
-            btnViewGrades.Click += btnViewGrades_Click;
-            // 
-            // btnThoiKhoaBieu
-            // 
-            btnThoiKhoaBieu.AccessibleRole = AccessibleRole.None;
-            btnThoiKhoaBieu.BackColor = Color.FromArgb(23, 24, 29);
-            btnThoiKhoaBieu.FlatAppearance.BorderSize = 0;
-            btnThoiKhoaBieu.FlatStyle = FlatStyle.Flat;
-            btnThoiKhoaBieu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnThoiKhoaBieu.ForeColor = Color.White;
-            btnThoiKhoaBieu.ImageAlign = ContentAlignment.MiddleLeft;
-            btnThoiKhoaBieu.Location = new Point(0, 129);
-            btnThoiKhoaBieu.Margin = new Padding(0);
-            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
-            btnThoiKhoaBieu.Size = new Size(200, 43);
-            btnThoiKhoaBieu.TabIndex = 8;
-            btnThoiKhoaBieu.Text = "Thời khóa biểu";
-            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
-            btnThoiKhoaBieu.Click += btnThoiKhoaBieu_Click;
             // 
             // flpSettingContainer
             // 

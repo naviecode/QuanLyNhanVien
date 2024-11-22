@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLogic.Helpers;
 using BusinessLogic.IService;
-using BusinessLogic.IService.ICourseService.Dto;
 using BusinessLogic.IService.IFacultyService;
 using BusinessLogic.IService.IFacultyService.Dto;
 using BusinessLogic.IService.IUserService.Dto;
 using Data.Entities;
 using Data.IRepository;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.Services.FacultyService
 {
@@ -142,20 +140,20 @@ namespace BusinessLogic.Services.FacultyService
             }
             return new ResponseActionDto<FacultyByIdDto>(new FacultyByIdDto(), -1, "Không tìm thấy", "");
         }
-//         public ResponseDataDto<FacultyResultSearchDto> GetCombobox()
-//         {
-//             var facultys = _repositoryManager.FacultysRepository.GetAll();
-//             var query = from faculty in facultys
-//                         select new FacultyResultSearchDto
-//                         {
-//                             FacultyId = faculty.Id,
-//                             FullName = faculty.FirstName + ' ' + faculty.LastName
-//                         };
-//             var result = query.ToList();
-//             int totalItem = result.Count();
-//             return new ResponseDataDto<FacultyResultSearchDto>(result, totalItem);
+        public ResponseDataDto<FacultyResultSearchDto> GetCombobox_sonnq()
+        {
+            var facultys = _repositoryManager.FacultysRepository.GetAll();
+            var query = from faculty in facultys
+                        select new FacultyResultSearchDto
+                        {
+                            FacultyId = faculty.Id,
+                            FullName = faculty.FirstName + ' ' + faculty.LastName
+                        };
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<FacultyResultSearchDto>(result, totalItem);
 
-//         }
+        }
         public ResponseDataDto<FacultyResultSearchDto> GetCombobox()
         {
             var faculties = _repositoryManager.FacultysRepository.GetAll();

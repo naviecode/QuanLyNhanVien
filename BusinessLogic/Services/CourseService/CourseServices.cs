@@ -144,7 +144,7 @@ namespace BusinessLogic.Services.CourseService
             return new ResponseDataDto<CourseNearCloseDto>(result, totalItem);
         }
 
-        public ResponseDataDto<CourseSearchResultDto> GetCombobox()
+        public ResponseDataDto<CourseSearchResultDto> GetCombobox_sonnq()
         {
             var courses = _repositoryManager.CoursesRepository.GetAll();
             var query = from course in courses

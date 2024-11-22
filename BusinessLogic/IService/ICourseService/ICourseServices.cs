@@ -15,7 +15,7 @@ namespace BusinessLogic.IService.ICourseService
         ResponseActionDto<CourseSearchResultDto> Update(CourseUpdateDto data);
         ResponseActionDto<CourseResultByIdDto> GetById(int userId);
         ResponseDataDto<CourseNearCloseDto> CourseNearClose();
-        //ResponseDataDto<CourseSearchResultDto> GetCombobox();
         ResponseDataDto<CourseSearchResultDto> GetCombobox();
+        ResponseDataDto<CourseSearchResultDto> GetCombobox_sonnq();
     }
 }
