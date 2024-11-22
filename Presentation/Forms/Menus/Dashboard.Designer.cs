@@ -52,33 +52,36 @@
             // 
             // chartStudent
             // 
+            chartStudent.BackColor = SystemColors.Control;
             chartArea1.Name = "ChartArea1";
             chartStudent.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             chartStudent.Legends.Add(legend1);
-            chartStudent.Location = new Point(492, 12);
+            chartStudent.Location = new Point(477, 3);
             chartStudent.Name = "chartStudent";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartStudent.Series.Add(series1);
-            chartStudent.Size = new Size(339, 244);
+            chartStudent.Size = new Size(382, 347);
             chartStudent.TabIndex = 0;
             chartStudent.Text = "chart1";
             // 
             // chartStudentTrend
             // 
+            chartStudentTrend.BackColor = SystemColors.Control;
             chartArea2.Name = "ChartArea1";
             chartStudentTrend.ChartAreas.Add(chartArea2);
+            chartStudentTrend.Dock = DockStyle.Bottom;
             legend2.Name = "Legend1";
             chartStudentTrend.Legends.Add(legend2);
-            chartStudentTrend.Location = new Point(12, 262);
+            chartStudentTrend.Location = new Point(0, 356);
             chartStudentTrend.Name = "chartStudentTrend";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             chartStudentTrend.Series.Add(series2);
-            chartStudentTrend.Size = new Size(819, 311);
+            chartStudentTrend.Size = new Size(867, 332);
             chartStudentTrend.TabIndex = 0;
             chartStudentTrend.Text = "chart1";
             // 
@@ -87,10 +90,10 @@
             groupBox1.Controls.Add(dgvDataCourse);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(474, 244);
+            groupBox1.Size = new Size(459, 244);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Danh sách khóa đang mở";
+            groupBox1.Text = "Danh sách khóa học đang mở đăng ký nhanhhh";
             // 
             // dgvDataCourse
             // 
@@ -98,17 +101,17 @@
             dgvDataCourse.Location = new Point(6, 22);
             dgvDataCourse.Name = "dgvDataCourse";
             dgvDataCourse.RowTemplate.Height = 25;
-            dgvDataCourse.Size = new Size(461, 216);
+            dgvDataCourse.Size = new Size(445, 216);
             dgvDataCourse.TabIndex = 0;
             // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(835, 585);
+            ClientSize = new Size(867, 688);
             Controls.Add(groupBox1);
-            Controls.Add(chartStudentTrend);
             Controls.Add(chartStudent);
+            Controls.Add(chartStudentTrend);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Dashboard";
             Text = "Dashboard";

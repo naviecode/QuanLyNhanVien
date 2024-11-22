@@ -83,6 +83,24 @@ namespace Data.Repository
             }
         }
 
+        public bool Delete(T entity)
+        {
+            try
+            {
+                if (entity != null)
+                {
+                    _dbSet.Remove(entity);
+                    return SaveChanges();
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Delete failed: {ex.Message}");
+                return false;
+            }
+        }
+
         public bool SaveChanges()
         {
             try

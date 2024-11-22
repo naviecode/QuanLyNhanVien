@@ -20,6 +20,7 @@ namespace Data.Repository
         private IFacultysRepository _facultysRepository;
         private IStudentsRepository _studentsRepository;
         private IRolePermissionsRepository _rolePermissionsRepository;
+        private ITeachingScheduleRepository _teachingScheduleRepository;
 
 
         public IUsersRepository UsersRepository => _usersRepository ?? new UsersRepository(_databaseContext);
@@ -33,5 +34,6 @@ namespace Data.Repository
         public IFacultysRepository FacultysRepository => _facultysRepository ?? new FacultyRepository(_databaseContext);
         public IStudentsRepository StudentsRepository => _studentsRepository ?? new StudentsRepository(_databaseContext);
         public IRolePermissionsRepository RolePermissionsRepository => _rolePermissionsRepository ?? new RolePermissionsRepository(_databaseContext);
+        public ITeachingScheduleRepository TeachingScheduleRepository => _teachingScheduleRepository ?? new TeachingScheduleRepository(_databaseContext);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BusinessLogic.Helpers;
 using BusinessLogic.IService;
-using Data.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Forms.Menus;
 using Presentation.Forms.SubMenu;
@@ -15,7 +14,8 @@ namespace Presentation.Forms
         public event EventHandler EditButtonClicked;
         public event EventHandler DeleteButtonClicked;
         bool menuExpand = false;
-        private int heightMenuExpand = 430;
+        private int heightMenuExpand = 500;
+        private int heightButton = 35;
         bool settingExpand = false;
 
         #region Form
@@ -26,6 +26,7 @@ namespace Presentation.Forms
         Menu_Grade menuGrade;
         Menu_Class menuClass;
         Menu_ClassSection menuClassSection;
+        Menu_TeachingSchedule menuTeachingSchedule;
         Menu_Course menuCourse;
         Menu_Department menuDepartment;
         Menu_Enrollment menuEnroollment;
@@ -59,27 +60,27 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ViewDashBoard"))
             {
                 btnTongQuan.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ManageStudents"))
             {
                 btnChucNang1.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ManageCourses"))
             {
                 btnChucNang2.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("EnrollCourses"))
             {
                 btnChucNang3.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ManageGrade"))
             {
                 btnChucNang4.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ViewGrades"))
             {
@@ -88,8 +89,7 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageFaculty"))
             {
                 btnChucNang5.Visible = false;
-                heightMenuExpand -= 43;
-
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ManageClasses"))
             {
@@ -98,12 +98,12 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageDepartments"))
             {
                 btnChucNang7.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("GenerateReports"))
             {
                 btnChucNang8.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("ViewStudentInfo"))
             {
@@ -112,7 +112,17 @@ namespace Presentation.Forms
             if (!UserSession.HasPermissionName("ManageAccounts"))
             {
                 btnChucNang9.Visible = false;
-                heightMenuExpand -= 43;
+                heightMenuExpand -= heightButton;
+            }
+            if (!UserSession.HasPermissionName("ManageTeachingSchedule"))
+            {
+                btnChucNang10.Visible = false;
+                heightMenuExpand -= heightButton;
+            }
+            if (!UserSession.HasPermissionName("ManageClassSection"))
+            {
+                btnChucNang11.Visible = false;
+                heightMenuExpand -= heightButton;
             }
             if (!UserSession.HasPermissionName("AssignPermissions"))
             {
@@ -217,7 +227,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (dashboard == null)
             {
-                dashboard = new Dashboard(this);
+                dashboard = new Dashboard(this, _serviceManager);
                 dashboard.FormClosed += Dashboard_FormClosed;
                 dashboard.MdiParent = this;
                 dashboard.Dock = DockStyle.Fill;
@@ -412,6 +422,7 @@ namespace Presentation.Forms
         {
             lblTitlePageCurrent.Text = "Quản lý tài khoản";
             SetNavigation(true);
+            CloseAllChildForms();
             if (menuUsers == null)
             {
                 menuUsers = new Menu_Users(this, _serviceManager);
@@ -427,8 +438,55 @@ namespace Presentation.Forms
         }
         private void MenuUsers_FormClosed(object sender, FormClosedEventArgs e)
         {
-            dashboard = null;
+            menuUsers = null;
         }
+
+        private void btnChucNang10_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Quản lý lịch dạy học";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuTeachingSchedule == null)
+            {
+                menuTeachingSchedule = new Menu_TeachingSchedule(this, _serviceManager);
+                menuTeachingSchedule.FormClosed += MenuTeachingSchedule_FormClosed;
+                menuTeachingSchedule.MdiParent = this;
+                menuTeachingSchedule.Dock = DockStyle.Fill;
+                menuTeachingSchedule.Show();
+            }
+            else
+            {
+                menuTeachingSchedule.Activate();
+            }
+        }
+        private void MenuTeachingSchedule_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuTeachingSchedule = null;
+        }
+
+        private void btnChucNang11_Click(object sender, EventArgs e)
+        {
+            lblTitlePageCurrent.Text = "Quản lý khóa học cho lớp";
+            SetNavigation(true);
+            CloseAllChildForms();
+            if (menuClassSection == null)
+            {
+                menuClassSection = new Menu_ClassSection();
+                menuClassSection.FormClosed += MenuClassSection_FormClosed;
+                menuClassSection.MdiParent = this;
+                menuClassSection.Dock = DockStyle.Fill;
+                menuClassSection.Show();
+            }
+            else
+            {
+                menuClassSection.Activate();
+            }
+        }
+        private void MenuClassSection_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            menuClassSection = null;
+        }
+
 
         private void btnRole_Click(object sender, EventArgs e)
         {
@@ -577,7 +635,7 @@ namespace Presentation.Forms
         }
         private void ViewTimeTable_FormClosed(object sender, FormClosedEventArgs e)
         {
-            viewGrades = null;
+            viewTimeTable = null;
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -632,6 +690,7 @@ namespace Presentation.Forms
                 childForm.Close();
             }
         }
+
 
     }
 }

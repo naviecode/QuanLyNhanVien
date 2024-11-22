@@ -10,6 +10,6 @@ namespace BusinessLogic.IService.IPermissions
         ResponseActionDto<PermissionsReadDto> GetById(int id);
         ResponseDataDto<PermissionsReadDto> GetAll();
         ResponseDataDto<PermissionsReadDto> GetCombobox();
-
+        ResponseDataDto<PermissionsReadDto> Search(string filter);
     }
 }

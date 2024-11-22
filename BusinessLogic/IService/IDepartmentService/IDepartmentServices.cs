@@ -14,5 +14,7 @@ namespace BusinessLogic.IService.IDepartmentService
         ResponseActionDto<DepartmentSearchResultDto> Delete(int id);
         ResponseActionDto<DepartmentByIdDto> GetById(int departmentId);
         ResponseDataDto<DepartmentSearchResultDto> Search(DepartmentFilterSearchDto filterInput);
+        ResponseDataDto<DepartmentCountStudentsDto> DepartmentCountStudent();
+
     }
 }

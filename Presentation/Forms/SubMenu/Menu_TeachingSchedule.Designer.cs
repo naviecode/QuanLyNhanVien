@@ -1,6 +1,6 @@
-﻿namespace Presentation.Forms.SubSettings
+﻿namespace Presentation.Forms.SubMenu
 {
-    partial class Setting_RolePermission
+    partial class Menu_TeachingSchedule
     {
         /// <summary>
         /// Required designer variable.
@@ -28,61 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            customListView1 = new CustomControls.CustomListView();
-            panel1 = new Panel();
-            txtQuyen = new TextBox();
+            txtUserName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
             btnNext = new Button();
             btnPrev = new Button();
-            label2 = new Label();
-            txtChucDanh = new TextBox();
-            panel1.SuspendLayout();
+            customListView1 = new CustomControls.CustomListView();
+            panel1 = new Panel();
             panel2.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // customListView1
+            // txtUserName
             // 
-            customListView1.BorderStyle = BorderStyle.None;
-            customListView1.Dock = DockStyle.Fill;
-            customListView1.FullRowSelect = true;
-            customListView1.GridLines = true;
-            customListView1.Location = new Point(0, 64);
-            customListView1.Name = "customListView1";
-            customListView1.Size = new Size(800, 339);
-            customListView1.TabIndex = 6;
-            customListView1.UseCompatibleStateImageBehavior = false;
-            customListView1.View = View.Details;
-            customListView1.SelectedIndexChanged += customListView1_SelectedIndexChanged;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(txtChucDanh);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(txtQuyen);
-            panel1.Controls.Add(label1);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(800, 64);
-            panel1.TabIndex = 5;
-            // 
-            // txtQuyen
-            // 
-            txtQuyen.Location = new Point(116, 12);
-            txtQuyen.Name = "txtQuyen";
-            txtQuyen.Size = new Size(193, 23);
-            txtQuyen.TabIndex = 0;
+            txtUserName.Location = new Point(116, 12);
+            txtUserName.Name = "txtUserName";
+            txtUserName.Size = new Size(193, 23);
+            txtUserName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(9, 16);
             label1.Name = "label1";
-            label1.Size = new Size(61, 15);
+            label1.Size = new Size(90, 15);
             label1.TabIndex = 1;
-            label1.Text = "Tên quyền";
+            label1.Text = "Tên người dùng";
             // 
             // panel2
             // 
@@ -112,6 +84,7 @@
             btnNext.TabIndex = 0;
             btnNext.Text = "Sau";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // btnPrev
             // 
@@ -121,53 +94,60 @@
             btnPrev.TabIndex = 0;
             btnPrev.Text = "Trước";
             btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
             // 
-            // label2
+            // customListView1
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(338, 17);
-            label2.Name = "label2";
-            label2.Size = new Size(84, 15);
-            label2.TabIndex = 1;
-            label2.Text = "Tên chức danh";
+            customListView1.BorderStyle = BorderStyle.None;
+            customListView1.Dock = DockStyle.Fill;
+            customListView1.FullRowSelect = true;
+            customListView1.GridLines = true;
+            customListView1.Location = new Point(0, 64);
+            customListView1.Name = "customListView1";
+            customListView1.Size = new Size(800, 386);
+            customListView1.TabIndex = 6;
+            customListView1.UseCompatibleStateImageBehavior = false;
+            customListView1.View = View.Details;
+            customListView1.SelectedIndexChanged += customListView1_SelectedIndexChanged;
             // 
-            // txtChucDanh
+            // panel1
             // 
-            txtChucDanh.Location = new Point(445, 13);
-            txtChucDanh.Name = "txtChucDanh";
-            txtChucDanh.Size = new Size(193, 23);
-            txtChucDanh.TabIndex = 0;
+            panel1.Controls.Add(txtUserName);
+            panel1.Controls.Add(label1);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(800, 64);
+            panel1.TabIndex = 5;
             // 
-            // Setting_RolePermission
+            // Menu_TeachingSchedule
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(panel2);
             Controls.Add(customListView1);
             Controls.Add(panel1);
-            Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Setting_RolePermission";
-            Text = "Setting_RolePermission";
-            FormClosed += Setting_RolePermission_FormClosed;
-            Load += Setting_RolePermission_Load;
+            Name = "Menu_TeachingSchedule";
+            Text = "Menu_TeachingSchedule";
+            FormClosed += Menu_TeachingSchedule_FormClosed;
+            Load += Menu_TeachingSchedule_Load;
+            panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private CustomControls.CustomListView customListView1;
-        private Panel panel1;
-        private TextBox txtQuyen;
+        private TextBox txtUserName;
         private Label label1;
         private Panel panel2;
         private Label lblPageInfo;
         private Button btnNext;
         private Button btnPrev;
-        private TextBox txtChucDanh;
-        private Label label2;
+        private CustomControls.CustomListView customListView1;
+        private Panel panel1;
     }
 }

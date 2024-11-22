@@ -1,17 +1,19 @@
 ﻿using BusinessLogic.IService;
-using BusinessLogic.IService.IRoleService.Dto;
 using BusinessLogic.IService.IUserService.Dto;
 using Presentation.Forms.FormInput;
 
-namespace Presentation.Forms.SubSettings
+namespace Presentation.Forms.SubMenu
 {
-    public partial class Setting_Role : Form
+    public partial class Menu_TeachingSchedule : Form
     {
         private MainForm mainForm;
         private readonly IServiceManager _serviceManager;
         private int IdSelectListView;
+        //private List<OptionItem> lstRole = new List<OptionItem>();
+        private List<OptionItem> lstFactly = new List<OptionItem>();
+        private List<OptionItem> lstCourse = new List<OptionItem>();
 
-        public Setting_Role(MainForm mainForm, IServiceManager serviceManager)
+        public Menu_TeachingSchedule(MainForm mainForm, IServiceManager serviceManager)
         {
             InitializeComponent();
             this.mainForm = mainForm;
@@ -22,6 +24,26 @@ namespace Presentation.Forms.SubSettings
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
             mainForm.SetButtonVisibility(true, true, true, true);
         }
+
+        private void Menu_TeachingSchedule_Load(object sender, EventArgs e)
+        {
+            var resultLstFactly = _serviceManager.FacultyService.GetCombobox().Items;
+            lstFactly = resultLstFactly.Select(x => new OptionItem
+            {
+                Value = x.FacultyId.ToString(),
+                Text = x.FullName
+            }).ToList();
+
+            var resultLstCourse = _serviceManager.CourseService.GetCombobox().Items;
+            lstCourse = resultLstCourse.Select(x => new OptionItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.CourseName
+            }).ToList();
+
+            this.OnSearch();
+        }
+
         private void MainForm_SearchButtonClicked(object sender, EventArgs e)
         {
             this.OnSearch();
@@ -29,30 +51,36 @@ namespace Presentation.Forms.SubSettings
 
         private void OnSearch()
         {
-            var result = _serviceManager.RoleService.Search(txtUserName.Text).Items;
+            var result = _serviceManager.TeachingScheduleService.Search("test").Items;
             List<Dictionary<string, string>> data = result.Select((e, index) => new Dictionary<string, string>
-            {
-                { "ID", e.Id.ToString() },
-                { "STT", (index + 1).ToString() },
-                { "RoleName", e.RoleName }
-            }).ToList();
+                {
+                    { "ID", e.Id.ToString() },
+                    { "STT", (index + 1).ToString() },
+                    { "FacultyName", e.Faculty.FirstName + ' ' + e.Faculty.LastName },
+                    { "CourseName", e.Course.CourseName},
+                    { "Time", e.StartAndEndTime},
+                    { "Date", e.Date.ToShortDateString()},
+                }).ToList();
 
             customListView1.SetData(data);
             lblPageInfo.Text = customListView1.GetPageInfo();
+
         }
 
         private void MainForm_AddButtonClicked(object sender, EventArgs e)
         {
             var fields = new List<InputField>
             {
-                new InputField(label:"RoleName",type:"text", required: true)
+                new InputField(label:"Username",type:"text", required: true),
+                new InputField(label:"PasswordHash",type: "text_password", required : true),
+                //new InputField(label: "RoleID", type: "combobox", value: "", options: this.lstRole)
             };
 
-            var inputForm = new InputForm(fields, entity: new RoleCreateDto());
+            var inputForm = new InputForm(fields, entity: new UserCreateDto());
             if (inputForm.ShowDialog() == DialogResult.OK)
             {
-                RoleCreateDto roleCreate = (RoleCreateDto)inputForm.GetEntity();
-                var result = _serviceManager.RoleService.Create(roleCreate);
+                UserCreateDto userCreate = (UserCreateDto)inputForm.GetEntity();
+                var result = _serviceManager.UserService.Create(userCreate);
                 if (result.Code == 0)
                 {
                     MessageBox.Show("Thêm mới thành công");
@@ -70,18 +98,20 @@ namespace Presentation.Forms.SubSettings
         {
             if (this.IdSelectListView != 0)
             {
-                var valueById = _serviceManager.RoleService.GetById(this.IdSelectListView);
+                var valueById = _serviceManager.UserService.GetById(this.IdSelectListView);
                 var fields = new List<InputField>
                 {
                     new InputField(label:"Id",type:"text", value: valueById.Data.Id.ToString(), required: true, isReadOnly: true),
-                    new InputField(label:"RoleName",type:"text", value: valueById.Data.RoleName, required: true, isReadOnly: false)
+                    new InputField(label:"Username",type:"text", value: valueById.Data.Username, required: true, isReadOnly: true),
+                    new InputField(label:"PasswordHash",type: "text_password",value: valueById.Data.PasswordHash, required : true),
+                    //new InputField(label: "RoleID", type: "combobox", value: valueById.Data.RoleID.ToString(), options: this.lstRole)
                 };
-                var inputForm = new InputForm(fields, entity: new RoleUpdateDto());
+                var inputForm = new InputForm(fields, entity: new UserUpdateDto());
 
                 if (inputForm.ShowDialog() == DialogResult.OK)
                 {
-                    RoleUpdateDto roleUpdate = (RoleUpdateDto)inputForm.GetEntity();
-                    var result = _serviceManager.RoleService.Update(roleUpdate);
+                    UserUpdateDto userCreate = (UserUpdateDto)inputForm.GetEntity();
+                    var result = _serviceManager.UserService.Update(userCreate);
                     if (result.Code == 0)
                     {
                         MessageBox.Show("Cập nhập thành công");
@@ -110,7 +140,7 @@ namespace Presentation.Forms.SubSettings
                                 MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    var delete = _serviceManager.RoleService.Delete(this.IdSelectListView);
+                    var delete = _serviceManager.UserService.Delete(this.IdSelectListView);
                     if (delete.Code == 0)
                     {
                         MessageBox.Show("Xóa thành công");
@@ -150,12 +180,7 @@ namespace Presentation.Forms.SubSettings
             lblPageInfo.Text = customListView1.GetPageInfo();
         }
 
-        private void Setting_Role_Load(object sender, EventArgs e)
-        {
-            this.OnSearch();
-        }
-
-        private void Setting_Role_FormClosed(object sender, FormClosedEventArgs e)
+        private void Menu_TeachingSchedule_FormClosed(object sender, FormClosedEventArgs e)
         {
             mainForm.AddButtonClicked -= MainForm_AddButtonClicked;
             mainForm.EditButtonClicked -= MainForm_EditButtonClicked;

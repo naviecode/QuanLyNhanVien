@@ -10,7 +10,9 @@ namespace BusinessLogic.IService.IUserService
         ResponseDataDto<UserReadDto> GetAll();
         ResponseActionDto<UserReadDto> GetById(int userId);
         ResponseActionDto<UserReadDto> Login(string username, string password);
-        ResponseActionDto<UserReadDto> ChangePassword(string username, string passwordOld, string passwordNew);
+        ResponseActionDto<UserReadDto> ChangePassword(int userId, string passwordOld, string passwordNew);
+        ResponseDataDto<UserReadDto> Search(string filter);
+
 
     }
 }

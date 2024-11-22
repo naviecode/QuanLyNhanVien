@@ -141,5 +141,20 @@ namespace BusinessLogic.Services.FacultyService
             }
             return new ResponseActionDto<FacultyByIdDto>(new FacultyByIdDto(), -1, "Không tìm thấy", "");
         }
+
+        public ResponseDataDto<FacultyResultSearchDto> GetCombobox()
+        {
+            var facultys = _repositoryManager.FacultysRepository.GetAll();
+            var query = from faculty in facultys
+                        select new FacultyResultSearchDto
+                        {
+                            FacultyId = faculty.Id,
+                            FullName = faculty.FirstName + ' ' + faculty.LastName
+                        };
+            var result = query.ToList();
+            int totalItem = result.Count();
+            return new ResponseDataDto<FacultyResultSearchDto>(result, totalItem);
+
+        }
     }
 }

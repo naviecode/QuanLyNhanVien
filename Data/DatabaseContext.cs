@@ -50,9 +50,6 @@ namespace Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-                        //modelBuilder.Entity<RolePermissions>()
-            //    .HasKey(rp => rp.Id);
-            //Chạy lại migration thì khi getall rolePermission sẽ đi kèm permission name luôn khỏi phải left join
             modelBuilder.Entity<RolePermissions>()
                            .HasKey(rp => new { rp.RoleID, rp.PermissionID });
 
@@ -135,6 +132,16 @@ namespace Data
             modelBuilder.Entity<Enrollment>()
                 .Property(e => e.Grade)
                 .HasColumnType("decimal(5,2)");
+
+            modelBuilder.Entity<TeachingSchedule>()
+                .HasOne<Course>()
+                .WithMany()
+                .HasForeignKey(ts => ts.CourseScheduleId);
+
+            modelBuilder.Entity<TeachingSchedule>()
+                .HasOne<Faculty>()
+                .WithMany()
+                .HasForeignKey(ts => ts.FacultyScheduleId);
         }
     }
 }

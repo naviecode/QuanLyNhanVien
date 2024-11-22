@@ -46,11 +46,6 @@
             label7 = new Label();
             txtKhoa = new TextBox();
             txtMaLop = new TextBox();
-            label9 = new Label();
-            txtTimMasv = new TextBox();
-            label10 = new Label();
-            txtTimMaLop = new TextBox();
-            label11 = new Label();
             groupBox2 = new GroupBox();
             label12 = new Label();
             txtKhoaHoc = new TextBox();
@@ -64,7 +59,6 @@
             txtSDT = new TextBox();
             btnCapNhap = new Button();
             btnDoiMatKhau = new Button();
-            cboKhoa = new ComboBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -86,7 +80,7 @@
             groupBox1.Controls.Add(pictureBox1);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
-            groupBox1.Location = new Point(145, 66);
+            groupBox1.Location = new Point(132, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(530, 233);
             groupBox1.TabIndex = 0;
@@ -95,6 +89,7 @@
             // 
             // txtGioiTinh
             // 
+            txtGioiTinh.Enabled = false;
             txtGioiTinh.Location = new Point(117, 86);
             txtGioiTinh.Name = "txtGioiTinh";
             txtGioiTinh.Size = new Size(202, 23);
@@ -102,6 +97,7 @@
             // 
             // txtNgayNhapHoc
             // 
+            txtNgayNhapHoc.Enabled = false;
             txtNgayNhapHoc.Location = new Point(117, 118);
             txtNgayNhapHoc.Name = "txtNgayNhapHoc";
             txtNgayNhapHoc.Size = new Size(202, 23);
@@ -109,6 +105,7 @@
             // 
             // txtNgaySinh
             // 
+            txtNgaySinh.Enabled = false;
             txtNgaySinh.Location = new Point(117, 179);
             txtNgaySinh.Name = "txtNgaySinh";
             txtNgaySinh.Size = new Size(202, 23);
@@ -116,6 +113,7 @@
             // 
             // txtQueQuan
             // 
+            txtQueQuan.Enabled = false;
             txtQueQuan.Location = new Point(117, 150);
             txtQueQuan.Name = "txtQueQuan";
             txtQueQuan.Size = new Size(202, 23);
@@ -123,6 +121,7 @@
             // 
             // txtTenSv
             // 
+            txtTenSv.Enabled = false;
             txtTenSv.Location = new Point(117, 54);
             txtTenSv.Name = "txtTenSv";
             txtTenSv.Size = new Size(202, 23);
@@ -166,6 +165,7 @@
             // 
             // txtMaSv
             // 
+            txtMaSv.Enabled = false;
             txtMaSv.Location = new Point(117, 22);
             txtMaSv.Name = "txtMaSv";
             txtMaSv.Size = new Size(202, 23);
@@ -219,6 +219,7 @@
             // 
             // txtKhoa
             // 
+            txtKhoa.Enabled = false;
             txtKhoa.Location = new Point(98, 20);
             txtKhoa.Name = "txtKhoa";
             txtKhoa.Size = new Size(149, 23);
@@ -226,51 +227,11 @@
             // 
             // txtMaLop
             // 
+            txtMaLop.Enabled = false;
             txtMaLop.Location = new Point(98, 50);
             txtMaLop.Name = "txtMaLop";
             txtMaLop.Size = new Size(149, 23);
             txtMaLop.TabIndex = 13;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(12, 31);
-            label9.Name = "label9";
-            label9.Size = new Size(40, 15);
-            label9.TabIndex = 18;
-            label9.Text = "Mã SV";
-            // 
-            // txtTimMasv
-            // 
-            txtTimMasv.Location = new Point(82, 27);
-            txtTimMasv.Name = "txtTimMasv";
-            txtTimMasv.Size = new Size(149, 23);
-            txtTimMasv.TabIndex = 17;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(275, 31);
-            label10.Name = "label10";
-            label10.Size = new Size(47, 15);
-            label10.TabIndex = 8;
-            label10.Text = "Mã Lớp";
-            // 
-            // txtTimMaLop
-            // 
-            txtTimMaLop.Location = new Point(345, 27);
-            txtTimMaLop.Name = "txtTimMaLop";
-            txtTimMaLop.Size = new Size(149, 23);
-            txtTimMaLop.TabIndex = 13;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(528, 31);
-            label11.Name = "label11";
-            label11.Size = new Size(34, 15);
-            label11.TabIndex = 7;
-            label11.Text = "Khoa";
             // 
             // groupBox2
             // 
@@ -280,7 +241,7 @@
             groupBox2.Controls.Add(txtKhoaHoc);
             groupBox2.Controls.Add(txtMaLop);
             groupBox2.Controls.Add(label7);
-            groupBox2.Location = new Point(145, 305);
+            groupBox2.Location = new Point(132, 251);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(253, 114);
             groupBox2.TabIndex = 19;
@@ -298,6 +259,7 @@
             // 
             // txtKhoaHoc
             // 
+            txtKhoaHoc.Enabled = false;
             txtKhoaHoc.Location = new Point(98, 80);
             txtKhoaHoc.Name = "txtKhoaHoc";
             txtKhoaHoc.Size = new Size(149, 23);
@@ -312,7 +274,7 @@
             groupBox3.Controls.Add(txtAddress);
             groupBox3.Controls.Add(txtEmail);
             groupBox3.Controls.Add(txtSDT);
-            groupBox3.Location = new Point(416, 305);
+            groupBox3.Location = new Point(403, 251);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(259, 114);
             groupBox3.TabIndex = 19;
@@ -356,6 +318,7 @@
             // 
             // txtAddress
             // 
+            txtAddress.Enabled = false;
             txtAddress.Location = new Point(80, 77);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(173, 23);
@@ -363,6 +326,7 @@
             // 
             // txtEmail
             // 
+            txtEmail.Enabled = false;
             txtEmail.Location = new Point(80, 49);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(173, 23);
@@ -370,6 +334,7 @@
             // 
             // txtSDT
             // 
+            txtSDT.Enabled = false;
             txtSDT.Location = new Point(80, 21);
             txtSDT.Name = "txtSDT";
             txtSDT.Size = new Size(173, 23);
@@ -377,50 +342,41 @@
             // 
             // btnCapNhap
             // 
-            btnCapNhap.Location = new Point(583, 438);
+            btnCapNhap.Enabled = false;
+            btnCapNhap.Location = new Point(570, 384);
             btnCapNhap.Name = "btnCapNhap";
             btnCapNhap.Size = new Size(92, 38);
             btnCapNhap.TabIndex = 20;
             btnCapNhap.Text = "Cập nhập";
             btnCapNhap.UseVisualStyleBackColor = true;
+            btnCapNhap.Click += btnCapNhap_Click;
             // 
             // btnDoiMatKhau
             // 
-            btnDoiMatKhau.Location = new Point(485, 438);
+            btnDoiMatKhau.Enabled = false;
+            btnDoiMatKhau.Location = new Point(472, 384);
             btnDoiMatKhau.Name = "btnDoiMatKhau";
             btnDoiMatKhau.Size = new Size(92, 38);
             btnDoiMatKhau.TabIndex = 20;
             btnDoiMatKhau.Text = "Đổi mật khẩu";
             btnDoiMatKhau.UseVisualStyleBackColor = true;
-            // 
-            // cboKhoa
-            // 
-            cboKhoa.FormattingEnabled = true;
-            cboKhoa.Location = new Point(583, 27);
-            cboKhoa.Name = "cboKhoa";
-            cboKhoa.Size = new Size(153, 23);
-            cboKhoa.TabIndex = 21;
+            btnDoiMatKhau.Click += btnDoiMatKhau_Click;
             // 
             // ViewStudentInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(767, 504);
-            Controls.Add(cboKhoa);
             Controls.Add(btnDoiMatKhau);
             Controls.Add(btnCapNhap);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
-            Controls.Add(label9);
             Controls.Add(groupBox1);
-            Controls.Add(txtTimMasv);
-            Controls.Add(txtTimMaLop);
-            Controls.Add(label10);
-            Controls.Add(label11);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ViewStudentInfo";
             Text = "ViewStudentInfo";
             FormClosed += ViewStudentInfo_FormClosed;
+            Load += ViewStudentInfo_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -429,7 +385,6 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -452,11 +407,6 @@
         private TextBox txtKhoa;
         private TextBox txtQueQuan;
         private TextBox txtTenSv;
-        private Label label9;
-        private TextBox txtTimMasv;
-        private Label label10;
-        private TextBox txtTimMaLop;
-        private Label label11;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
         private Label label13;
@@ -470,6 +420,5 @@
         private TextBox txtEmail;
         private Button btnCapNhap;
         private Button btnDoiMatKhau;
-        private ComboBox cboKhoa;
     }
 }

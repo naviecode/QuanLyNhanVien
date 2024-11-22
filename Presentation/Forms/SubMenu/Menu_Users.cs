@@ -20,6 +20,7 @@ namespace Presentation.Forms.SubMenu
             mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            mainForm.SetButtonVisibility(true ,true, true ,true );
         }
 
         private void Menu_Users_Load(object sender, EventArgs e)
@@ -41,17 +42,18 @@ namespace Presentation.Forms.SubMenu
 
         private void OnSearch()
         {
-            var result = _serviceManager.UserService.GetAll().Items;
+            var result = _serviceManager.UserService.Search(txtUserName.Text).Items;
             List<Dictionary<string, string>> data = result.Select((e, index) => new Dictionary<string, string>
-            {
-                { "ID", e.Id.ToString() },
-                { "STT", (index + 1).ToString() },
-                { "Name", e.Username },
-                { "RoleName", e.Role.RoleName.ToString() }
-            }).ToList();
+                {
+                    { "ID", e.Id.ToString() },
+                    { "STT", (index + 1).ToString() },
+                    { "Name", e.Username },
+                    { "RoleName", e.Role.RoleName.ToString() }
+                }).ToList();
 
             customListView1.SetData(data);
             lblPageInfo.Text = customListView1.GetPageInfo();
+
         }
 
         private void MainForm_AddButtonClicked(object sender, EventArgs e)
@@ -127,7 +129,6 @@ namespace Presentation.Forms.SubMenu
                                 MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    // Nếu người dùng chọn "Yes", thực hiện hành động xóa
                     var delete = _serviceManager.UserService.Delete(this.IdSelectListView);
                     if (delete.Code == 0)
                     {

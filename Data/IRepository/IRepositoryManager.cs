@@ -13,5 +13,6 @@
         IStudentsRepository StudentsRepository { get; }
         IPermissionsRepository PermissionsRepository { get; }
         IRolePermissionsRepository RolePermissionsRepository { get; }
+        ITeachingScheduleRepository TeachingScheduleRepository { get; }
     }
 }

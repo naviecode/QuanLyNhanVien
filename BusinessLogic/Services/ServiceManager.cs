@@ -24,6 +24,8 @@ using BusinessLogic.Services.RoleService;
 using BusinessLogic.Services.UserService;
 using Data.IRepository;
 using Microsoft.EntityFrameworkCore.Internal;
+using BusinessLogic.IService.ITeachingScheduleService;
+using BusinessLogic.Services.TeachingScheduleService;
 
 namespace BusinessLogic.Services
 {
@@ -40,6 +42,7 @@ namespace BusinessLogic.Services
         private readonly Lazy<IRegistCourseServices> _lazyregistCourseService;
         private readonly Lazy<IPermissionService> _lazyPermissionService;
         private readonly Lazy<IRolePermissionService> _lazyRolePermissionService;
+        private readonly Lazy<ITeachingScheduleServices> _lazyTeacultyScheduleService;
         public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper) 
         {
             _lazyUserService = new Lazy<IUserServices>(()=> new UserServices(repositoryManager, mapper));
@@ -53,6 +56,7 @@ namespace BusinessLogic.Services
             _lazyregistCourseService = new Lazy<IRegistCourseServices>(() => new RegistCourseServices(repositoryManager, mapper));
             _lazyPermissionService = new Lazy<IPermissionService>(()=> new PermissionsServices(repositoryManager, mapper));
             _lazyRolePermissionService = new Lazy<IRolePermissionService> (()=> new RolePermissionsServices(repositoryManager, mapper));
+            _lazyTeacultyScheduleService = new Lazy<ITeachingScheduleServices>(()=> new TeachingScheduleServices(repositoryManager, mapper));
         }
 
         public IUserServices UserService => _lazyUserService.Value;
@@ -66,5 +70,6 @@ namespace BusinessLogic.Services
         public IRegistCourseServices RegistCourseService => _lazyregistCourseService.Value;
         public IPermissionService PermissionService => _lazyPermissionService.Value;
         public IRolePermissionService RolePermissionService => _lazyRolePermissionService.Value;
+        public ITeachingScheduleServices TeachingScheduleService => _lazyTeacultyScheduleService.Value;
     }
 }

@@ -24,6 +24,7 @@ namespace Presentation.Forms.SubSettings
             mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            mainForm.SetButtonVisibility(true, true, true, true);
         }
 
 
@@ -51,7 +52,7 @@ namespace Presentation.Forms.SubSettings
 
         private void OnSearch()
         {
-            var result = _serviceManager.RolePermissionService.GetAll().Items;
+            var result = _serviceManager.RolePermissionService.Search(txtChucDanh.Text, txtQuyen.Text).Items;
             List<Dictionary<string, string>> data = result.Select((e, index) => new Dictionary<string, string>
             {
                 { "ID", e.Id.ToString() },
