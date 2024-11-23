@@ -76,9 +76,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(9, 16);
             label1.Name = "label1";
-            label1.Size = new Size(90, 15);
+            label1.Size = new Size(84, 15);
             label1.TabIndex = 1;
-            label1.Text = "Tên người dùng";
+            label1.Text = "Tên chức danh";
             // 
             // panel2
             // 

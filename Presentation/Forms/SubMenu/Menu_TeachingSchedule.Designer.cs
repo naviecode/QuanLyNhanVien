@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtUserName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
@@ -36,25 +35,19 @@
             btnPrev = new Button();
             customListView1 = new CustomControls.CustomListView();
             panel1 = new Panel();
+            txtUserName = new TextBox();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // txtUserName
-            // 
-            txtUserName.Location = new Point(116, 12);
-            txtUserName.Name = "txtUserName";
-            txtUserName.Size = new Size(193, 23);
-            txtUserName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(9, 16);
             label1.Name = "label1";
-            label1.Size = new Size(90, 15);
+            label1.Size = new Size(81, 15);
             label1.TabIndex = 1;
-            label1.Text = "Tên người dùng";
+            label1.Text = "Tên người dạy";
             // 
             // panel2
             // 
@@ -120,6 +113,13 @@
             panel1.Size = new Size(800, 64);
             panel1.TabIndex = 5;
             // 
+            // txtUserName
+            // 
+            txtUserName.Location = new Point(116, 12);
+            txtUserName.Name = "txtUserName";
+            txtUserName.Size = new Size(193, 23);
+            txtUserName.TabIndex = 0;
+            // 
             // Menu_TeachingSchedule
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -140,8 +140,6 @@
         }
 
         #endregion
-
-        private TextBox txtUserName;
         private Label label1;
         private Panel panel2;
         private Label lblPageInfo;
@@ -149,5 +147,6 @@
         private Button btnPrev;
         private CustomControls.CustomListView customListView1;
         private Panel panel1;
+        private TextBox txtUserName;
     }
 }
