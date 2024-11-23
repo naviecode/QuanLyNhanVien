@@ -29,13 +29,21 @@
         private void InitializeComponent()
         {
             customListView1 = new CustomControls.CustomListView();
-            txtKhoaHoc = new TextBox();
+            txtCourseName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
             btnNext = new Button();
             btnPrev = new Button();
             panel1 = new Panel();
+            txtYear = new TextBox();
+            txtSemester = new TextBox();
+            txtFacultyName = new TextBox();
+            txtClassName = new TextBox();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
             btnHuyDangKy = new Button();
             btnDangky = new Button();
             panel2.SuspendLayout();
@@ -48,24 +56,24 @@
             customListView1.Dock = DockStyle.Fill;
             customListView1.FullRowSelect = true;
             customListView1.GridLines = true;
-            customListView1.Location = new Point(0, 64);
+            customListView1.Location = new Point(0, 92);
             customListView1.Name = "customListView1";
-            customListView1.Size = new Size(800, 339);
+            customListView1.Size = new Size(800, 311);
             customListView1.TabIndex = 6;
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
             // 
-            // txtKhoaHoc
+            // txtCourseName
             // 
-            txtKhoaHoc.Location = new Point(116, 12);
-            txtKhoaHoc.Name = "txtKhoaHoc";
-            txtKhoaHoc.Size = new Size(193, 23);
-            txtKhoaHoc.TabIndex = 0;
+            txtCourseName.Location = new Point(115, 6);
+            txtCourseName.Name = "txtCourseName";
+            txtCourseName.Size = new Size(193, 23);
+            txtCourseName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(9, 16);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
             label1.Size = new Size(77, 15);
             label1.TabIndex = 1;
@@ -111,33 +119,106 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(txtYear);
+            panel1.Controls.Add(txtSemester);
+            panel1.Controls.Add(txtFacultyName);
+            panel1.Controls.Add(txtClassName);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(label2);
             panel1.Controls.Add(btnHuyDangKy);
             panel1.Controls.Add(btnDangky);
-            panel1.Controls.Add(txtKhoaHoc);
+            panel1.Controls.Add(txtCourseName);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 64);
+            panel1.Size = new Size(800, 92);
             panel1.TabIndex = 5;
+            // 
+            // txtYear
+            // 
+            txtYear.Location = new Point(404, 34);
+            txtYear.Name = "txtYear";
+            txtYear.Size = new Size(193, 23);
+            txtYear.TabIndex = 10;
+            // 
+            // txtSemester
+            // 
+            txtSemester.Location = new Point(404, 6);
+            txtSemester.Name = "txtSemester";
+            txtSemester.Size = new Size(193, 23);
+            txtSemester.TabIndex = 9;
+            // 
+            // txtFacultyName
+            // 
+            txtFacultyName.Location = new Point(115, 60);
+            txtFacultyName.Name = "txtFacultyName";
+            txtFacultyName.Size = new Size(193, 23);
+            txtFacultyName.TabIndex = 8;
+            // 
+            // txtClassName
+            // 
+            txtClassName.Location = new Point(115, 34);
+            txtClassName.Name = "txtClassName";
+            txtClassName.Size = new Size(193, 23);
+            txtClassName.TabIndex = 7;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(354, 37);
+            label5.Name = "label5";
+            label5.Size = new Size(33, 15);
+            label5.TabIndex = 6;
+            label5.Text = "Năm";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(354, 12);
+            label4.Name = "label4";
+            label4.Size = new Size(44, 15);
+            label4.TabIndex = 5;
+            label4.Text = "Học kỳ";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 63);
+            label3.Name = "label3";
+            label3.Size = new Size(83, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Tên giảng viên";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 37);
+            label2.Name = "label2";
+            label2.Size = new Size(45, 15);
+            label2.TabIndex = 3;
+            label2.Text = "Tên lớp";
             // 
             // btnHuyDangKy
             // 
-            btnHuyDangKy.Location = new Point(685, 12);
+            btnHuyDangKy.Location = new Point(644, 49);
             btnHuyDangKy.Name = "btnHuyDangKy";
-            btnHuyDangKy.Size = new Size(103, 23);
+            btnHuyDangKy.Size = new Size(122, 34);
             btnHuyDangKy.TabIndex = 2;
             btnHuyDangKy.Text = "Hủy đăng ký";
             btnHuyDangKy.UseVisualStyleBackColor = true;
             // 
             // btnDangky
             // 
-            btnDangky.Location = new Point(567, 12);
+            btnDangky.Location = new Point(644, 6);
             btnDangky.Name = "btnDangky";
-            btnDangky.Size = new Size(103, 23);
+            btnDangky.Size = new Size(122, 37);
             btnDangky.TabIndex = 2;
-            btnDangky.Text = "Đăng ký";
+            btnDangky.Text = "Đăng ký khóa mới";
             btnDangky.UseVisualStyleBackColor = true;
+            btnDangky.Click += btnDangky_Click;
             // 
             // Menu_Enrollment
             // 
@@ -150,6 +231,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Enrollment";
             Text = "Menu_Enrollment";
+            FormClosed += Menu_Enrollment_FormClosed;
+            Load += Menu_Enrollment_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -159,7 +242,7 @@
         #endregion
 
         private CustomControls.CustomListView customListView1;
-        private TextBox txtKhoaHoc;
+        private TextBox txtCourseName;
         private Label label1;
         private Panel panel2;
         private Label lblPageInfo;
@@ -168,5 +251,13 @@
         private Panel panel1;
         private Button btnHuyDangKy;
         private Button btnDangky;
+        private Label label3;
+        private Label label2;
+        private Label label5;
+        private Label label4;
+        private TextBox txtClassName;
+        private TextBox txtSemester;
+        private TextBox txtFacultyName;
+        private TextBox txtYear;
     }
 }

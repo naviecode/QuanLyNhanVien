@@ -23,6 +23,7 @@ namespace Presentation.Forms.SubMenu
             mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            this.mainForm.SetButtonVisibility(true, true, true, true);
         }
         private void MainForm_SearchButtonClicked(object sender, EventArgs e)
         {
@@ -84,15 +85,15 @@ namespace Presentation.Forms.SubMenu
                 var valueById = _serviceManager.FacultyService.GetById(this.IdSelectListView);
                 var fields = new List<InputField>
                 {
-                    new InputField(label:"FacultyId",type:"text", required: true, isReadOnly: true),
-                    new InputField(label:"LastName",type:"text", required: true),
-                    new InputField(label:"FirstName",type:"text", required: true),
-                    new InputField(label:"Email",type:"text"),
-                    new InputField(label:"PhoneNumber",type:"text"),
-                    new InputField(label:"DepartmentId", type: "combobox", value: "", options: this.lstDepartment),
-                    new InputField(label:"UserId",type:"text", required: true, isReadOnly: true),
-                    new InputField(label:"Username",type:"text", required: true),
-                    new InputField(label:"PasswordHash",type: "text_password", required : true),
+                    new InputField(label:"FacultyId",type:"text", value: valueById.Data.FacultyId.ToString(), required: true, isReadOnly: true),
+                    new InputField(label:"LastName",type:"text", value: valueById.Data.LastName, required: true),
+                    new InputField(label:"FirstName",type:"text", value: valueById.Data.FirstName, required: true),
+                    new InputField(label:"Email",type:"text", value: valueById.Data.Email),
+                    new InputField(label:"PhoneNumber",type:"text",value: valueById.Data.PhoneNumber),
+                    new InputField(label:"DepartmentId", type: "combobox", value: valueById.Data.DepartmentID.ToString(), options: this.lstDepartment),
+                    new InputField(label:"UserId",type:"text", required: true,value: valueById.Data.UserId.ToString(), isReadOnly: true),
+                    new InputField(label:"Username",type:"text", required: true, value: valueById.Data.Username),
+                    new InputField(label:"PasswordHash",type: "text_password",value: valueById.Data.PasswordHash, required : true),
                 };
                 var inputForm = new InputForm(fields, entity: new FacultyUpdateDto());
 
