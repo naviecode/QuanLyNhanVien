@@ -8,8 +8,8 @@ namespace BusinessLogic.Mapper
     {
         public CourseMapperProfile() 
         {
-            CreateMap<CourseAddDto, Course>();
-            CreateMap<CourseUpdateDto, Course>();
+            CreateMap<CourseAddDto, Course>().ForMember(dest => dest.Enrollments, opt => opt.MapFrom(src => new List<Enrollment>())).ForMember(dest => dest.Classes, opt => opt.MapFrom(src => new List<Class>()));
+            CreateMap<CourseUpdateDto, Course>().ForMember(dest => dest.Enrollments, opt => opt.MapFrom(src => new List<Enrollment>())).ForMember(dest => dest.Classes, opt => opt.MapFrom(src => new List<Class>()));
             CreateMap<Course, CourseResultByIdDto>().ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.Id));
             CreateMap<Course, CourseSearchResultDto>();
         }

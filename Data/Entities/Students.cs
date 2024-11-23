@@ -31,6 +31,6 @@ namespace Data.Entities
 
         public Users User { get; set; }
         // Navigation property
-        public ICollection<Enrollment> Enrollments { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }

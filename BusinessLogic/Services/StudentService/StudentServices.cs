@@ -66,15 +66,16 @@ namespace BusinessLogic.Services.StudentService
             var userIdNew = _repositoryManager.UsersRepository.Add(_mapper.Map<UserCreateDto, Users>(new UserCreateDto() { Username = data.Username, PasswordHash = data.PasswordHash, RoleID = AppConsts.StudentRoleId}));
             data.UserId = userIdNew;
 
-            checkIsExist = _repositoryManager.StudentsRepository.GetAll().Any(x => x.FirstName == data.FirstName && x.LastName == data.LastName &&
+            var checkIsExistStudent = _repositoryManager.StudentsRepository.GetAll().Any(x => x.FirstName == data.FirstName && x.LastName == data.LastName &&
                                                                                        x.DateOfBirth == data.DateOfBirth && x.Gender == data.Gender &&
                                                                                        x.Email == data.Email && x.PhoneNumber == data.PhoneNumber &&
                                                                                        x.Address == data.Address && x.EnrollmentDate == data.EnrollmentDate);
-            if (checkIsExist)
+            if (checkIsExistStudent)
             {
                 return new ResponseActionDto<StudentSearchResultDto>(null, -1, "Thêm mới thất bại", "Sinh viên đã tồn tại trong hệ thống!");
 
             }
+            var x = _mapper.Map<StudentAddDto, Students>(data);
             var idNew = _repositoryManager.StudentsRepository.Add(_mapper.Map<StudentAddDto, Students>(data));
             if (idNew != null && idNew != 0)
             {

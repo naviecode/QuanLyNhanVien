@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLogic.IService.ICourseService.Dto;
 using BusinessLogic.IService.IStudentService.Dto;
 using Data.Entities;
 
@@ -8,9 +9,10 @@ namespace BusinessLogic.Mapper
     {
         public StudentMapperProfile()
         {
-            CreateMap<StudentAddDto, Students>();
-            CreateMap<StudentUpdateDto, Students>().ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<StudentAddDto, Students>().ForMember(dest => dest.Enrollments, opt => opt.MapFrom(src => new List<Enrollment>()));
+            CreateMap<StudentUpdateDto, Students>().ForMember(x => x.Id, opt => opt.Ignore()).ForMember(dest => dest.Enrollments, opt => opt.MapFrom(src => new List<Enrollment>()));
             CreateMap<Students, StudentResultByIdDto>();
+            CreateMap<Students, StudentSearchResultDto>().ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.Id));
         }
     }
 }
