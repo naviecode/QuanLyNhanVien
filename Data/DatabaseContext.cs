@@ -44,8 +44,6 @@ namespace Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<Faculty> Faculty { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<ClassSection> ClassSections { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
