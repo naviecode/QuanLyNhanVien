@@ -17,5 +17,6 @@ namespace BusinessLogic.IService.ICourseService
         ResponseDataDto<CourseNearCloseDto> CourseNearClose();
         ResponseDataDto<CourseSearchResultDto> GetCombobox();
         ResponseDataDto<CourseSearchResultDto> GetCombobox_sonnq();
+        ResponseDataDto<CourseWithClassByIdResultDto> GetComboboxWithClasses();
     }
 }

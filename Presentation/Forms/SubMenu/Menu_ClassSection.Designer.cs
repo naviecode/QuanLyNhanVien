@@ -220,6 +220,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_ClassSection";
             Text = "Menu_ClassSection";
+            FormClosed += Menu_ClassSection_FormClosed;
             Load += Menu_ClassSection_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);

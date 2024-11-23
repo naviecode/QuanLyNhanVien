@@ -157,5 +157,42 @@ namespace BusinessLogic.Services.CourseService
             int totalItem = result.Count();
             return new ResponseDataDto<CourseSearchResultDto>(result, totalItem);
         }
+        public ResponseDataDto<CourseWithClassByIdResultDto> GetComboboxWithClasses()
+        {
+            var currentDate = DateTime.Now;
+
+            var courses = _repositoryManager.CoursesRepository.GetAll();
+            var classSections = _repositoryManager.ClassSectionsRepository.GetAll();
+            var faculties = _repositoryManager.FacultysRepository.GetAll();
+            var classes = _repositoryManager.ClassesRepository.GetAll();
+
+            var query = from course in courses
+                        join classSection in classSections on course.Id equals classSection.CourseId
+                        join cls in classes on classSection.ClassId equals cls.Id
+                        join faculty in faculties on classSection.FacultyId equals faculty.Id
+                        where course.StartRegisterDate <= currentDate
+                           && course.EndRegisterDate >= currentDate
+                           && course.MaxAmountRegist > 0
+                        select new CourseWithClassByIdResultDto
+                        {
+                            CourseId = course.Id,
+                            CourseName = course.CourseName,
+                            Credits = course.Credits,
+                            StartRegisterDate = course.StartRegisterDate,
+                            EndRegisterDate = course.EndRegisterDate,
+                            MaxAmountRegist = course.MaxAmountRegist,
+                            FacultyName = faculty.LastName + " " + faculty.FirstName,
+                            ClassName = cls.ClassName,
+                            Semester = classSection.Semester,
+                            Year = classSection.Year
+                        };
+
+            var result = query.ToList();
+            int totalItem = result.Count();
+
+            return new ResponseDataDto<CourseWithClassByIdResultDto>(result, totalItem);
+        }
+
+
     }
 }

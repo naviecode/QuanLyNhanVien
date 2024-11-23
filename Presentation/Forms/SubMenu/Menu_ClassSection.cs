@@ -29,6 +29,7 @@ namespace Presentation.Forms.SubMenu
             this.mainForm = mainForm;
             this._serviceManager = serviceManager;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            this.mainForm.SetButtonVisibility(true, false, false, false);
         }
         private void Menu_ClassSection_Load(object sender, EventArgs e)
         {
@@ -134,6 +135,11 @@ namespace Presentation.Forms.SubMenu
                 }
 
             }
-        }      
+        }
+
+        private void Menu_ClassSection_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.SearchButtonClicked -= MainForm_SearchButtonClicked;
+        }
     }
 }

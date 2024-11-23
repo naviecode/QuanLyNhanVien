@@ -30,6 +30,7 @@ namespace Presentation.Forms.SubMenu
             _mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             _mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             _mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            this._mainForm.SetButtonVisibility(true, true, true, true);
         }
         private void Menu_Course_Load(object sender, EventArgs e)
         {

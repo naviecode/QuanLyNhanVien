@@ -52,7 +52,7 @@ namespace Presentation.Forms
             _serviceProvider = serviceProvider;
             InitializeComponent();
             OpenDashboard();
-            ConfigureMenu();
+            //ConfigureMenu();
         }
 
         private void ConfigureMenu()
@@ -299,7 +299,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuEnroollment == null)
             {
-                menuEnroollment = new Menu_Enrollment();
+                menuEnroollment = new Menu_Enrollment(this, _serviceManager);
                 menuEnroollment.FormClosed += Enrollment_FormClosed;
                 menuEnroollment.MdiParent = this;
                 menuEnroollment.Dock = DockStyle.Fill;
@@ -323,7 +323,7 @@ namespace Presentation.Forms
             CloseAllChildForms();
             if (menuGrade == null)
             {
-                menuGrade = new Menu_Grade();
+                menuGrade = new Menu_Grade(this, _serviceManager);
                 menuGrade.FormClosed += Grade_FormClosed;
                 menuGrade.MdiParent = this;
                 menuGrade.Dock = DockStyle.Fill;
