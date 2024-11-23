@@ -33,6 +33,7 @@ namespace Presentation.Forms.SubMenu
             _mainForm.EditButtonClicked += MainForm_EditButtonClicked;
             _mainForm.DeleteButtonClicked += MainForm_DeleteButtonClicked;
             _mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
+            this._mainForm.SetButtonVisibility(true, true, true, true);
         }
         private void Menu_Students_Load(object sender, EventArgs e)
         {
@@ -60,7 +61,6 @@ namespace Presentation.Forms.SubMenu
                 { "Họ và tên", e.FullName },
                 { "Lớp", e.ClassName },
                 { "Ngày sinh", e.DateOfBirth.ToString("dd/mm/yyyy") },
-                { "Họ và tên", e.FullName },
                 { "Giới tính", e.Gender },
                 { "Email", e.Email },
                 { "Số điện thoại", e.PhoneNumber },

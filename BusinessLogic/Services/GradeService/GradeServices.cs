@@ -2,6 +2,7 @@
 using BusinessLogic.IService;
 using BusinessLogic.IService.IGradeService;
 using BusinessLogic.IService.IGradeService.Dto;
+using Data.Entities;
 using Data.IRepository;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,6 +67,7 @@ namespace BusinessLogic.Services.GradeService
                            && (filterInput.Year == 0 || cs.Year == filterInput.Year)
                         select new StudentGradeSearchResultDto
                         {
+                            EnrollmentId = e.Id,
                             StudentId = s.Id,
                             StudentName = s.LastName + " " + s.FirstName,
                             CourseId = c.Id,
@@ -80,7 +82,7 @@ namespace BusinessLogic.Services.GradeService
 
             return new ResponseDataDto<StudentGradeSearchResultDto>(result, totalItem);
         }
-        public ResponseActionDto<StudentGradeByIdDto> GetById(int studentId, int courseId, string semester, int year)
+        public ResponseActionDto<StudentGradeByIdDto> GetById(int id)
         {
             var enrollments = _repositoryManager.EnrollmentsRepository.GetAll();
             var classSections = _repositoryManager.ClassSectionsRepository.GetAll();
@@ -91,10 +93,7 @@ namespace BusinessLogic.Services.GradeService
                          join cs in classSections on e.CourseId equals cs.CourseId
                          join s in students on e.StudentId equals s.Id
                          join c in courses on cs.CourseId equals c.Id
-                         where e.StudentId == studentId
-                               && e.CourseId == courseId
-                               && cs.Semester == semester
-                               && cs.Year == year
+                         where e.Id == id
                          select new StudentGradeByIdDto
                          {
                              StudentId = s.Id,

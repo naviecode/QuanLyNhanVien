@@ -12,16 +12,13 @@ namespace Data.Entities
         [Required]
         [ForeignKey("Course")]
         public int CourseScheduleId { get; set; }
-
-        [Required]
-        public DayOfWeek DayOfWeek { get; set; }
         [Required] 
         public string StartAndEndTime { get; set; } 
 
         public DateTime Date { get; set; } 
         [ForeignKey("Faculty")]
         public int? FacultyScheduleId { get; set; }
-
+        public string Room { get; set; }
         // Navigation properties
         public Course Course { get; set; }
         public Faculty Faculty { get; set; }

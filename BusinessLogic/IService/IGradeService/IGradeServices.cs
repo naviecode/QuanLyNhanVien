@@ -11,6 +11,6 @@ namespace BusinessLogic.IService.IGradeService
     {
         ResponseActionDto<StudentGradeSearchResultDto> AddOrUpdateGrade(GradeAddOrUpdateDto data);
         ResponseDataDto<StudentGradeSearchResultDto> SearchGrades(StudentGradeFilterSearchDto filterInput);
-        ResponseActionDto<StudentGradeByIdDto> GetById(int studentId, int courseId, string semester, int year);
+        ResponseActionDto<StudentGradeByIdDto> GetById(int id);
     }
 }

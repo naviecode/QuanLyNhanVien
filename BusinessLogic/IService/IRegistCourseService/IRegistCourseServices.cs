@@ -9,8 +9,8 @@ namespace BusinessLogic.IService.IRegistCourseService
 {
     public interface IRegistCourseServices
     {
-        ResponseActionDto<RegisteredCourseDto> RegisterCourse(CourseRegistrationDto data);
-        ResponseActionDto<RegisteredCourseDto> CancelRegistration(CancelRegistrationDto data);
-        ResponseActionDto<List<RegisteredCourseDto>> GetRegisteredCourses(int studentId);
+        ResponseActionDto<RegisteredSearchResultto> RegisterCourse(CourseRegistrationDto data);
+        ResponseActionDto<RegisteredSearchResultto> CancelRegistration(int courseId);
+        ResponseDataDto<RegisteredSearchResultto> GetRegisteredCourses(RegisteredFilterSearchDto filterInput);
     }
 }

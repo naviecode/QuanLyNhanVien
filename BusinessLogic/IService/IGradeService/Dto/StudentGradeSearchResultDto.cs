@@ -8,6 +8,7 @@ namespace BusinessLogic.IService.IGradeService.Dto
 {
     public class StudentGradeSearchResultDto
     {
+        public int EnrollmentId { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
         public int CourseId { get; set; }

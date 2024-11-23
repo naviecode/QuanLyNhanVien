@@ -29,14 +29,21 @@
         private void InitializeComponent()
         {
             customListView1 = new CustomControls.CustomListView();
-            txtUserName = new TextBox();
+            txtStudentName = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
             btnNext = new Button();
             btnPrev = new Button();
             panel1 = new Panel();
-            cboLopHoc = new ComboBox();
+            btnCapNhatDiem = new Button();
+            txtYear = new TextBox();
+            label5 = new Label();
+            txtSemester = new TextBox();
+            label4 = new Label();
+            txtCourseName = new TextBox();
+            txtGrade = new TextBox();
+            label3 = new Label();
             label2 = new Label();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
@@ -48,19 +55,19 @@
             customListView1.Dock = DockStyle.Fill;
             customListView1.FullRowSelect = true;
             customListView1.GridLines = true;
-            customListView1.Location = new Point(0, 64);
+            customListView1.Location = new Point(0, 78);
             customListView1.Name = "customListView1";
-            customListView1.Size = new Size(800, 339);
+            customListView1.Size = new Size(800, 325);
             customListView1.TabIndex = 6;
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
             // 
-            // txtUserName
+            // txtStudentName
             // 
-            txtUserName.Location = new Point(116, 12);
-            txtUserName.Name = "txtUserName";
-            txtUserName.Size = new Size(193, 23);
-            txtUserName.TabIndex = 0;
+            txtStudentName.Location = new Point(116, 12);
+            txtStudentName.Name = "txtStudentName";
+            txtStudentName.Size = new Size(193, 23);
+            txtStudentName.TabIndex = 0;
             // 
             // label1
             // 
@@ -111,32 +118,96 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(cboLopHoc);
-            panel1.Controls.Add(txtUserName);
+            panel1.Controls.Add(btnCapNhatDiem);
+            panel1.Controls.Add(txtYear);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(txtSemester);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(txtCourseName);
+            panel1.Controls.Add(txtGrade);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(txtStudentName);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 64);
+            panel1.Size = new Size(800, 78);
             panel1.TabIndex = 5;
             // 
-            // cboLopHoc
+            // btnCapNhatDiem
             // 
-            cboLopHoc.FormattingEnabled = true;
-            cboLopHoc.Location = new Point(402, 13);
-            cboLopHoc.Name = "cboLopHoc";
-            cboLopHoc.Size = new Size(121, 23);
-            cboLopHoc.TabIndex = 2;
+            btnCapNhatDiem.Location = new Point(618, 41);
+            btnCapNhatDiem.Name = "btnCapNhatDiem";
+            btnCapNhatDiem.Size = new Size(132, 25);
+            btnCapNhatDiem.TabIndex = 8;
+            btnCapNhatDiem.Text = "Cập nhật điểm";
+            btnCapNhatDiem.UseVisualStyleBackColor = true;
+            btnCapNhatDiem.Click += btnCapNhatDiem_Click;
+            // 
+            // txtYear
+            // 
+            txtYear.Location = new Point(657, 12);
+            txtYear.Name = "txtYear";
+            txtYear.Size = new Size(93, 23);
+            txtYear.TabIndex = 9;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(618, 16);
+            label5.Name = "label5";
+            label5.Size = new Size(33, 15);
+            label5.TabIndex = 8;
+            label5.Text = "Năm";
+            // 
+            // txtSemester
+            // 
+            txtSemester.Location = new Point(390, 43);
+            txtSemester.Name = "txtSemester";
+            txtSemester.Size = new Size(193, 23);
+            txtSemester.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(337, 46);
+            label4.Name = "label4";
+            label4.Size = new Size(44, 15);
+            label4.TabIndex = 6;
+            label4.Text = "Học kỳ";
+            // 
+            // txtCourseName
+            // 
+            txtCourseName.Location = new Point(116, 43);
+            txtCourseName.Name = "txtCourseName";
+            txtCourseName.Size = new Size(193, 23);
+            txtCourseName.TabIndex = 5;
+            // 
+            // txtGrade
+            // 
+            txtGrade.Location = new Point(390, 12);
+            txtGrade.Name = "txtGrade";
+            txtGrade.Size = new Size(193, 23);
+            txtGrade.TabIndex = 4;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(9, 46);
+            label3.Name = "label3";
+            label3.Size = new Size(77, 15);
+            label3.TabIndex = 3;
+            label3.Text = "Tên khóa học";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(337, 15);
             label2.Name = "label2";
-            label2.Size = new Size(50, 15);
+            label2.Size = new Size(35, 15);
             label2.TabIndex = 1;
-            label2.Text = "Lớp học";
+            label2.Text = "Điểm";
             // 
             // Menu_Grade
             // 
@@ -149,6 +220,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Menu_Grade";
             Text = "Menu_Grade";
+            FormClosed += Menu_Grade_FormClosed;
+            Load += Menu_Grade_Load;
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -167,5 +240,19 @@
         private Panel panel1;
         private ComboBox cboLopHoc;
         private Label label2;
+        private Label label3;
+        private TextBox textBox1;
+        private TextBox textBox4;
+        private Label label5;
+        private TextBox textBox3;
+        private Label label4;
+        private TextBox textBox2;
+        private TextBox txtStudentName;
+        private Button btnHuyDangKy;
+        private Button btnCapNhatDiem;
+        private TextBox txtYear;
+        private TextBox txtSemester;
+        private TextBox txtCourseName;
+        private TextBox txtGrade;
     }
 }
