@@ -60,7 +60,6 @@ namespace Presentation.Forms.SubMenu
                 { "Họ và tên", e.FullName },
                 { "Lớp", e.ClassName },
                 { "Ngày sinh", e.DateOfBirth.ToString("dd/mm/yyyy") },
-                { "Họ và tên", e.FullName },
                 { "Giới tính", e.Gender },
                 { "Email", e.Email },
                 { "Số điện thoại", e.PhoneNumber },
