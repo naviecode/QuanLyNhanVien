@@ -1,4 +1,6 @@
-﻿using BusinessLogic.IService;
+﻿using BusinessLogic.Helpers;
+using BusinessLogic.IService;
+using BusinessLogic.IService.ITeachingScheduleService.Dto;
 
 namespace Presentation.Forms.Menus
 {
@@ -22,14 +24,8 @@ namespace Presentation.Forms.Menus
         }
         private void ViewTimeTable_Load(object sender, EventArgs e)
         {
-            List<Schedule> sampleSchedules = new List<Schedule>
-            {
-                new Schedule { Room = "101", Day = "Thứ 2", CourseName = "Lập trình C#", Time = "08:00 - 10:00", Teacher = "Thầy A" },
-                new Schedule { Room = "102", Day = "Thứ 3", CourseName = "Cơ sở dữ liệu", Time = "10:00 - 12:00", Teacher = "Cô B" },
-                new Schedule { Room = "101", Day = "Thứ 4", CourseName = "Mạng máy tính", Time = "13:00 - 15:00", Teacher = "Thầy C" },
-                new Schedule { Room = "103", Day = "Thứ 5", CourseName = "Hệ điều hành", Time = "15:00 - 17:00", Teacher = "Cô D" },
-                new Schedule { Room = "104", Day = "Thứ 6", CourseName = "Kiến trúc máy tính", Time = "08:00 - 10:00", Teacher = "Thầy E" }
-            };
+            
+            var resultSchedules = _serviceManager.TeachingScheduleService.GetTimeTable(UserSession.UserId).Items;
             tableLayoutPanel1.ColumnCount = 8; 
             tableLayoutPanel1.RowCount = 6;    
 
@@ -50,14 +46,14 @@ namespace Presentation.Forms.Menus
             }
 
             // Gọi hàm đổ dữ liệu
-            PopulateSchedule(sampleSchedules);
+            PopulateSchedule(resultSchedules);
         }
-        private void PopulateSchedule(List<Schedule> schedules)
+        private void PopulateSchedule(List<TeachingScheduleReadDto> schedules)
         {
             foreach (var schedule in schedules)
             {
                 // Xác định cột dựa trên `Day`
-                int column = GetColumnIndex(schedule.Day);
+                int column = GetColumnIndex(GetVietnameseDayOfWeek(schedule.Date));
                 if (column == -1) continue;
 
                 // Tìm hàng dựa trên Room
@@ -65,8 +61,23 @@ namespace Presentation.Forms.Menus
                 if (row == -1) continue;
 
                 // Thêm nội dung vào ô
-                string text = $"{schedule.CourseName}\n{schedule.Time}\n{schedule.Teacher}";
+                string text = $"{schedule.CourseName}\n{schedule.StartAndEndTime}\n{schedule.FactlyName}";
                 AddCell(text, column, row, false);
+            }
+        }
+        static string GetVietnameseDayOfWeek(DateTime date)
+        {
+            // Dùng DayOfWeek để lấy thứ
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Monday: return "Thứ 2";
+                case DayOfWeek.Tuesday: return "Thứ 3";
+                case DayOfWeek.Wednesday: return "Thứ 4";
+                case DayOfWeek.Thursday: return "Thứ 5";
+                case DayOfWeek.Friday: return "Thứ 6";
+                case DayOfWeek.Saturday: return "Thứ 7";
+                case DayOfWeek.Sunday: return "Chủ nhật";
+                default: return "";
             }
         }
         private int GetColumnIndex(string day)

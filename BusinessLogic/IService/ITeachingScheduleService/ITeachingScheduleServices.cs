@@ -10,6 +10,7 @@ namespace BusinessLogic.IService.ITeachingScheduleService
         ResponseDataDto<TeachingScheduleReadDto> GetAll();
         ResponseActionDto<TeachingScheduleReadDto> GetById(int id);
         ResponseDataDto<TeachingScheduleReadDto> Search(string filter);
+        ResponseDataDto<TeachingScheduleReadDto> GetTimeTable(int currentUser);
 
     }
 }
