@@ -52,7 +52,7 @@ namespace Presentation.Forms
             _serviceProvider = serviceProvider;
             InitializeComponent();
             OpenDashboard();
-            //ConfigureMenu();
+            ConfigureMenu();
         }
 
         private void ConfigureMenu()

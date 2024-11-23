@@ -106,6 +106,11 @@ namespace BusinessLogic.Services.DepartmentService
             var departments = _repositoryManager.DepartmentsRepository.GetAll();
             var classes = _repositoryManager.ClassesRepository.GetAll();
             var students = _repositoryManager.StudentsRepository.GetAll();
+            if(departments.Count == 0 || classes.Count == 0 || students.Count == 0)
+            {
+                return new ResponseDataDto<DepartmentCountStudentsDto>(new List<DepartmentCountStudentsDto>(), 0);
+
+            }
 
             var query = from department in departments
                          join classe in classes on department.Id equals classe.DepartmentId into departmentClass

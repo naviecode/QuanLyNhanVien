@@ -11,8 +11,8 @@ namespace BusinessLogic.Mapper
             CreateMap<DepartmentAddDto, Department>();
             CreateMap<DepartmentUpdateDto, Department>();
             CreateMap<Department, DepartmentByIdDto>().ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.Id));
-            CreateMap<DepartmentSearchResultDto, Department>();
-            CreateMap<Department, DepartmentSearchResultDto>();
+            CreateMap<DepartmentSearchResultDto, Department>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DepartmentId));
+            CreateMap<Department, DepartmentSearchResultDto>().ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.Id));
 
 
         }
