@@ -61,6 +61,7 @@
             customListView1.TabIndex = 6;
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
+            customListView1.SelectedIndexChanged += customListView1_SelectedIndexChanged;
             // 
             // txtStudentName
             // 
@@ -106,6 +107,7 @@
             btnNext.TabIndex = 0;
             btnNext.Text = "Sau";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // btnPrev
             // 
@@ -115,6 +117,7 @@
             btnPrev.TabIndex = 0;
             btnPrev.Text = "Trước";
             btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
             // 
             // panel1
             // 

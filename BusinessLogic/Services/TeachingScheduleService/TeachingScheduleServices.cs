@@ -4,6 +4,7 @@ using BusinessLogic.IService.ITeachingScheduleService;
 using BusinessLogic.IService.ITeachingScheduleService.Dto;
 using Data.Entities;
 using Data.IRepository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BusinessLogic.Services.TeachingScheduleService
 {
@@ -67,31 +68,41 @@ namespace BusinessLogic.Services.TeachingScheduleService
 
         public ResponseDataDto<TeachingScheduleReadDto> GetTimeTable(int currentUser)
         {
-            var teachings = _repositoryManager.TeachingScheduleRepository.GetAll();
-            var courses = _repositoryManager.CoursesRepository.GetAll();
-            var factlys = _repositoryManager.FacultysRepository.GetAll();
-            var enrollments = _repositoryManager.EnrollmentsRepository.GetAll();
-            var studentId = _repositoryManager.StudentsRepository.GetAll().Where(x=>x.UserId == currentUser).FirstOrDefault();
-            var query = from teching in teachings
-                        join course in courses on teching.CourseScheduleId equals course.Id into teachingCourse
-                        from course in teachingCourse.DefaultIfEmpty()
-                        join factly in factlys on teching.FacultyScheduleId equals factly.Id into teachingFaculty
-                        from factly in teachingFaculty.DefaultIfEmpty()
-                        join enrollment in enrollments on course.Id equals enrollment.CourseId into courseEnrollment
-                        from enrollment in courseEnrollment.DefaultIfEmpty()
-                        where (enrollment != null && enrollment.StudentId == studentId?.Id)
-                        select new TeachingScheduleReadDto
-                        {
-                            Id = teching.Id,
-                            CourseName = course.CourseName,
-                            FactlyName = factly.FirstName + ' ' + factly.LastName,
-                            StartAndEndTime = teching.StartAndEndTime,
-                            Date = teching.Date,
-                            Room = teching.Room
-                        };
-            var result = query.ToList();
-            int totalItem = result.Count();
-            return new ResponseDataDto<TeachingScheduleReadDto>(result, totalItem);
+            var teachings = _repositoryManager.TeachingScheduleRepository.GetAll().ToList();
+            var courses = _repositoryManager.CoursesRepository.GetAll().ToList();
+            var faculties = _repositoryManager.FacultysRepository.GetAll().ToList();
+            var enrollments = _repositoryManager.EnrollmentsRepository.GetAll().ToList();
+            var student = _repositoryManager.StudentsRepository.GetAll()
+                                .FirstOrDefault(x => x.UserId == currentUser);
+
+            if (student != null) 
+            {
+                var query = from teaching in teachings
+                            join course in courses on teaching.CourseScheduleId equals course.Id into teachingCourses
+                            from course in teachingCourses.DefaultIfEmpty()
+                            join faculty in faculties on teaching.FacultyScheduleId equals faculty.Id into teachingFaculties
+                            from faculty in teachingFaculties.DefaultIfEmpty()
+                            join enrollment in enrollments on course?.Id equals enrollment.CourseId into courseEnrollments
+                            from enrollment in courseEnrollments.DefaultIfEmpty()
+                            where enrollment != null && enrollment.StudentId == student.Id
+                            select new TeachingScheduleReadDto
+                            {
+                                Id = teaching.Id,
+                                CourseName = course?.CourseName ?? "N/A",
+                                FactlyName = faculty != null ? $"{faculty.LastName} {faculty.FirstName}" : "N/A",
+                                StartAndEndTime = teaching.StartAndEndTime,
+                                Date = teaching.Date,
+                                Room = teaching.Room
+                            };
+                var result = query.ToList();
+                int totalItem = result.Count();
+                return new ResponseDataDto<TeachingScheduleReadDto>(result, totalItem);
+            }
+            else
+            {
+                return new ResponseDataDto<TeachingScheduleReadDto>(null, 0);
+            }
+     
         }
 
         public ResponseDataDto<TeachingScheduleReadDto> Search(string filter)

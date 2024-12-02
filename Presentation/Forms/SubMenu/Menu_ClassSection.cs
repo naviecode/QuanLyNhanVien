@@ -141,5 +141,10 @@ namespace Presentation.Forms.SubMenu
         {
             mainForm.SearchButtonClicked -= MainForm_SearchButtonClicked;
         }
+
+        private void customListView1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

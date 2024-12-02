@@ -223,6 +223,7 @@
             btnNext.TabIndex = 2;
             btnNext.Text = "Sau";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // btnPrev
             // 
@@ -232,6 +233,7 @@
             btnPrev.TabIndex = 3;
             btnPrev.Text = "Trước";
             btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
             // 
             // Menu_QLSV
             // 

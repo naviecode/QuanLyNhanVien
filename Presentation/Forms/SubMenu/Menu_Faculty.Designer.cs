@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            txtPhoneNumber = new TextBox();
+            txtEmail = new TextBox();
+            txtDepartmentName = new TextBox();
+            label4 = new Label();
+            label3 = new Label();
             label2 = new Label();
             txtFacultyName = new TextBox();
             label1 = new Label();
@@ -37,11 +42,6 @@
             btnNext = new Button();
             btnPrev = new Button();
             customListView1 = new CustomControls.CustomListView();
-            label3 = new Label();
-            label4 = new Label();
-            txtDepartmentName = new TextBox();
-            txtEmail = new TextBox();
-            txtPhoneNumber = new TextBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -61,6 +61,45 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 64);
             panel1.TabIndex = 5;
+            // 
+            // txtPhoneNumber
+            // 
+            txtPhoneNumber.Location = new Point(473, 34);
+            txtPhoneNumber.Name = "txtPhoneNumber";
+            txtPhoneNumber.Size = new Size(193, 23);
+            txtPhoneNumber.TabIndex = 7;
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(473, 8);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(193, 23);
+            txtEmail.TabIndex = 6;
+            // 
+            // txtDepartmentName
+            // 
+            txtDepartmentName.Location = new Point(115, 34);
+            txtDepartmentName.Name = "txtDepartmentName";
+            txtDepartmentName.Size = new Size(193, 23);
+            txtDepartmentName.TabIndex = 5;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(386, 37);
+            label4.Name = "label4";
+            label4.Size = new Size(76, 15);
+            label4.TabIndex = 4;
+            label4.Text = "Số điện thoại";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(386, 11);
+            label3.Name = "label3";
+            label3.Size = new Size(36, 15);
+            label3.TabIndex = 3;
+            label3.Text = "Email";
             // 
             // label2
             // 
@@ -115,6 +154,7 @@
             btnNext.TabIndex = 0;
             btnNext.Text = "Sau";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // btnPrev
             // 
@@ -124,6 +164,7 @@
             btnPrev.TabIndex = 0;
             btnPrev.Text = "Trước";
             btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
             // 
             // customListView1
             // 
@@ -138,45 +179,6 @@
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
             customListView1.SelectedIndexChanged += customListView1_SelectedIndexChanged;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(386, 11);
-            label3.Name = "label3";
-            label3.Size = new Size(36, 15);
-            label3.TabIndex = 3;
-            label3.Text = "Email";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(386, 37);
-            label4.Name = "label4";
-            label4.Size = new Size(76, 15);
-            label4.TabIndex = 4;
-            label4.Text = "Số điện thoại";
-            // 
-            // txtDepartmentName
-            // 
-            txtDepartmentName.Location = new Point(115, 34);
-            txtDepartmentName.Name = "txtDepartmentName";
-            txtDepartmentName.Size = new Size(193, 23);
-            txtDepartmentName.TabIndex = 5;
-            // 
-            // txtEmail
-            // 
-            txtEmail.Location = new Point(473, 8);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(193, 23);
-            txtEmail.TabIndex = 6;
-            // 
-            // txtPhoneNumber
-            // 
-            txtPhoneNumber.Location = new Point(473, 34);
-            txtPhoneNumber.Name = "txtPhoneNumber";
-            txtPhoneNumber.Size = new Size(193, 23);
-            txtPhoneNumber.TabIndex = 7;
             // 
             // Menu_Faculty
             // 

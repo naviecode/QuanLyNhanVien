@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             customListView1 = new CustomControls.CustomListView();
-            txtCourseName = new TextBox();
-            label1 = new Label();
             panel2 = new Panel();
             lblPageInfo = new Label();
             btnNext = new Button();
             btnPrev = new Button();
-            panel1 = new Panel();
-            label4 = new Label();
-            label3 = new Label();
-            dtpEndRegisterDate = new DateTimePicker();
-            txtCredits = new TextBox();
-            dtpStartRegisterDate = new DateTimePicker();
+            label1 = new Label();
+            txtCourseName = new TextBox();
             label2 = new Label();
+            dtpStartRegisterDate = new DateTimePicker();
+            txtCredits = new TextBox();
+            dtpEndRegisterDate = new DateTimePicker();
+            label3 = new Label();
+            label4 = new Label();
+            panel1 = new Panel();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -52,28 +52,13 @@
             customListView1.Dock = DockStyle.Fill;
             customListView1.FullRowSelect = true;
             customListView1.GridLines = true;
-            customListView1.Location = new Point(0, 64);
+            customListView1.Location = new Point(0, 83);
             customListView1.Name = "customListView1";
-            customListView1.Size = new Size(800, 339);
+            customListView1.Size = new Size(800, 320);
             customListView1.TabIndex = 6;
             customListView1.UseCompatibleStateImageBehavior = false;
             customListView1.View = View.Details;
-            // 
-            // txtCourseName
-            // 
-            txtCourseName.Location = new Point(115, 6);
-            txtCourseName.Name = "txtCourseName";
-            txtCourseName.Size = new Size(193, 23);
-            txtCourseName.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(77, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Tên khóa học";
+            customListView1.SelectedIndexChanged += customListView1_SelectedIndexChanged;
             // 
             // panel2
             // 
@@ -103,6 +88,7 @@
             btnNext.TabIndex = 0;
             btnNext.Text = "Sau";
             btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
             // 
             // btnPrev
             // 
@@ -112,6 +98,71 @@
             btnPrev.TabIndex = 0;
             btnPrev.Text = "Trước";
             btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(77, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Tên khóa học";
+            // 
+            // txtCourseName
+            // 
+            txtCourseName.Location = new Point(115, 6);
+            txtCourseName.Name = "txtCourseName";
+            txtCourseName.Size = new Size(193, 23);
+            txtCourseName.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 35);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 15);
+            label2.TabIndex = 2;
+            label2.Text = "Số tín chỉ";
+            // 
+            // dtpStartRegisterDate
+            // 
+            dtpStartRegisterDate.Location = new Point(495, 6);
+            dtpStartRegisterDate.Name = "dtpStartRegisterDate";
+            dtpStartRegisterDate.Size = new Size(200, 23);
+            dtpStartRegisterDate.TabIndex = 3;
+            // 
+            // txtCredits
+            // 
+            txtCredits.Location = new Point(115, 32);
+            txtCredits.Name = "txtCredits";
+            txtCredits.Size = new Size(193, 23);
+            txtCredits.TabIndex = 4;
+            // 
+            // dtpEndRegisterDate
+            // 
+            dtpEndRegisterDate.Location = new Point(495, 32);
+            dtpEndRegisterDate.Name = "dtpEndRegisterDate";
+            dtpEndRegisterDate.Size = new Size(200, 23);
+            dtpEndRegisterDate.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(369, 9);
+            label3.Name = "label3";
+            label3.Size = new Size(120, 15);
+            label3.TabIndex = 6;
+            label3.Text = "Ngày bắt đầu đăng kí";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(369, 35);
+            label4.Name = "label4";
+            label4.Size = new Size(120, 15);
+            label4.TabIndex = 7;
+            label4.Text = "Ngày hết hạn đăng kí";
             // 
             // panel1
             // 
@@ -126,56 +177,8 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 64);
+            panel1.Size = new Size(800, 83);
             panel1.TabIndex = 5;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(369, 35);
-            label4.Name = "label4";
-            label4.Size = new Size(120, 15);
-            label4.TabIndex = 7;
-            label4.Text = "Ngày hết hạn đăng kí";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(369, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(120, 15);
-            label3.TabIndex = 6;
-            label3.Text = "Ngày bắt đầu đăng kí";
-            // 
-            // dtpEndRegisterDate
-            // 
-            dtpEndRegisterDate.Location = new Point(495, 32);
-            dtpEndRegisterDate.Name = "dtpEndRegisterDate";
-            dtpEndRegisterDate.Size = new Size(200, 23);
-            dtpEndRegisterDate.TabIndex = 5;
-            // 
-            // txtCredits
-            // 
-            txtCredits.Location = new Point(115, 32);
-            txtCredits.Name = "txtCredits";
-            txtCredits.Size = new Size(193, 23);
-            txtCredits.TabIndex = 4;
-            // 
-            // dtpStartRegisterDate
-            // 
-            dtpStartRegisterDate.Location = new Point(495, 6);
-            dtpStartRegisterDate.Name = "dtpStartRegisterDate";
-            dtpStartRegisterDate.Size = new Size(200, 23);
-            dtpStartRegisterDate.TabIndex = 3;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 35);
-            label2.Name = "label2";
-            label2.Size = new Size(56, 15);
-            label2.TabIndex = 2;
-            label2.Text = "Số tín chỉ";
             // 
             // Menu_Course
             // 
@@ -199,18 +202,18 @@
         #endregion
 
         private CustomControls.CustomListView customListView1;
-        private TextBox txtCourseName;
-        private Label label1;
         private Panel panel2;
         private Label lblPageInfo;
         private Button btnNext;
         private Button btnPrev;
-        private Panel panel1;
+        private Label label1;
+        private TextBox txtCourseName;
         private Label label2;
         private DateTimePicker dtpStartRegisterDate;
         private TextBox txtCredits;
-        private Label label4;
-        private Label label3;
         private DateTimePicker dtpEndRegisterDate;
+        private Label label3;
+        private Label label4;
+        private Panel panel1;
     }
 }

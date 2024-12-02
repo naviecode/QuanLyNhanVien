@@ -23,7 +23,6 @@ namespace Presentation.Forms.SubMenu
         public Menu_Enrollment(MainForm mainForm, IServiceManager serviceManager)
         {
             InitializeComponent();
-            InitializeComponent();
             this.mainForm = mainForm;
             this._serviceManager = serviceManager;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;
@@ -41,7 +40,7 @@ namespace Presentation.Forms.SubMenu
             lstCourse = resultLstCourse.Select(x => new OptionItem
             {
                 Value = x.CourseId.ToString(),
-                Text = x.CourseId.ToString() + " - " + x.CourseId + " - " + x.ClassName + " - " + x.FacultyName + " - " + x.Semester + " - " + x.Year + " (Số tín chỉ " + x.Credits + ")",
+                Text = x.CourseId.ToString() + " - " + x.ClassName + " - " + x.FacultyName + " - " + x.Semester + " - " + x.Year + " (Số tín chỉ " + x.Credits + ")",
             }).ToList();
             this.OnSearch(GetSearchFilterInput());
         }

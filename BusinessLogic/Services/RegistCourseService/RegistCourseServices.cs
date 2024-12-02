@@ -32,10 +32,7 @@ namespace BusinessLogic.Services.RegistCourseService
                 return new ResponseActionDto<RegisteredSearchResultto>(null, -1, "Đăng ký thất bại", "Đã hết hạn đăng ký!");
             }
 
-            var currentEnrollments = _repositoryManager.EnrollmentsRepository.GetAll()
-                .Count(x => x.CourseId == data.CourseId);
-
-            if (currentEnrollments >= course.MaxAmountRegist)
+            if (course.MaxAmountRegist <= 0)
             {
                 return new ResponseActionDto<RegisteredSearchResultto>(null, -1, "Đăng ký thất bại", "Khóa học đã đầy!");
             }
@@ -47,10 +44,10 @@ namespace BusinessLogic.Services.RegistCourseService
             {
                 return new ResponseActionDto<RegisteredSearchResultto>(null, -1, "Đăng ký thất bại", "Sinh viên đã đăng ký khóa học này!");
             }
-
+            var studentId = _repositoryManager.StudentsRepository.GetAll().Where(x=>x.UserId == UserSession.UserId).FirstOrDefault().Id;
             var enrollment = new Enrollment
             {
-                StudentId = data.StudentId,
+                StudentId = studentId,
                 CourseId = data.CourseId,
                 EnrollmentDate = DateTime.Now,
                 IsCanceled = false
@@ -134,22 +131,21 @@ namespace BusinessLogic.Services.RegistCourseService
             var classes = _repositoryManager.ClassesRepository.GetAll();
             var courses = _repositoryManager.CoursesRepository.GetAll();
             var faculties = _repositoryManager.FacultysRepository.GetAll();
-
             var query = from student in students
+                        where student.UserId == UserSession.UserId
                         join enrollment in enrollments on student.Id equals enrollment.StudentId
                         join classSection in classSections on enrollment.CourseId equals classSection.CourseId
                         join cls in classes on classSection.ClassId equals cls.Id
                         join course in courses on classSection.CourseId equals course.Id
                         join faculty in faculties on classSection.FacultyId equals faculty.Id into facultyJoin
                         from faculty in facultyJoin.DefaultIfEmpty()
-                        where student.UserId == UserSession.UserId
-                           && enrollment.IsCanceled == null
-                           && (string.IsNullOrEmpty(filterInput.ClassName) || cls.ClassName.ToLower().Contains(filterInput.ClassName.ToLower()))
+                        where (string.IsNullOrEmpty(filterInput.ClassName) || cls.ClassName.ToLower().Contains(filterInput.ClassName.ToLower()))
                            && (string.IsNullOrEmpty(filterInput.CourseName) || course.CourseName.ToLower().Contains(filterInput.CourseName.ToLower()))
-                           && (!filterInput.Credits.HasValue || course.Credits == filterInput.Credits.Value)
-                           && (string.IsNullOrEmpty(filterInput.FacultyName) || (faculty.LastName + " " + faculty.FirstName).ToLower().Contains(filterInput.FacultyName.ToLower()))
+                           && (filterInput.Credits == null || course.Credits == filterInput.Credits.Value)
+                           && (string.IsNullOrEmpty(filterInput.FacultyName) ||
+                               (faculty.LastName + " " + faculty.FirstName).ToLower().Contains(filterInput.FacultyName.ToLower()))
                            && (string.IsNullOrEmpty(filterInput.Semester) || classSection.Semester.ToLower().Contains(filterInput.Semester.ToLower()))
-                           && (!filterInput.Year.HasValue || classSection.Year == filterInput.Year.Value)
+                           && (filterInput.Year == 0 || classSection.Year == filterInput.Year.Value)
                         select new RegisteredSearchResultto
                         {
                             ClassId = cls.Id,

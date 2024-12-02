@@ -24,7 +24,6 @@ namespace Presentation.Forms.SubMenu
         public Menu_Grade(MainForm mainForm, IServiceManager serviceManager)
         {
             InitializeComponent();
-            InitializeComponent();
             this.mainForm = mainForm;
             this._serviceManager = serviceManager;
             mainForm.SearchButtonClicked += MainForm_SearchButtonClicked;

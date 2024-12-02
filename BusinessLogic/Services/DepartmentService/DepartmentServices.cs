@@ -111,19 +111,18 @@ namespace BusinessLogic.Services.DepartmentService
                 return new ResponseDataDto<DepartmentCountStudentsDto>(new List<DepartmentCountStudentsDto>(), 0);
 
             }
-
-            var query = from department in departments
-                         join classe in classes on department.Id equals classe.DepartmentId into departmentClass
-                         from classe in departmentClass.DefaultIfEmpty()
-                         join student in students on classe.Id equals student.ClassId into classesStudent
-                         from student in classesStudent.DefaultIfEmpty()
-                         group student by department.DepartmentName into departmentGroup
-                         select new DepartmentCountStudentsDto
-                         {
-                             DepartmentName = departmentGroup.Key,
-                             StudentCount = departmentGroup.Count(x=>x != null),
-                         };
-            var result = query.ToList();
+            var query1 = from department in departments
+                        join classe in classes on department.Id equals classe.DepartmentId into departmentClasses
+                        from classe in departmentClasses.DefaultIfEmpty() // Left join on classes
+                        join student in students on classe?.Id equals student.ClassId into classStudents
+                        from student in classStudents.DefaultIfEmpty() // Left join on students
+                        group student by department.DepartmentName into departmentGroup
+                        select new DepartmentCountStudentsDto
+                        {
+                            DepartmentName = departmentGroup.Key,
+                            StudentCount = departmentGroup.Count(student => student != null)
+                        };
+            var result = query1.ToList();
             int totalItem = result.Count();
             return new ResponseDataDto<DepartmentCountStudentsDto>(result, totalItem);
         }

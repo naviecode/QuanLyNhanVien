@@ -101,11 +101,13 @@ namespace BusinessLogic.Services.StudentService
         public ResponseActionDto<StudentSearchResultDto> Update(StudentUpdateDto data)
         {
             var result = _repositoryManager.StudentsRepository.GetById(data.Id);
-            var userResult = _repositoryManager.UsersRepository.GetById(data.UserId);
+            var userResult = _repositoryManager.UsersRepository.GetById(result.UserId);
             if (result != null && userResult != null)
             {
-                _mapper.Map(new UserUpdateDto() { Id = data.UserId, Username = data.Username, PasswordHash = data.PasswordHash}, userResult);
+                _mapper.Map(new UserUpdateDto() { Id = data.UserId, Username = data.Username, PasswordHash = data.PasswordHash, RoleID = result.User.RoleID}, userResult);
                 var userRes = _repositoryManager.UsersRepository.Update(userResult);
+                data.UserId = result.UserId;
+                data.RoleID = result.User.RoleID;
                 _mapper.Map(data, result);
                 var res = _repositoryManager.StudentsRepository.Update(result);
                 if (res == true && userRes == true)
